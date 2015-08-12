@@ -7,15 +7,15 @@
 	<title>Laravel</title>
 
 	<!-- CSS -->
-	<link rel="stylesheet" href="scripts/css/bootstrap.min.css">
-	<link rel="stylesheet" href="scripts/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="/scripts/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/scripts/css/bootstrap-theme.min.css">
 	<link href="/css/app.css" rel="stylesheet">
 
 	<!-- Fonts -->
-	<link href="scripts/fonts/" rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
 	<!-- JS Scripts -->
-	<script src='scripts/jquery-1.11.2.min.js'></script>  
-	<script src="scripts/js/bootstrap.min.js"></script>
+	<script src='/scripts/jquery-1.11.2.min.js'></script>
+	<script src="/scripts/js/bootstrap.min.js"></script>
 	<style>
 
 	</style>
@@ -37,7 +37,8 @@
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li><a href="/">Home</a></li>
+					<li><a href="home">Home</a></li>
+					<li><a href="form">Form</a></li>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">
