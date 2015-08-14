@@ -9,16 +9,15 @@
 	<!-- CSS -->
 	<link rel="stylesheet" href="/scripts/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/scripts/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="/scripts/css/bootstrap-datetimepicker.min.css">
 	<link href="/css/app.css" rel="stylesheet">
 
 	<!-- Fonts -->
 	<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
 	<!-- JS Scripts -->
-	<script src='/scripts/jquery-1.11.2.min.js'></script>
-	<script src="/scripts/js/bootstrap.min.js"></script>
-	<style>
-
-	</style>
+	<script src='../scripts/jquery-1.11.2.min.js'></script>
+	<script src="../scripts/js/bootstrap.min.js"></script>
+	<script src="../scripts/js/bootstrap-datetimepicker.min.js"></script>
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
