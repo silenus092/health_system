@@ -370,9 +370,42 @@ $(document).ready(function() {
 						</div>
 						<div class="form-group">
 							<label class="col-md-3 text-left">10. ประวัติครอบครัว มารดา  </label>
+							<div class="btn-group" data-toggle="buttons">
+								<label class="btn btn-primary active">
+									<input type="radio" name="6_symptom" id="6_1_symptom" value="ไม่ได้ตรวจ" autocomplete="off" checked> ไม่ได้ตรวจ
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="6_symptom" id="6_2_symptom" value="ตรวจ" autocomplete="off"> ตรวจ
+								</label>
+							</div>
+						</div>
+						<div class="form-group">
+						<label class="col-md-3 control-label">10.1 รายชือญาติที่ป่วยเป็นโรคกล้ามเนื้อ</label>
+						<button type="submit" class="btn btn-primary">
+							Add more
+						</button>
+						<div class="checkbox col-md-2">
+							<label>
+								<input  type="checkbox" name="10_checkbox_male">ไม่รู้: ติดตามเพิ่มเติม
+							</label>
+						</div>
+						</div>
+						<div class="form-group">
+						<div class="col-md-2">
+							<input type="text" class="form-control" name="ban_number" placeholder="ชื่อ-นามสกุล">
+						</div>
+						<div class="col-md-2">
+							<input type="text" class="form-control" name="ban_number" placeholder="อายุ" >
+						</div>
+						<div class="col-md-2">
+							<input type="text" class="form-control" name="ban_number" placeholder="เลขประจำตัวประชาชน">
+						</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 text-left">10.2 มารดามีพี่น้องแม่เดียวกัน กี่คน  </label>
 							<div class="checkbox col-md-1">
 								<label>
-									<input  type="checkbox" type="checkbox_male">ชาย
+									<input  type="checkbox" name="10_checkbox_male">ชาย
 								</label>
 							</div>
 							<div class="col-md-2 text-left">
@@ -380,14 +413,13 @@ $(document).ready(function() {
 							</div>
 							<div class="checkbox col-md-1">
 								<label>
-									<input  type="checkbox" name="checkbox_female">หญิง
+									<input  type="checkbox" name="10_checkbox_female">หญิง
 								</label>
 							</div>
 							<div class="col-md-2 text-left">
 								<input type="text" class="form-control" name="checkbox_female_number" value="" placeholder="คน">
 							</div>
 						</div>
-
 						<hr>
 						<div class="form-group">
 							<label class="col-md-4 control-label">คนไข้จากโรงพยาบาล </label>
