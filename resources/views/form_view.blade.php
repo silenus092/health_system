@@ -1,9 +1,9 @@
 
 @extends('app')
-
 @section('content')
 <script type="text/javascript">
-$(function () {
+$(document).ready(function() {
+	$("#5_2_symptom_add_one").hide();
 	$('#datetimepicker1').datetimepicker({
 		format: "dd MM yyyy - HH:ii P",
 		showMeridian: true,
@@ -16,11 +16,21 @@ $(function () {
 		autoclose: true,
 		todayBtn: true
 	});
-
-	$("input:radio[name='group1']").click(function() {
-    $('.desc').hide();
-    $('#' + $("input:radio[name='group1']:checked").val()).show();
+	$('#datetimepicker3').datetimepicker({
+		format: "dd MM yyyy - HH:ii P",
+		showMeridian: true,
+		autoclose: true,
+		todayBtn: true
 	});
+	$('input[name=5_symptom]').click(function () {
+		if (this.id == "5_2_symptom") {
+			$("#5_2_symptom_add_on").show('slow');
+		} else {
+			$("#5_2_symptom_add_one").hide('slow');
+		}
+	});
+
+
 
 });
 </script>
@@ -227,11 +237,157 @@ $(function () {
 								<label class="btn btn-primary">
 									<input type="radio" name="5_symptom" id="5_2_symptom" value="มี" autocomplete="off"> มี
 								</label>
+							</div>
+							<p>
+								<div id="5_2_symptom_add_on" >
+									<label class="col-md-1 ">ผล</label>
+									<div class="col-md-2">
+										<input type="text" class="form-control" name="5_2_symptom_add_on_result">
+									</div>
+									<label class="col-md-2">ครั้งแรก เมื่อ วัน-เดือน-ปี</label>
+									<div class='col-md-2 input-group date' id='datetimepicker2'>
+										<input type='text' name="5_2_symptom_add_on_result_date" class="form-control" />
+										<span class="input-group-addon">
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+									</div>
+								</div>
+							</p>
+						</div>
+						<div class="form-group">
+							<label class="col-md-6 text-left">6. ได้ตรวจ เอคโค (Echocardiogram) หรือไม่</label>
+							<div class="btn-group" data-toggle="buttons">
+								<label class="btn btn-primary active">
+									<input type="radio" name="6_symptom" id="6_1_symptom" value="ไม่ได้ตรวจ" autocomplete="off" checked> ไม่ได้ตรวจ
+								</label>
 								<label class="btn btn-primary">
-									<input type="radio" name="5_symptom" id="5_3_symptom" value="ไม่ได้สังเกต" autocomplete="off"> ไม่ได้สังเกต
+									<input type="radio" name="6_symptom" id="6_2_symptom" value="ตรวจ" autocomplete="off"> ตรวจ
+								</label>
+							</div>
+							<p>
+								<div id="6_2_symptom_add_on" >
+									<label class="col-md-1 ">ผล</label>
+									<div class="col-md-2">
+										<input type="text" class="form-control" name="6_2_symptom_add_on_result">
+									</div>
+									<label class="col-md-2">ครั้งสุดท้าย เมื่อ วัน-เดือน-ปี</label>
+									<div class='col-md-2 input-group date' id='datetimepicker3'>
+										<input type='text' name="6_2_symptom_add_on_result_date" class="form-control" />
+										<span class="input-group-addon">
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+									</div>
+								</div>
+							</p>
+						</div>
+						<div class="form-group">
+							<label class="col-md-6 text-left">7. การตรวจยีนโรคกล้ามเนื้อเสื่อมดูเชน ของผู้ป่วย ด้วยวิธีต่อไปนี้และผลดังนี้ </label>
+						</div>
+
+							<div class="form-group">
+								<label class="col-md-2 text-left">7.1 Multiplex PCR </label>
+								<div class="col-md-3 btn-group" data-toggle="buttons">
+									<label class="btn btn-primary active">
+										<input type="radio" name="7_1_symptom" id="7_1_symptom" autocomplete="off" checked> ปกติ
+									</label>
+									<label class="btn btn-primary">
+										<input type="radio" name="7_1_symptom" id="7_2_symptom" autocomplete="off"> ไม่ได้ตรวจ
+									</label>
+									<label class="btn btn-primary">
+										<input type="radio" name="7_1_symptom" id="7_3_symptom" autocomplete="off"> ผิดปกติ
+									</label>
+								</div>
+								<div class="col-md-5" >
+								<input type="text" class="col-md-5 form-control" name="7_1_symptom_result" placeholder="ผล">
+								</div>
+							</div>
+						<div class="form-group">
+							<label class="col-md-2 text-left" >7.2 MLPA </label>
+							<div class="col-md-3 btn-group" data-toggle="buttons">
+								<label class="btn btn-primary active">
+									<input type="radio" name="7_2_symptom" id="7_4_symptom" value="ไม่เป็น" autocomplete="off" checked> ปกติ
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="7_2_symptom" id="7_5_symptom" value="เป็น" autocomplete="off"> ไม่ได้ตรวจ
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="7_2_symptom" id="7_6_symptom" value="ไม่ได้สังเกต" autocomplete="off"> ผิดปกติ
+								</label>
+							</div>
+							<div class="col-md-5" >
+							<input type="text" class="col-md-5 form-control" name="7_2_symptom_result" placeholder="ผล">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 text-left">7.3 Sequencing</label>
+							<div class="col-md-3 btn-group" data-toggle="buttons">
+								<label class="btn btn-primary active">
+									<input type="radio" name="7_3_symptom" id="7_7_symptom" value="ไม่เป็น" autocomplete="off" checked> ปกติ
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="7_3_symptom" id="7_8_symptom" value="เป็น" autocomplete="off"> ไม่ได้ตรวจ
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="7_3_symptom" id="7_9_symptom" value="ไม่ได้สังเกต" autocomplete="off"> ผิดปกติ
+								</label>
+							</div>
+							<div class="col-md-5" >
+							<input type="text" class="col-md-5 form-control" name="7_3_symptom_result" placeholder="ผล">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-6 text-left">8. ผลตรวจยีนของมารดา</label>
+							<div class="btn-group" data-toggle="buttons">
+								<label class="btn btn-primary active">
+									<input type="radio" name="8_1_symptom" id="8_1_symptom" value="เป็นพาหะ" autocomplete="off" checked> เป็นพาหะ
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="8_1_symptom" id="8_2_symptom" value="ไม่เป็นพาหะ" autocomplete="off"> ไม่เป็นพาหะ
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="8_1_symptom" id="8_3_symptom" value="ไม่รู้" autocomplete="off">ยังไม่ได้ตรวจ / ไม่รู้
 								</label>
 							</div>
 						</div>
+						<div class="form-group">
+							<label class="col-md-3 text-left">	9. ผู้ป่วยมีพี่น้องแม่เดียวกันกี่คน </label>
+							<div class="checkbox col-md-1">
+								<label>
+									<input  type="checkbox" type="checkbox_male">ชาย
+								</label>
+							</div>
+							<div class="col-md-2 text-left">
+								<input type="text" class="form-control" name="checkbox_male_number" value="" placeholder="คน">
+							</div>
+							<div class="checkbox col-md-1">
+								<label>
+									<input  type="checkbox" name="checkbox_female">หญิง
+								</label>
+							</div>
+							<div class="col-md-2 text-left">
+								<input type="text" class="form-control" name="checkbox_female_number" value="" placeholder="คน">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 text-left">10. ประวัติครอบครัว มารดา  </label>
+							<div class="checkbox col-md-1">
+								<label>
+									<input  type="checkbox" type="checkbox_male">ชาย
+								</label>
+							</div>
+							<div class="col-md-2 text-left">
+								<input type="text" class="form-control" name="checkbox_male_number" value="" placeholder="คน">
+							</div>
+							<div class="checkbox col-md-1">
+								<label>
+									<input  type="checkbox" name="checkbox_female">หญิง
+								</label>
+							</div>
+							<div class="col-md-2 text-left">
+								<input type="text" class="form-control" name="checkbox_female_number" value="" placeholder="คน">
+							</div>
+						</div>
+
 						<hr>
 						<div class="form-group">
 							<label class="col-md-4 control-label">คนไข้จากโรงพยาบาล </label>
