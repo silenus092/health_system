@@ -38,6 +38,9 @@ class FormController extends Controller
 							$id = DB::table('person')->insertGetId(
 						    ['person_first_name' =>Input::get('first_name'), 'person_last_name' =>Input::get('last_name'),
 								'person_age' =>   Input::get('age'), 'person_sex' =>Input::get('sex'),
+                'person_citizenID' => Input::get('citizen_id'), 	'person_birth_date' =>  Input::get('birth_date'),
+                'person_house_num' => Input::get('citizen_id'), 	'person_soi' =>  Input::get('birth_date'),
+                'person_road' => Input::get('citizen_id'), 	'person_tumbon' =>  Input::get('birth_date'),
 								]
 							);
                 return response()->json(array('status' => 'Complete', 'message' => 'บันทึกสำเร็จ ' )) ;

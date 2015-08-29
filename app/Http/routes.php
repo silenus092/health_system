@@ -33,6 +33,7 @@ Route::get('form', 'FormController@index');
 Route::post('form_add', [
     'as' => 'form_add', 'uses' => 'FormController@store'
 ]);
+
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
