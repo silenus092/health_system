@@ -10,13 +10,29 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
+Route::filter('csrf', function()
+{
+    if (Request::ajax())
+    {
+        if (Session::token() !== Request::header('csrftoken'))
+        {
+            // Change this to return something your JavaScript can read...
+            throw new Illuminate\Session\TokenMismatchException;
+        }
+    }
+    elseif (Session::token() !== Input::get('_token'))
+    {
+        throw new Illuminate\Session\TokenMismatchException;
+    }
+});
 Route::get('/', 'HomeController@index');
 
 Route::get('home', 'HomeController@index');
 
 Route::get('form', 'FormController@index');
-
+Route::post('form_add', [
+    'as' => 'form_add', 'uses' => 'FormController@store'
+]);
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
