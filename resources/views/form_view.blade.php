@@ -9,7 +9,7 @@ $(document).ready(function() {
        headers: {
            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
        }
-   });
+     });
 
   $("#5_2_symptom_add_one").hide();
   $('#datetimepicker1').datetimepicker({
@@ -29,7 +29,7 @@ $(document).ready(function() {
   $('#datetimepicker3').datetimepicker({
     format: "yyyy-mm-dd",
     showMeridian: true,
-     minView: 2,
+    minView: 2,
     autoclose: true,
     todayBtn: true
   });
