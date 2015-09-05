@@ -35,16 +35,49 @@ class FormController extends Controller
     {
         try {
             if ($request->ajax()) {
-                $id = DB::table('person')->insertGetId(
+                $Person_id = DB::table('person')->insertGetId(
                 ['person_first_name' =>Input::get('first_name'), 'person_last_name' =>Input::get('last_name'),
                 'person_age' =>   Input::get('age'), 'person_sex' =>Input::get('sex'),
                 'person_citizenID' => Input::get('citizen_id'), 	'person_birth_date' =>  Input::get('birth_date'),
-                'person_house_num' => Input::get('ban_number'), 	'person_soi' =>  Input::get('birth_date'),
-                'person_road' => Input::get('citizen_id'), 	'person_tumbon' =>  Input::get('birth_date'),
-                'person_mooh_number' => Input::get('citizen_id'), 	'person_tumbon' =>  Input::get('birth_date'),
-                mooh_number
+                'person_house_num' => Input::get('ban_number'), 	'person_soi' =>  Input::get('soi'),
+                'person_road' => Input::get('road'), 	'person_tumbon' =>  Input::get('sub_district'),
+                'person_mooh_num' => Input::get('mooh_number'), 	'person_amphur' =>  Input::get('district'),
+                'person_province' => Input::get('province'), 	'person_post_cost' =>  Input::get('postal_code'),
+                'person_mobile_phone' => Input::get('mobi_phone_number'), 	'person_phone' =>  Input::get('house_number')
                 ]
-            );
+
+                $Doctor_id = DB::table('doctor')->insertGetId(
+                ['doctor_name' =>Input::get('doctor_name'), 'doctor_mobile_phone' =>Input::get('doctor_mobilephonenumber'),
+                'doctor_phone' =>   Input::get('doctor_phonenumber'), 'hospital' =>Input::get('hospital_name'),
+                'email' => Input::get('doctor_email')
+                ]
+                );
+
+                $Patient_id = DB::table('patients')->insertGetId(
+                ['doctor_id' =>$Doctor_id, 'person_id' =>$Person_id,
+                'registration_date' =>   Input::get('doctor_care_date')
+                ]
+                );
+                 // use date function  temporary
+                $disease_form_id = DB::table('disease_forms')->insertGetId(
+                ['doctor_id' =>$Doctor_id, 'disease_types' =>"ดูเชน, Duchenne muscular dystrophy, DMD",
+                'question_date' =>  date("Y-m-d")
+                ]
+                );
+
+                DB::table('disease_1')->insert(
+                ['doctor_id' =>$Doctor_id, 'disease_types' =>"ดูเชน, Duchenne muscular dystrophy, DMD",
+                'registration_date' =>   Input::get('doctor_care_date')
+                ]
+                );
+
+                DB::table('disease_1')->insert(
+                ['patient_id' =>$Patient_id, 'question_id' =>$disease_form_id,
+                'registration_date' =>  date("Y-m-d")
+                ]
+                );
+
+
             return response()->json(array('status' => 'Complete', 'message' => 'บันทึกสำเร็จ ' )) ;
         }
     } catch (Exception $e) {

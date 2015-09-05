@@ -510,7 +510,7 @@ $(document).ready(function() {
             <div class="form-group">
               <label class="col-md-4 control-label">วัน-เดือน-ปี ที่บันทึกข้อมูลโดยแพทย์เจ้าของไข้</label>
               <div class='col-md-6 input-group date' id='datetimepicker4'>
-                <input type='text' name="doctor_date" class="form-control" />
+                <input type='text' name="doctor_care_date" class="form-control" />
                 <span class="input-group-addon">
                   <span class="glyphicon glyphicon-calendar"></span>
                 </span>
