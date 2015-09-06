@@ -10,8 +10,16 @@ $(document).ready(function() {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
   });
+  $('input:radio[name="5_symptom"]').change(
+      function(){
+          if ($(this).is(':checked') && $(this).val() == 'มี') {
+            alert("มี");
+          }else{
 
-  $("#5_2_symptom_add_one").hide();
+          }
+      });
+
+
   $('#datetimepicker1').datetimepicker({
     format: "yyyy-mm-dd",
     showMeridian: true,
@@ -40,13 +48,7 @@ $(document).ready(function() {
     autoclose: true,
     todayBtn: true
   });
-  $('input[name=5_symptom]').click(function () {
-    if (this.id == "5_2_symptom") {
-      $("#5_2_symptom_add_on").show('slow');
-    } else {
-      $("#5_2_symptom_add_one").hide('slow');
-    }
-  });
+
   $('#add_more').click(function() {
     count_line++;
     $('<div class="col-md-2">'+
