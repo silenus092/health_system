@@ -36,36 +36,39 @@ class FormController extends Controller
     {
         try {
             if ($request->ajax()) {
-                $Person_id = DB::table('person')->insertGetId(
+                $Person_id = DB::table('persons')->insertGetId(
                 ['person_first_name' => Input::get('first_name'), 'person_last_name' => Input::get('last_name'),
                 'person_age' => Input::get('age'), 'person_sex' => Input::get('sex'),
                 'person_citizenID' => Input::get('citizen_id'),    'person_birth_date' => Input::get('birth_date'),
                 'person_house_num' => Input::get('ban_number'),    'person_soi' => Input::get('soi'),
                 'person_road' => Input::get('road'),    'person_tumbon' => Input::get('sub_district'),
                 'person_mooh_num' => Input::get('mooh_number'),    'person_amphur' => Input::get('district'),
-                'person_province' => Input::get('province'),    'person_post_cost' => Input::get('postal_code'),
+                'person_province' => Input::get('province'),    'person_post_code' => Input::get('postal_code'),
                 'person_mobile_phone' => Input::get('mobi_phone_number'),    'person_phone' => Input::get('house_number'),
                 ]
                 );
 
-                $doctor_id = DB::table('doctor')->insertGetId(
+                $Doctor_id = DB::table('doctors')->insertGetId(
                 ['doctor_name' => Input::get('doctor_name'), 'doctor_mobile_phone' => Input::get('doctor_mobilephonenumber'),
                 'doctor_phone' => Input::get('doctor_phonenumber'), 'hospital' => Input::get('hospital_name'),
-                'email' => Input::get('doctor_email'),
+                'email' => Input::get('doctor_email')
                 ]
                 );
 
                 $Patient_id = DB::table('patients')->insertGetId(
                 ['doctor_id' => $Doctor_id, 'person_id' => $Person_id,
-                'registration_date' => Input::get('doctor_care_date'),
+                'registration_date' => Input::get('doctor_care_date')
                 ]
                 );
 
-                $disease_forms = DB::table('disease_forms')->where('disease_types', 'ดูเชน  Duchenne muscular dystrophy, DMD')->first();
+                $disease_types = DB::table('disease_types')->where('disease_type_name_en', 'Duchenne muscular dystrophy, DMD')->first();
+
+                $disease_form_id = DB::table('disease_forms')->insertGetId(
+                ['disease_type_id' => $disease_types->disease_type_id] );
 
                 DB::table('patients_disease_forms')->insert(
-                ['patient_id' => $Patient_id, 'question_id' =>  $disease_forms->question_id,
-                'registration_date' => date('Y-m-d'),
+                ['patient_id' => $Patient_id, 'question_id' =>  $disease_form_id,
+                'registration_date' => date('Y-m-d')
                 ]
                 );
 
@@ -84,7 +87,7 @@ class FormController extends Controller
                 'symptom_9_male' => Input::get('9_male_number'), 'symptom_9_female' =>Input::get('9_female_number'),
                 'symptom_10_2_male' => Input::get('10_2_male_number'), 'symptom_10_2_female' =>Input::get('10_2_female_number'),
                 'symptom_10_1' => Input::get('10_symptom') , 'symptom_10_1_number' => Input::get('10_symptom_number'),
-                
+                'questions_id' =>  $disease_form_id
                 ]
                 );
 

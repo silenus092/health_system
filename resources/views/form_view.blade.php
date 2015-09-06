@@ -6,23 +6,23 @@
 var count_line = 1 ;
 $(document).ready(function() {
   $.ajaxSetup({
-       headers: {
-           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-       }
-     });
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
 
   $("#5_2_symptom_add_one").hide();
   $('#datetimepicker1').datetimepicker({
     format: "yyyy-mm-dd",
     showMeridian: true,
-     minView: 2,
+    minView: 2,
     autoclose: true,
     todayBtn: true
   });
   $('#datetimepicker2').datetimepicker({
     format: "yyyy-mm-dd",
     showMeridian: true,
-     minView: 2,
+    minView: 2,
     autoclose: true,
     todayBtn: true
   });
@@ -36,7 +36,7 @@ $(document).ready(function() {
   $('#datetimepicker4').datetimepicker({
     format: "yyyy-mm-dd",
     showMeridian: true,
-     minView: 2,
+    minView: 2,
     autoclose: true,
     todayBtn: true
   });
@@ -429,7 +429,7 @@ $(document).ready(function() {
               <label class="col-md-3 text-left">	9. ผู้ป่วยมีพี่น้องแม่เดียวกันกี่คน </label>
               <div class="checkbox col-md-1">
                 <label>
-                  <input  id="9_checkbox_male" name="9_checkbox_male" type="checkbox" >ชาย
+                  ชาย
                 </label>
               </div>
               <div class="col-md-2 text-left">
@@ -437,7 +437,7 @@ $(document).ready(function() {
               </div>
               <div class="checkbox col-md-1">
                 <label>
-                  <input  type="checkbox" id="9_checkbox_female" name="9_checkbox_female">หญิง
+                  หญิง
                 </label>
               </div>
               <div class="col-md-2 text-left">
@@ -446,17 +446,27 @@ $(document).ready(function() {
             </div>
             <div class="form-group">
               <label class="col-md-3 text-left">10. ประวัติครอบครัว มารดา  </label>
-              <div class="btn-group" data-toggle="buttons">
-                <label class="btn btn-primary active">
-                  <input type="radio" name="6_symptom" id="6_1_symptom" value="ไม่ได้ตรวจ" autocomplete="off" checked> ไม่ได้ตรวจ
-                </label>
-                <label class="btn btn-primary">
-                  <input type="radio" name="6_symptom" id="6_2_symptom" value="ตรวจ" autocomplete="off"> ตรวจ
-                </label>
-              </div>
             </div>
             <div class="form-group">
-              <label class="col-md-3 control-label">10.1 รายชือญาติที่ป่วยเป็นโรคกล้ามเนื้อ</label>
+              <label class="col-md-6 ">
+                10.1 มีหรือเคยมีพี่น้องเพศชาย หรือญาติเพศชายป่วยเป็นโรคกล้ามเนื้อหรือไม่
+              </label>
+              <div class="btn-group" data-toggle="buttons">
+                <label class="btn btn-primary active">
+                  <input type="radio" name="10_symptom" id="10_1_symptom" value="ไม่มี" autocomplete="off" checked> ไม่เป็น
+                </label>
+                <label class="btn btn-primary">
+                  <input type="radio" name="10_symptom" id="10_2_symptom" value="มี" autocomplete="off"> เป็น
+                </label>
+              </div>
+                <label>
+                  <input type="text" class="form-control" name="10_symptom_number" placeholder="กี่คน">
+                </label>
+
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-6 control-label">รายชือญาติที่ป่วยเป็นโรคกล้ามเนื้อ ระบุว่าเป็นใครบ้าง และอายุเท่าไหร่ พร้อมเลขที่บัตรประชาชน</label>
 
               <input type="button" id="add_more" value="Add More"  class="btn btn-primary" />
 
@@ -466,6 +476,7 @@ $(document).ready(function() {
                 </label>
               </div>
             </div>
+
             <div class="form-group form-group_10">
               <div class="col-md-2">
                 <input type="text" class="form-control field_name" name="10_name[]" placeholder="1-ชื่อ-นามสกุล">
@@ -482,19 +493,19 @@ $(document).ready(function() {
               <label class="col-md-3 text-left">10.2 มารดามีพี่น้องแม่เดียวกัน กี่คน  </label>
               <div class="checkbox col-md-1">
                 <label>
-                  <input  type="checkbox" name="10_checkbox_male">ชาย
+                  ชาย
                 </label>
               </div>
               <div class="col-md-2 text-left">
-                <input type="text" class="form-control" name="checkbox_male_number" value="" placeholder="คน">
+                <input type="text" class="form-control" name="10_2_male_number" value="" placeholder="คน">
               </div>
               <div class="checkbox col-md-1">
                 <label>
-                  <input  type="checkbox" name="10_checkbox_female">หญิง
+                  หญิง
                 </label>
               </div>
               <div class="col-md-2 text-left">
-                <input type="text" class="form-control" name="checkbox_female_number" value="" placeholder="คน">
+                <input type="text" class="form-control" name="10_2_female_number" value="" placeholder="คน">
               </div>
             </div>
             <hr>

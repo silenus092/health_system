@@ -9,17 +9,17 @@
 	<title>Laravel</title>
 
 	<!-- CSS -->
-	<link rel="stylesheet" href="/scripts/css/bootstrap.min.css">
-	<link rel="stylesheet" href="/scripts/css/bootstrap-theme.min.css">
-		<link rel="stylesheet" href="/scripts/css/bootstrap-datetimepicker.min.css">
-	<link href="/css/app.css" rel="stylesheet">
+	<link rel="stylesheet" href="{{ URL::asset('scripts/css/bootstrap.min.css') }}" >
+	<link rel="stylesheet" href="{{ URL::asset('scripts/css/bootstrap-theme.min.css') }}">
+		<link rel="stylesheet" href="{{ URL::asset('scripts/css/bootstrap-datetimepicker.min.css') }}">
+	<link href="{{ URL::asset('css/app.css') }}" rel="stylesheet">
 
 	<!-- Fonts -->
 	<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
 	<!-- JS Scripts -->
-	<script src='../scripts/jquery-1.11.2.min.js'></script>
-	<script src="../scripts/js/bootstrap.min.js"></script>
-	<script src="../scripts/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="{{ URL::asset('/scripts/jquery-1.11.2.min.js') }}"></script>
+	<script src="{{ URL::asset('/scripts/js/bootstrap.min.js') }}"></script>
+	<script src="{{ URL::asset('/scripts/js/bootstrap-datetimepicker.min.js') }}"></script>
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -44,13 +44,13 @@
 
 				<ul class="nav navbar-nav navbar-right">
 					@if (Auth::guest())
-						<li><a href="/auth/login">Login</a></li>
-						<li><a href="/auth/register">Register</a></li>
+						<li><a href="{{ URL::asset('/auth/login') }}">Login</a></li>
+						<li><a href="{{ URL::asset('/auth/register') }}">Register</a></li>
 					@else
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
-								<li><a href="/auth/logout">Logout</a></li>
+								<li><a href="{{ URL::asset('/auth/logout') }}">Logout</a></li>
 							</ul>
 						</li>
 					@endif
