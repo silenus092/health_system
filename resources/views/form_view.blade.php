@@ -13,11 +13,31 @@ $(document).ready(function() {
   $('input:radio[name="5_symptom"]').change(
       function(){
           if ($(this).is(':checked') && $(this).val() == 'มี') {
-            alert("มี");
+            $('#5_2_symptom_add_on_result').prop( "disabled", false );
+            $('#5_2_symptom_add_on_result_date').prop( "disabled", false );
           }else{
-
+              $('#5_2_symptom_add_on_result').prop( "disabled", true );
+              $('#5_2_symptom_add_on_result_date').prop( "disabled", true );
           }
       });
+    $('input:radio[name="6_symptom"]').change(
+          function(){
+              if ($(this).is(':checked') && $(this).val() == 'ตรวจ') {
+                $('#6_2_symptom_add_on_result').prop( "disabled", false );
+                $('#6_2_symptom_add_on_result_date').prop( "disabled", false );
+              }else{
+                  $('#6_2_symptom_add_on_result').prop( "disabled", true );
+                  $('#6_2_symptom_add_on_result_date').prop( "disabled", true );
+              }
+    });
+    $('input:radio[name="10_symptom"]').change(
+          function(){
+              if ($(this).is(':checked') && $(this).val() == 'เป็น') {
+                $('#10_symptom_number').prop( "disabled", false );
+              }else{
+                $('#10_symptom_number').prop( "disabled", true );
+              }
+    });
 
 
   $('#datetimepicker1').datetimepicker({
@@ -319,12 +339,12 @@ $(document).ready(function() {
               <p>
                 <div id="5_2_symptom_add_on" >
                   <label class="col-md-1 ">ผล</label>
-                  <div class="col-md-2">
-                    <input type="text" class="form-control" name="5_2_symptom_add_on_result">
+                  <div class="col-md-4">
+                    <input type="text" class="form-control" id="5_2_symptom_add_on_result" name="5_2_symptom_add_on_result" disabled="true">
                   </div>
                   <label class="col-md-2">ครั้งแรก เมื่อ วัน-เดือน-ปี</label>
                   <div class='col-md-2 input-group date' id='datetimepicker2'>
-                    <input type='text' name="5_2_symptom_add_on_result_date" class="form-control" />
+                    <input type='text' id="5_2_symptom_add_on_result_date" name="5_2_symptom_add_on_result_date" class="form-control" disabled="true" />
                     <span class="input-group-addon">
                       <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -345,12 +365,12 @@ $(document).ready(function() {
               <p>
                 <div id="6_2_symptom_add_on" >
                   <label class="col-md-1 ">ผล</label>
-                  <div class="col-md-2">
-                    <input type="text" class="form-control" name="6_2_symptom_add_on_result">
+                  <div class="col-md-4">
+                    <input type="text" class="form-control" id="6_2_symptom_add_on_result" name="6_2_symptom_add_on_result" disabled="true">
                   </div>
                   <label class="col-md-2">ครั้งสุดท้าย เมื่อ วัน-เดือน-ปี</label>
                   <div class='col-md-2 input-group date' id='datetimepicker3'>
-                    <input type='text' name="6_2_symptom_add_on_result_date" class="form-control" />
+                    <input type='text' id="6_2_symptom_add_on_result_date" name="6_2_symptom_add_on_result_date"  class="form-control" disabled="true"/>
                     <span class="input-group-addon">
                       <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -386,10 +406,10 @@ $(document).ready(function() {
                   <input type="radio" name="7_2_symptom" id="7_4_symptom" value="ไม่เป็น" autocomplete="off" checked> ปกติ
                 </label>
                 <label class="btn btn-primary">
-                  <input type="radio" name="7_2_symptom" id="7_5_symptom" value="เป็น" autocomplete="off"> ไม่ได้ตรวจ
+                  <input type="radio" name="7_2_symptom" id="7_5_symptom" value="ไม่ได้ตรวจ" autocomplete="off"> ไม่ได้ตรวจ
                 </label>
                 <label class="btn btn-primary">
-                  <input type="radio" name="7_2_symptom" id="7_6_symptom" value="ไม่ได้สังเกต" autocomplete="off"> ผิดปกติ
+                  <input type="radio" name="7_2_symptom" id="7_6_symptom" value="ผิดปกติ" autocomplete="off"> ผิดปกติ
                 </label>
               </div>
               <div class="col-md-5" >
@@ -400,13 +420,13 @@ $(document).ready(function() {
               <label class="col-md-2 text-left">7.3 Sequencing</label>
               <div class="col-md-3 btn-group" data-toggle="buttons">
                 <label class="btn btn-primary active">
-                  <input type="radio" name="7_3_symptom" id="7_7_symptom" value="ไม่เป็น" autocomplete="off" checked> ปกติ
+                  <input type="radio" name="7_3_symptom" id="7_7_symptom" value="ปกติ" autocomplete="off" checked> ปกติ
                 </label>
                 <label class="btn btn-primary">
-                  <input type="radio" name="7_3_symptom" id="7_8_symptom" value="เป็น" autocomplete="off"> ไม่ได้ตรวจ
+                  <input type="radio" name="7_3_symptom" id="7_8_symptom" value="ไม่ได้ตรวจ" autocomplete="off"> ไม่ได้ตรวจ
                 </label>
                 <label class="btn btn-primary">
-                  <input type="radio" name="7_3_symptom" id="7_9_symptom" value="ไม่ได้สังเกต" autocomplete="off"> ผิดปกติ
+                  <input type="radio" name="7_3_symptom" id="7_9_symptom" value="ผิดปกติ" autocomplete="off"> ผิดปกติ
                 </label>
               </div>
               <div class="col-md-5" >
@@ -450,22 +470,23 @@ $(document).ready(function() {
               <label class="col-md-3 text-left">10. ประวัติครอบครัว มารดา  </label>
             </div>
             <div class="form-group">
-              <label class="col-md-6 ">
+              <label class="col-md-5">
                 10.1 มีหรือเคยมีพี่น้องเพศชาย หรือญาติเพศชายป่วยเป็นโรคกล้ามเนื้อหรือไม่
               </label>
-              <div class="btn-group" data-toggle="buttons">
+              <div class="col-md-2 btn-group"  data-toggle="buttons">
                 <label class="btn btn-primary active">
-                  <input type="radio" name="10_symptom" id="10_1_symptom" value="ไม่มี" autocomplete="off" checked> ไม่เป็น
+                  <input type="radio" name="10_symptom" id="10_1_symptom" value="ไม่เป็น" autocomplete="off" checked> ไม่เป็น
                 </label>
                 <label class="btn btn-primary">
-                  <input type="radio" name="10_symptom" id="10_2_symptom" value="มี" autocomplete="off"> เป็น
+                  <input type="radio" name="10_symptom" id="10_2_symptom" value="เป็น" autocomplete="off"> เป็น
                 </label>
               </div>
-                <label>
-                  <input type="text" class="form-control" name="10_symptom_number" placeholder="กี่คน">
-                </label>
-
+               <div class="col-md-2">
+                <input type="text" class="form-control" id="10_symptom_number" name="10_symptom_number" disabled="true" placeholder="กี่คน">
+              </div>
             </div>
+
+
 
             <div class="form-group">
               <label class="col-md-6 control-label">รายชือญาติที่ป่วยเป็นโรคกล้ามเนื้อ ระบุว่าเป็นใครบ้าง และอายุเท่าไหร่ พร้อมเลขที่บัตรประชาชน</label>
@@ -474,7 +495,7 @@ $(document).ready(function() {
 
               <div class="checkbox col-md-2">
                 <label>
-                  <input  type="checkbox" name="10_checkbox_male">ไม่รู้: ติดตามเพิ่มเติม
+                  <input  type="checkbox" name="10_checkbox">ไม่รู้: ติดตามเพิ่มเติม
                 </label>
               </div>
             </div>
