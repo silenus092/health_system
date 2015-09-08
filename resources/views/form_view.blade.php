@@ -5,7 +5,6 @@
 <script type="text/javascript" CHARSET="UTF-8">
 var count_line = 1 ;
 $(document).ready(function() {
-  $(".loader").fadeOut("slow");
   $.ajaxSetup({
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -41,19 +40,22 @@ $(document).ready(function() {
     });
     $('input:radio[name="10_symptom"]').change(
           function(){
-              if ($(this).is(':checked') && $(this).val() == 'เป็น') {
+              if ($(this).is(':checked') && $(this).val() == 'มี') {
                 $('#10_symptom_number').prop( "disabled", false );
               }else{
                 $('#10_symptom_number').prop( "disabled", true );
               }
     });
 
+    $('#10_checkbox :checked').removeAttr('checked');
+
     $("#10_checkbox").change(function() {
     if(this.checked) {
         $(".form-group_10").hide();
-
+        $('#add_more').prop( "disabled", true );
     }else{
         $(".form-group_10").show();
+          $('#add_more').prop( "disabled", false );
     }
     });
 
@@ -156,7 +158,7 @@ $(document).ready(function() {
 });
 
 </script>
-<div class="loader"></div>
+<!-- <div class="loader"></div> -->
 <div class="container">
   <div class="row">
     <div class="panel panel-default">
@@ -507,10 +509,10 @@ $(document).ready(function() {
               </label>
               <div class="col-md-2 btn-group"  data-toggle="buttons">
                 <label class="btn btn-primary active">
-                  <input type="radio" name="10_symptom" id="10_1_symptom" value="ไม่เป็น" autocomplete="off" checked> ไม่เป็น
+                  <input type="radio" name="10_symptom" id="10_1_symptom" value="ไม่มี" autocomplete="off" checked> ไม่มี
                 </label>
                 <label class="btn btn-primary">
-                  <input type="radio" name="10_symptom" id="10_2_symptom" value="เป็น" autocomplete="off"> เป็น
+                  <input type="radio" name="10_symptom" id="10_2_symptom" value="มี" autocomplete="off"> มี
                 </label>
               </div>
                <div class="col-md-2">
@@ -610,7 +612,7 @@ $(document).ready(function() {
             <hr>
             <div class="form-group">
               <div class="col-md-6 col-md-offset-4">
-                <input type="button" id="submit" value="Register"  class="btn btn-primary" />
+                <input type="button" id="submit" value="submit"  class="btn btn-primary" />
               </div>
             </div>
           </form>
