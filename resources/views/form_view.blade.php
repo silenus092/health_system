@@ -5,11 +5,20 @@
 <script type="text/javascript" CHARSET="UTF-8">
 var count_line = 1 ;
 $(document).ready(function() {
+  $(".loader").fadeOut("slow");
   $.ajaxSetup({
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
+    },
   });
+  jQuery(document).ajaxStart(function () {
+   		//show ajax indicator
+       ajaxindicatorstart(' please wait..');
+  }).ajaxStop(function () {
+  //hide ajax indicator
+      ajaxindicatorstop();
+  });
+
   $('input:radio[name="5_symptom"]').change(
       function(){
           if ($(this).is(':checked') && $(this).val() == 'มี') {
@@ -26,8 +35,8 @@ $(document).ready(function() {
                 $('#6_2_symptom_add_on_result').prop( "disabled", false );
                 $('#6_2_symptom_add_on_result_date').prop( "disabled", false );
               }else{
-                  $('#6_2_symptom_add_on_result').prop( "disabled", true );
-                  $('#6_2_symptom_add_on_result_date').prop( "disabled", true );
+                $('#6_2_symptom_add_on_result').prop( "disabled", true );
+                $('#6_2_symptom_add_on_result_date').prop( "disabled", true );
               }
     });
     $('input:radio[name="10_symptom"]').change(
@@ -39,6 +48,14 @@ $(document).ready(function() {
               }
     });
 
+    $("#10_checkbox").change(function() {
+    if(this.checked) {
+        $(".form-group_10").hide();
+
+    }else{
+        $(".form-group_10").show();
+    }
+    });
 
   $('#datetimepicker1').datetimepicker({
     format: "yyyy-mm-dd",
@@ -100,7 +117,7 @@ $(document).ready(function() {
     {
       vpb_items_id.push($(this).val());
     });
-
+    alert("vpb_items "+vpb_items.length);
     var dataString = "&vpb_items="+ vpb_items;
     var data_age= "&vpb_item_ages="+ vpb_items_age;
     var data_id = "&vpb_item_ids="+ vpb_items_id;
@@ -112,19 +129,34 @@ $(document).ready(function() {
       type: "POST",
       data: serializedReturn,
       success: function(data) {
-        alert(data.status +" \n"+ data.message);
+        //alert(data.status +" \n"+ data.message);
         if(data.status == "Complete"){
-          location.reload();
+          BootstrapDialog.show({
+                type: BootstrapDialog.TYPE_SUCCESS,
+                title: data.status,
+                message: data.message
+            });
+        }else{
+          BootstrapDialog.show({
+                type: BootstrapDialog.TYPE_DANGER,
+                title: data.status,
+                message: data.message
+            });
         }
       },
       error: function(xhr, textStatus, thrownError) {
-        alert('Status: '+textStatus+"\n Details: "+thrownError);
+        BootstrapDialog.show({
+              type: BootstrapDialog.TYPE_DANGER,
+              title: textStatus,
+              message: thrownError
+          });
       }
     });
   });
 });
 
 </script>
+<div class="loader"></div>
 <div class="container">
   <div class="row">
     <div class="panel panel-default">
@@ -495,7 +527,7 @@ $(document).ready(function() {
 
               <div class="checkbox col-md-2">
                 <label>
-                  <input  type="checkbox" name="10_checkbox">ไม่รู้: ติดตามเพิ่มเติม
+                  <input  type="checkbox" id="10_checkbox" name="10_checkbox">ไม่รู้: ติดตามเพิ่มเติม
                 </label>
               </div>
             </div>
