@@ -47,9 +47,9 @@ $(document).ready(function() {
               }
     });
 
-    $('#10_checkbox :checked').removeAttr('checked');
+    $('#10_symptom_checkbox :checked').removeAttr('checked');
 
-    $("#10_checkbox").change(function() {
+    $("#10_symptom_checkbox").change(function() {
     if(this.checked) {
         $(".form-group_10").hide();
         $('#add_more').prop( "disabled", true );
@@ -98,7 +98,16 @@ $(document).ready(function() {
     '</div>'+
     '<div class="col-md-2">'+
     '<input type="text" class="form-control field_id" name="10_citizen_number[]" placeholder="เลขประจำตัวประชาชน">'+
-    '</div>')
+    '</div>'+ '<div class="form-group">'+'<label class="col-md-1 control-label">Relationship</label>'+
+    '<div class="col-md-2  selectContainer">'+'<select name="10_roles[]" class="form-control">'+
+    '<option value="ปู่ทวด">ปู่ทวด</option>'+'<option value="ปู่">ปู่</option>'+
+     '<option value="ตา">ตา</option>'+
+     '<option value="น้า">น้า</option>'+
+     '<option value="ลุง">ลุง</option>'+
+     '<option value="พ่อ">พ่อ</option>'+
+      '<option value="พี่ชาย">พี่ชาย</option>'+
+      '<option value="น้องชาย">น้องชาย</option>'+'</select></div></div>'
+    )
     .fadeIn('slow').appendTo('.form-group_10');
   });
 
@@ -129,7 +138,7 @@ $(document).ready(function() {
     $.ajax({
       url: "{{ url('/form_add') }}",
       type: "POST",
-      data: serializedReturn,
+      data: serializedReturn+"&request_types=dmd",
       success: function(data) {
         //alert(data.status +" \n"+ data.message);
         if(data.status == "Complete"){
@@ -519,9 +528,6 @@ $(document).ready(function() {
                 <input type="text" class="form-control" id="10_symptom_number" name="10_symptom_number" disabled="true" placeholder="กี่คน">
               </div>
             </div>
-
-
-
             <div class="form-group">
               <label class="col-md-6 control-label">รายชือญาติที่ป่วยเป็นโรคกล้ามเนื้อ ระบุว่าเป็นใครบ้าง และอายุเท่าไหร่ พร้อมเลขที่บัตรประชาชน</label>
 
@@ -529,7 +535,7 @@ $(document).ready(function() {
 
               <div class="checkbox col-md-2">
                 <label>
-                  <input  type="checkbox" id="10_checkbox" name="10_checkbox">ไม่รู้: ติดตามเพิ่มเติม
+                  <input  type="checkbox" id="10_symptom_checkbox" name="10_symptom_checkbox">ไม่รู้: ติดตามเพิ่มเติม
                 </label>
               </div>
             </div>
@@ -544,7 +550,21 @@ $(document).ready(function() {
               <div class="col-md-2">
                 <input type="text" class="form-control field_id" name="10_citizen_number[]" placeholder="เลขประจำตัวประชาชน">
               </div>
-
+              <div class="form-group">
+                <label class="col-md-1 control-label">Relationship</label>
+                <div class="col-md-2  selectContainer">
+                <select name="10_roles[]" class="form-control">
+                 <option value="ปู่ทวด">ปู่ทวด</option>
+                 <option value="ปู่">ปู่</option>
+                 <option value="ตา">ตา</option>
+                 <option value="น้า">น้า</option>
+                 <option value="ลุง">ลุง</option>
+                 <option value="พ่อ">พ่อ</option>
+                 <option value="พี่ชาย">พี่ชาย</option>
+                 <option value="น้องชาย">น้องชาย</option>
+             </select>
+              </div>
+              </div>
             </div>
             <div class="form-group">
               <label class="col-md-3 text-left">10.2 มารดามีพี่น้องแม่เดียวกัน กี่คน  </label>

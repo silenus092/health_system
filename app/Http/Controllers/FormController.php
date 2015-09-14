@@ -35,7 +35,10 @@ class FormController extends Controller
     public function store(Request $request)
     {
         try {
+
             if ($request->ajax()) {
+                if($request->request_types == "dmd"){
+                  // keep the personal  patient records
                 $Person_id = DB::table('persons')->insertGetId(
                 ['person_first_name' => Input::get('first_name'), 'person_last_name' => Input::get('last_name'),
                 'person_age' => Input::get('age'), 'person_sex' => Input::get('sex'),
@@ -44,17 +47,17 @@ class FormController extends Controller
                 'person_road' => Input::get('road'),    'person_tumbon' => Input::get('sub_district'),
                 'person_mooh_num' => Input::get('mooh_number'),    'person_amphur' => Input::get('district'),
                 'person_province' => Input::get('province'),    'person_post_code' => Input::get('postal_code'),
-                'person_mobile_phone' => Input::get('mobi_phone_number'),    'person_phone' => Input::get('house_number'),
+                'person_mobile_phone' => Input::get('mobi_phone_number'), 'person_phone' => Input::get('house_number'),
                 ]
                 );
-
+                  // keep the doctor profile
                 $Doctor_id = DB::table('doctors')->insertGetId(
                 ['doctor_name' => Input::get('doctor_name'), 'doctor_mobile_phone' => Input::get('doctor_mobilephonenumber'),
                 'doctor_phone' => Input::get('doctor_phonenumber'), 'hospital' => Input::get('hospital_name'),
                 'email' => Input::get('doctor_email')
                 ]
                 );
-
+                // keep the patient profile
                 $Patient_id = DB::table('patients')->insertGetId(
                 ['doctor_id' => $Doctor_id, 'person_id' => $Person_id,
                 'registration_date' => Input::get('doctor_care_date')
@@ -71,7 +74,8 @@ class FormController extends Controller
                 'registration_date' => date('Y-m-d')
                 ]
                 );
-
+                // insert information record
+                $symptom_checkbox_10 = Input::get('10_symptom_checkbox')
                 DB::table('disease_1')->insert(
                 ['symptom_1_1' => Input::get('1_1_symptom'), 'symptom_1_2' =>  Input::get('1_2_symptom'),
                 'symptom_1_3' => Input::get('1_3_symptom'), 'symptom_2' =>  Input::get('2_symptom_age'),
@@ -86,11 +90,17 @@ class FormController extends Controller
                 'symptom_7_3_result' => Input::get('7_3_symptom_result'), 'symptom_8' => Input::get('8_1_symptom'),
                 'symptom_9_male' => Input::get('9_male_number'), 'symptom_9_female' =>Input::get('9_female_number'),
                 'symptom_10_2_male' => Input::get('10_2_male_number'), 'symptom_10_2_female' =>Input::get('10_2_female_number'),
-                'symptom_10_1' => Input::get('10_symptom') , 'symptom_10_1_number' => Input::get('10_symptom_number'),
-                'questions_id' =>  $disease_form_id
-                ]
-                );
-
+                'symptom_10_1' => Input::get('10_symptom') , 'symptom_10_1_number' => Input::get('10_symptom_number'),'symptom_10_1_check' => $symptom_checkbox_10 ,
+                'questions_id' => $disease_form_id
+                ]);
+                    $sym_10_namearr[] = split ( "," ,  Input::get('10_name'));
+                    $sym_10_age[] = split ( "," ,  Input::get('10_age'));
+                    $sym_10_citizen_number[] = split ( "," ,  Input::get('10_citizen_number'));
+                    $sym_10_roles[] = split ( "," ,  Input::get('10_roles'));
+                if($symptom_checkbox_10 != null) {
+                    $symptom_number_10
+                }
+              }
                 return response()->json(array('status' => 'Complete', 'message' => 'บันทึกสำเร็จ '));
             }
         } catch (Exception $e) {
@@ -107,6 +117,15 @@ class FormController extends Controller
             }
         }
     }
+
+private function check_relationship($relationship){
+    if($relationship == ){
+
+    }
+}
+private function check_role($relationship){
+
+}
 
 /**
  * Display the specified resource.
