@@ -25,14 +25,20 @@ Route::filter('csrf', function()
         throw new Illuminate\Session\TokenMismatchException;
     }
 });
+
+
+Route::pattern('citizen_id', '[0-9]+');
+
 Route::get('/', 'HomeController@index');
 
 Route::get('home', 'HomeController@index');
 
 Route::get('form', 'FormController@index');
+Route::get('all', 'BeaconController@getAllBeacons');
 Route::post('form_add', [
     'as' => 'form_add', 'uses' => 'FormController@store'
 ]);
+Route::get('get_tree/{citizen_id}', 'FormController@show_tree');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

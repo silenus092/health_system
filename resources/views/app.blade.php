@@ -14,14 +14,17 @@
 	<link rel="stylesheet" href="{{ URL::asset('scripts/css/bootstrap-datetimepicker.min.css') }}">
 	<link href="{{ URL::asset('css/app.css') }}" rel="stylesheet">
   <link href="{{ URL::asset('scripts/css/bootstrap-dialog.min.css') }}" rel="stylesheet">
+	<link href="{{ URL::asset('scripts/css/amaran.min.css') }}" rel="stylesheet">
 	<!-- Fonts -->
 	<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 	<!-- JS Scripts -->
 	<script src="{{ URL::asset('/scripts/jquery-1.11.2.min.js') }}"></script>
 	<script src="{{ URL::asset('/scripts/js/bootstrap.min.js') }}"></script>
 	<script src="{{ URL::asset('/scripts/js/bootstrap-datetimepicker.min.js') }}"></script>
   <script src="{{ URL::asset('/scripts/custom-loading.js') }}"></script>
 	<script src="{{ URL::asset('/scripts/js/bootstrap-dialog.min.js') }}"></script>
+  <script src="{{ URL::asset('/scripts/js/jquery.amaran.min.js') }}"></script>
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>A
