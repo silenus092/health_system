@@ -59,7 +59,7 @@ abstract class Controller extends BaseController {
 				}else{
 					$my_role_id = DB::table('roles')->select('role_id')->where('role_description', '=', "พี่สาว")->first();
 				}
-		}else if($that_role == "ปู่" || $that_role == "ตา" || $that_role =="ย่า" || $that_role == "ยาย" ){
+		}else if($that_role == "ปู่" || $that_role == "ตา" || $that_role =="ย่า" || $that_role == "ยาย" || $that_role =="น้า" || $that_role == "อา" || $that_role =="ลุง" || $that_role == "ป้า" ){
 				if($person->person_sex == "male"){
 					$my_role_id = DB::table('roles')->select('role_id')->where('role_description', '=', "หลานชาย")->first();
 				}else{
@@ -72,7 +72,7 @@ abstract class Controller extends BaseController {
 					$my_role_id = DB::table('roles')->select('role_id')->where('role_description', '=', "เหลนสาว")->first();
 				}
 		}
-		if(count($my_role_id) != 0){
+		if($my_role_id != 21){
 			return $my_role_id->role_id;
 		}else {
 			return $my_role_id;
