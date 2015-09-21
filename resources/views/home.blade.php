@@ -3,7 +3,7 @@
 
 @section('content')
 <script>
-		 $(function(){
+		 /*$(function(){
 				 $.amaran({
 					 'theme'     :'awesome ok',
 					 'content'   :{
@@ -16,16 +16,27 @@
        	'inEffect'  :'slideTop',
 				'delay' : 4000
 				 });
-		 });
+		 });*/
  </script>
 <div class="container">
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
 			<div class="panel panel-default">
 				<div class="panel-heading">Home</div>
-
+                
 				<div class="panel-body">
-
+                 
+                    @if (Session::has('message'))
+                        {!! Amaran::theme('user green')->content([
+                        'message'=>Session::get('message'),
+                        'user'=>' ICBS',
+                         'img'=>URL::asset('images/ICBS.png'),
+                        ])
+                        ->position('top right')
+       	                ->inEffect('slideTop')
+                        ->create();
+                        !!}
+                    @endif
 
 				</div>
 			</div>

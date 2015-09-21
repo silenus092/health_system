@@ -71,12 +71,11 @@ abstract class Controller extends BaseController {
 				}else{
 					$my_role_id = DB::table('roles')->select('role_id')->where('role_description', '=', "เหลนสาว")->first();
 				}
-		}
-		if($my_role_id != 21){
+		}else{
+            	return $my_role_id;
+        }
 			return $my_role_id->role_id;
-		}else {
-			return $my_role_id;
-		}
+		
 	 	// this function   is not finish yet!!
 	}
 

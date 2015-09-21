@@ -38,7 +38,7 @@ Route::get('all', 'BeaconController@getAllBeacons');
 Route::post('form_add', [
     'as' => 'form_add', 'uses' => 'FormController@store'
 ]);
-Route::get('get_tree/{citizen_id}', 'FormController@show_tree');
+Route::get('get_tree/{citizen_id}', 'ApiController@show_tree');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

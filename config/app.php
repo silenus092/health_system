@@ -144,6 +144,10 @@ return [
 		'App\Providers\ConfigServiceProvider',
 		'App\Providers\EventServiceProvider',
 		'App\Providers\RouteServiceProvider',
+        /*
+        * Plugin ... 
+        */
+        'Xuma\Amaran\AmaranServiceProvider',
 
 	],
 
@@ -194,6 +198,7 @@ return [
 		'View'      => 'Illuminate\Support\Facades\View',
 		'Html' => 'Illuminate\Html\HtmlFacade',
 		'Form' => 'Illuminate\Html\FormFacade',
+        'Amaran' => 'Xuma\Amaran\Facades\Amaran',
 	],
 
 ];

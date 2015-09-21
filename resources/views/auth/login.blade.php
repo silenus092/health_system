@@ -17,7 +17,17 @@
 							</ul>
 						</div>
 					@endif
-
+                     @if (Session::has('logout'))
+                        {!! Amaran::theme('user yellow')->content([
+                        'message'=>Session::get('logout'),
+                        'user'=>' ICBS',
+                         'img'=>URL::asset('images/ICBS.png'),
+                        ])
+                        ->position('top right')
+       	                ->inEffect('slideTop')
+                        ->create();
+                        !!}
+                    @endif
 					<form class="form-horizontal" role="form" method="POST" action="{{ URL::asset('/auth/login') }}">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 

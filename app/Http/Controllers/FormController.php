@@ -112,27 +112,23 @@ class FormController extends Controller
                             ]);
                         }
                     }
-
+                    DB::commit();
                 }
-                DB::commit();
-                return response()->json(array('status' => 'Complete', 'message' => 'บันทึกสำเร็จ ','details' =>"ฉัน ".
-                $this->check_my_role($sym_10_roles[0],$Person_id)." เขา ". $this->check_role($sym_10_roles[0])
-                ." มีความสัมพันธ์เเบบ ".$this->check_my_relationship($sym_10_roles[0])));
-            }
-        } catch (Exception $e) {
-            DB::rollback();
-            if ($e->getCode() == 23000) {
-                $result['status'] = 1;
-                $result['message'] = 'Error: duplicate Record.';
-
+                return response()->json(array('status' => 'Complete', 'message' => 'บันทึกสำเร็จ ', 'details' =>" : ) ") );   
+             }
+             return response()->json(array('status' => '3', 'message' => 'มาได้ยังไง ')); 
+            }catch (Exception $e) {
+                DB::rollback();
+                if ($e->getCode() == 23000) {  
+                    $result['status'] = 1;
+                    $result['message'] = "Duplicate Record";
+                    return response()->json($result, 200);
+                } else {
+                    $result['status'] = 2;
+                    $result['message'] = $e->getMessage();
                 return response()->json($result, 200);
-            } else {
-                $result['status'] = 2;
-                $result['message'] = $e->getMessage();
-
-                return response()->json($result, 200);
+                }
             }
-        }
     }
 
 
