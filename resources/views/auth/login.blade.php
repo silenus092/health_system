@@ -27,6 +27,16 @@
        	                ->inEffect('slideTop')
                         ->create();
                         !!}
+                    @else
+                     {!! Amaran::theme('user blue')->content([
+                        'message'=>'Howdy , Do you have an account yet ? , register if you not have it ',
+                        'user'=>' ICBS',
+                        'img'=>URL::asset('images/ICBS.png'),
+                        ])
+                        ->position('top right')
+       	                ->inEffect('slideTop')
+                        ->create();
+                        !!}
                     @endif
 					<form class="form-horizontal" role="form" method="POST" action="{{ URL::asset('/auth/login') }}">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
