@@ -34,7 +34,15 @@
 								<input type="email" class="form-control" name="email" value="{{ old('email') }}">
 							</div>
 						</div>
-
+                        <div class="form-group">
+							<label class="col-md-4 control-label">Type</label>
+							<div class="col-md-6">
+								     <select name="staff_type" class="form-control field_roles">
+                                         <option value="คุณหมอ">คุณหมอ</option>
+                                         <option value="พยาบาล">พยาบาล</option>                   
+                                    </select>
+							</div>
+						</div>  
 						<div class="form-group">
 							<label class="col-md-4 control-label">Password</label>
 							<div class="col-md-6">

@@ -63,13 +63,22 @@ $(document).ready(function() {
           format: "yyyy-mm-dd",
           showMeridian: true,
           minView: 2,
+          endDate: '+0d',
           autoclose: true,
           todayBtn: true
         });
+    
+        $('#datetimepicker1').on("dp.change", function (e) {
+              alert('e.date=' + e.date); 
+             $('#age').text(e.date);
+        });
+    
+    
         $('#datetimepicker2').datetimepicker({
           format: "yyyy-mm-dd",
           showMeridian: true,
           minView: 2,
+          endDate: '+0d',
           autoclose: true,
           todayBtn: true
         });
@@ -77,6 +86,7 @@ $(document).ready(function() {
           format: "yyyy-mm-dd",
           showMeridian: true,
           minView: 2,
+          endDate: '+0d',
           autoclose: true,
           todayBtn: true
         });
@@ -84,6 +94,7 @@ $(document).ready(function() {
           format: "yyyy-mm-dd",
           showMeridian: true,
           minView: 2,
+          endDate: '+0d',  
           autoclose: true,
           todayBtn: true
         });
@@ -211,7 +222,7 @@ $(document).ready(function() {
                 <div class="form-group">
                   <label class="col-md-4 control-label">อายุ</label>
                   <div class='col-md-6' >
-                    <input type="text" class="form-control" name="age" value="">
+                    <input type="text" class="form-control" name="age" id="age" value="">
                   </div>
                 </div>
                 <div class="form-group">
@@ -433,7 +444,7 @@ $(document).ready(function() {
                 </div>
 
                 <div class="form-group">
-                  <label class="col-md-2 text-left">7.1 Multiplex PCR </label>
+                  <label class="col-md-2 text-left"> &nbsp&nbsp 7.1 Multiplex PCR </label>
                   <div class="col-md-3 btn-group" data-toggle="buttons">
                     <label class="btn btn-primary active">
                       <input type="radio" name="7_1_symptom" id="7_1_symptom" value="ปกติ"  autocomplete="off" checked> ปกติ
@@ -450,7 +461,7 @@ $(document).ready(function() {
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-md-2 text-left" >7.2 MLPA </label>
+                  <label class="col-md-2 text-left" > &nbsp&nbsp 7.2 MLPA </label>
                   <div class="col-md-3 btn-group" data-toggle="buttons">
                     <label class="btn btn-primary active">
                       <input type="radio" name="7_2_symptom" id="7_4_symptom" value="ไม่เป็น" autocomplete="off" checked> ปกติ
@@ -467,7 +478,7 @@ $(document).ready(function() {
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-md-2 text-left">7.3 Sequencing</label>
+                  <label class="col-md-2 text-left"> &nbsp&nbsp 7.3 Sequencing</label>
                   <div class="col-md-3 btn-group" data-toggle="buttons">
                     <label class="btn btn-primary active">
                       <input type="radio" name="7_3_symptom" id="7_7_symptom" value="ปกติ" autocomplete="off" checked> ปกติ
@@ -498,7 +509,7 @@ $(document).ready(function() {
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-md-3 text-left">	9. ผู้ป่วยมีพี่น้องแม่เดียวกันกี่คน </label>
+                  <label class="col-md-4 text-left">9. ผู้ป่วยมีพี่น้องแม่เดียวกันกี่คน (ไม่นับผู้ป่วยเอง)</label>
                   <div class="checkbox col-md-1">
                     <label>
                       ชาย
@@ -521,7 +532,7 @@ $(document).ready(function() {
                 </div>
                 <div class="form-group">
                   <label class="col-md-5">
-                    10.1 มีหรือเคยมีพี่น้องเพศชาย หรือญาติเพศชายป่วยเป็นโรคกล้ามเนื้อหรือไม่
+                    10.1 มีหรือเคยมีพี่น้องเพศชาย หรือญาติเพศชายป่วยเป็นโรคกล้ามเนื้อหรือไม่ (ไม่นับผู้ป่วยเอง)
                   </label>
                   <div class="col-md-2 btn-group"  data-toggle="buttons">
                     <label class="btn btn-primary active">
@@ -574,7 +585,7 @@ $(document).ready(function() {
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-md-3 text-left">10.2 มารดามีพี่น้องแม่เดียวกัน กี่คน  </label>
+                  <label class="col-md-4 text-left">10.2 มารดามีพี่น้องแม่เดียวกัน กี่คน (ไม่นับผู้ป่วยเอง) </label>
                   <div class="checkbox col-md-1">
                     <label>
                       ชาย

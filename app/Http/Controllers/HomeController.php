@@ -30,9 +30,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if(\Auth::check()){
-      \Session::flash('message', 'Welcome ');
-        }
+        $type = Auth::user()->staff_type;
+        \Session::flash('message', 'Welcome '. $type);
+        
         return view('home');
     }
 }

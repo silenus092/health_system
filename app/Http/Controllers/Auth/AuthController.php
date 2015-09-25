@@ -36,5 +36,17 @@ class AuthController extends Controller {
 		$this->middleware('guest', ['except' => 'getLogout']);
         
 	}
+     /**
+     * Handle an authentication attempt.
+     *
+     * @return Response
+     */
+    public function authenticate()
+    {
+        if (Auth::attempt(['email' => $email, 'password' => $password]))
+        {
+            return redirect()->intended('dashboard');
+        }
+    }
 
 }
