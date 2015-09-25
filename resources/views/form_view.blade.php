@@ -101,7 +101,7 @@ $(document).ready(function() {
 
         $('#add_more').click(function() {
           count_line++;
-          $('<div class="col-md-2">'+
+          $('<div class="col-md-4">'+
           '<input type="text" class="form-control field_name" name="10_name[]" placeholder="'+count_line+'-ใส่ ชื่อ เว้นวรรค นามสกุล">'+
           '</div>'+
           '<div class="col-md-2">'+
@@ -559,7 +559,7 @@ $(document).ready(function() {
                 </div>
 
                 <div class="form-group form-group_10">
-                  <div class="col-md-2">
+                  <div class="col-md-4">
                     <input type="text" class="form-control field_name" name="10_name[]" placeholder="1- ใส่ ชื่อ เว้นวรรค นามสกุล" required="true">
                   </div>
                   <div class="col-md-2">
