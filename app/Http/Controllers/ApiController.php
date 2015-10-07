@@ -16,25 +16,32 @@ class ApiController extends Controller
     *
     * @return Response
     */
+     private $list =  array();
+
     public function show_tree($id)
     {
         try{
-            //$request = \Request::ajax();
+            // check this guy exist or not
             $result = array();
             $r =DB::table('persons')->where('person_citizenID', '=', $id)->first();
             if ( count($r) == 0 )
             {
-                $result['Info']['status'] = "Error";
-                $result['Info']['message'] = "No Person Found.";
+
+                $result['Info']['status'] = "Complete";
+                $result['Info']['message'] = "No Person Found";
 
                 return response()->json($result, 200);
             }
-            $result['Info']['status'] = "Success";
-            $result['Info']['message'] = "";
-            $result['id']  = $r->person_id;
-            $result['title'] = $r->person_first_name." ".$r->person_last_name;
+            $result['Info']['status'] = "Complete";
+            $result['Info']['message'] = "Found";
+            // Fuck , this array  for persons
+            $person_array =array();
 
-            $result['description']['sex']  = $r->person_sex;
+            // Init for patient only
+            $person_array['id']  = $r->person_id;
+            $person_array['title'] = $r->person_first_name." ".$r->person_last_name;
+            $person_array['description'] = "Sex: ".$r->person_sex." Age: ".$r->person_age;
+        /*    $result['description']['sex']  = $r->person_sex;
             $result['description']['birth_date']  = $r->person_birth_date;
             $result['description']['age']  = $r->person_age;
             $result['description']['citizen_id']  = $r->person_citizenID;
@@ -47,81 +54,132 @@ class ApiController extends Controller
             $result['description']['province']  = $r->person_province;
             $result['description']['post_code']  = $r->person_post_code;
             $result['description']['phone']  = $r->person_phone;
-            $result['description']['mobile_phone']  = $r->person_mobile_phone;
-            $result['image']  = null;
-            if($r->person_sex == "female"){
-                $result['itemTitleColor'] = "pink";
-            }else{
-                $result['itemTitleColor'] = null;
-            }
-            $result['groupTitle'] =null;
-            $result['groupTitlecolor'] =null;
-            $relation_parent_array = array();
-            // check parents for this guys
-            $relation_parent = DB::table('relationship')
-                ->where('person_1_id', '=', $r->person_id)
-                ->join('relationship_type', 'relationship.relationship_type_id', '=', 'relationship_type.relationship_type_id')
-                ->where('relationship_type_description', '=', "พ่อเเม่")
-                ->get();
-            if(count($relation_parent) != 0 ){
+            $result['description']['mobile_phone']  = $r->person_mobile_phone;*/
+            $person_array['image']  = null ;
+            $person_array['itemTitleColor']  = $this->check_female($r->person_sex);
+            $person_array['groupTitle'] ="ผู้ป่วย";
+            $person_array['groupTitlecolor'] ="orange";
+            $person_array['parent'] = $this->find_parent($r);
+            $person_array['spouse'][]  = $this->find_spouse($r);
+            $result['person'][] = $person_array;
 
-                    $rp_array =array();
-                     // find  dad
-                    foreach ($relation_parent as $rp) {
-                        $role_dad= DB::table('roles')->where('role_id', '=', $rp->role_2_id)
-                                                 ->where('role_description', '=', "พ่อ")
-                                                 ->first();
-                        if(count($role_dad) != 0){
-                            $person_dad = DB::table('persons')
-                                ->where('person_id', '=', $rp->person_2_id)
-                                ->first();
-                            $rp_array['title'] = $person_dad->person_first_name." ".$person_dad->person_last_name;
-                            $rp_array['id'] = $person_dad->person_id;
-                            $rp_array['role']=$role_dad->role_description;
-                        }
-                        // find mom
-                        $role_mom= DB::table('roles')->where('role_id', '=', $rp->role_2_id)
-                                                 ->where('role_description', '=', "เเม่")
-                                                 ->first();
-                        if(count($role_mom) != 0){
-                            $person_mom = DB::table('persons')
-                                ->where('person_id', '=', $rp->person_2_id)
-                                ->first();
-                            $rp_array['title'] = $person_mom->person_first_name." ".$person_mom->person_last_name;
-                            $rp_array['id'] = $person_mom->person_id;
-                            $rp_array['role']=$role_mom->role_description;
+            // Let's find people who is left in list.
 
-                        }
-                            array_push($relation_parent_array, $rp_array);
+            while(count($this->list) >0){
+                    $size= count($this->list);
+                    for( $i=0 ; $i < $size ; $i++){
+                        $r =DB::table('persons')->where('person_id', '=', $this->list[$i])->first();
+                        $person_array =array();
+                        $person_array  = $this->set_person($person_array , $r);
+                        $person_array['parent'] = $this->find_parent($r);
+                        $person_array['spouse'][]  = $this->find_spouse($r);
+                        $result['person'][] = $person_array;
+                        unset($this->list[$i]);
                     }
-                    $result['parents'] =$relation_parent_array;
-                }else{
-                    $result['parents'] ="";
+
+
             }
-            //find_married
-            $relation_married = DB::table('relationship')
-                ->where('person_1_id', '=', $r->person_id)
-                ->join('relationship_type', 'relationship.relationship_type_id', '=', 'relationship_type.relationship_type_id')
-                ->where('relationship_type_description', '=', "คู่สมรส")
-                ->first();
-            if(count($relation_married) != 0 ){
-                $role= DB::table('roles')->where('role_id', '=', $relation_married->role_2_id)->first();
-                $person_2 = DB::table('persons')
-                    ->where('person_id', '=', $relation_married->person_2_id)
-                    ->first();
-                $result['spouses']['title'] = $person_2->person_first_name." ".$person_2->person_last_name;
-                $result['spouses']['id'] = $person_2->person_id;
-                $result['spouses']['role']=$role->role_description;
-            }else{
-                $result['spouses'] = "";
-            }
+
             return response()->json($result, 200)->setCallback(Input::get('callbackName'));
         }catch(Exception $e) {
-            $result['Info']['status'] = "Error";
-            $result['Info']['message'] = "$e";
+            $result['status'] = "Error";
+            $result['message'] = "$e";
             return response()->json($result,200)->setCallback(Input::get('callbackName'));
         }
     }
 
+    public function check_female($sex){
+        if($sex== "female"){
+            return "pink";
+        }else{
+            return null;
+        }
+
+    }
+    public function find_parent($r){
+        $relation_parent_array = array();
+        $relation_parent = DB::table('relationship')
+            ->where('person_1_id', '=', $r->person_id)
+            ->join('relationship_type', 'relationship.relationship_type_id', '=', 'relationship_type.relationship_type_id')
+            ->where('relationship_type_description', '=', "พ่อเเม่")
+            ->get();
+        if(count($relation_parent) != 0 ){
+
+                //$rp_array =array();
+                 // find  dad
+                foreach ($relation_parent as $rp) {
+                    $role_dad= DB::table('roles')->where('role_id', '=', $rp->role_2_id)
+                                             ->where('role_description', '=', "พ่อ")
+                                             ->first();
+                    if(count($role_dad) != 0){
+                        $person_dad = DB::table('persons')
+                            ->where('person_id', '=', $rp->person_2_id)
+                            ->first();
+                        //$rp_array['title'] = $person_dad->person_first_name." ".$person_dad->person_last_name;
+                        $this->list[]  = $person_dad->person_id ; // add dad to list
+                        $relation_parent_array[]= $person_dad->person_id;
+                        //$rp_array['role']=$role_dad->role_description;
+                    }
+
+                    // find mom
+                    $role_mom= DB::table('roles')->where('role_id', '=', $rp->role_2_id)
+                                             ->where('role_description', '=', "เเม่")
+                                             ->first();
+                    if(count($role_mom) != 0){
+                        $person_mom = DB::table('persons')
+                            ->where('person_id', '=', $rp->person_2_id)
+                            ->first();
+                        //$rp_array['title'] = $person_mom->person_first_name." ".$person_mom->person_last_name;
+                        $this->list[] = $person_mom->person_id ; // add mom to list
+                        $relation_parent_array[]= $person_mom->person_id;
+                        //$rp_array['role']=$role_mom->role_description;
+
+                    }
+                        //array_push($relation_parent_array, $rp_array);
+                }
+                return  $relation_parent_array;
+            }else{
+                return null;
+            }
+    }
+
+    public function find_spouse($r){
+        //find_married
+
+       $relation_married = DB::table('relationship')
+            ->where('person_1_id', '=', $r->person_id)
+            ->join('relationship_type', 'relationship.relationship_type_id', '=', 'relationship_type.relationship_type_id')
+            ->where('relationship_type_description', '=', "คู่สมรส")
+            ->first();
+        if(count($relation_married) != 0 ){
+            $role= DB::table('roles')->where('role_id', '=', $relation_married->role_2_id)->first();
+            $person_2 = DB::table('persons')
+                ->where('person_id', '=', $relation_married->person_2_id)
+                ->first();
+            $this->list[]  =   $person_2->person_id;
+            return  $person_2->person_id;
+
+        }else{
+            return null;
+        }
+    }
+
+    public function set_person($person_array , $r)
+    {
+        $person_array['id']  = $r->person_id;
+        $person_array['title'] = $r->person_first_name." ".$r->person_last_name;
+        $person_array['description'] = "Sex: ".$r->person_sex." Age: ".$r->person_age;
+        $person_array['image']  = null ;
+        $person_array['itemTitleColor']  = $this->check_female($r->person_sex);
+        if ( count(DB::table('patients')->where('person_id', '=',$r->person_id)->first()) > 0 ){
+            $person_array['groupTitle'] ="ผู้ป่วย";
+            $person_array['groupTitlecolor'] ="orange";
+        }else{
+            $person_array['groupTitle'] =null;
+            $person_array['groupTitlecolor'] =null;
+        }
+
+        return $person_array;
+    }
 }
 ?>

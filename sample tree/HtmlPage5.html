@@ -15,22 +15,24 @@
         var imageWomen = "/imagesTest/women.png";
         var colorSick = primitives.common.Colors.Orange;
         var colorWomen = primitives.common.Colors.Pink;
-
+    var items = null;
       $(document).ready(function() {
+
 		 $.ajax({
-          url: 'http://www.cavaros.com/health_system/public/get_tree/1103300053746',
+          url: 'http://localhost/health_system/public/get_tree/1103300053746',
           dataType: 'text',
           type: 'get',
           contentType: 'application/json',
           crossDomain: true,
-          dataType: 'jsonp',
+          dataType: 'json',
 		  jsonpCallback:'callbackName',
-          success: function(data, textStatus, jQxhr) {
-            	console.log(data["person"].id);
-          } 
-		 
+          success: function(data) {
+            
+
+
+          }
         });
-            items = [
+            /*items = [
                            {
                                id: 0
                                , spouses: [3]
@@ -116,7 +118,7 @@
                             }
 
 
-            ];
+            ];*/
 
             $("#basicdiagram").treeControl({ data: items });
         })
