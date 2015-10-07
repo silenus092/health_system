@@ -1,0 +1,43 @@
+<html>
+
+<head>
+  <title>The jQuery Example</title>
+ <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+
+  <script type="text/javascript" language="javascript">
+    $(document).ready(function() {
+      $("#driver").click(function(event) {
+        $.ajax({
+          url: 'http://localhost/health_system/public/get_tree/1103300053746',
+          dataType: 'text',
+          type: 'get',
+          contentType: 'application/json',
+          crossDomain: true,
+          dataType: 'jsonp',
+		  jsonpCallback:'callbackName',
+          success: function(data, textStatus, jQxhr) {
+            	console.log(data["Info"].status);
+          } 
+		 
+        });
+      });
+
+    });
+  </script>
+
+
+</head>
+
+<body>
+
+  <p>Click on the button to load /jquery/result.html file −</p>
+
+  <div id="stage" style="background-color:cc0;">
+    STAGE
+  </div>
+
+  <input type="button" id="driver" value="Load Data" />
+
+</body>
+
+</html>

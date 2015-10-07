@@ -5,6 +5,19 @@
 <script type="text/javascript" CHARSET="UTF-8">
 var count_line = 1 ;
 $(document).ready(function() {
+  $.ajax({
+        url: 'http://www.cavaros.com/health_system/public/get_tree/1103300053746',
+        dataType: 'text',
+        type: 'get',
+        contentType: 'application/json',
+        processData: false,
+        success: function (data, textStatus, jQxhr) {
+            console.log(JSON.stringify(data));
+        },
+        error: function (jqXhr, textStatus, errorThrown) {
+            console.log(errorThrown);
+        }
+    });
   $.ajaxSetup({
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -63,22 +76,13 @@ $(document).ready(function() {
           format: "yyyy-mm-dd",
           showMeridian: true,
           minView: 2,
-          endDate: '+0d',
           autoclose: true,
           todayBtn: true
         });
-    
-        $('#datetimepicker1').on("dp.change", function (e) {
-              alert('e.date=' + e.date); 
-             $('#age').text(e.date);
-        });
-    
-    
         $('#datetimepicker2').datetimepicker({
           format: "yyyy-mm-dd",
           showMeridian: true,
           minView: 2,
-          endDate: '+0d',
           autoclose: true,
           todayBtn: true
         });
@@ -86,7 +90,6 @@ $(document).ready(function() {
           format: "yyyy-mm-dd",
           showMeridian: true,
           minView: 2,
-          endDate: '+0d',
           autoclose: true,
           todayBtn: true
         });
@@ -94,15 +97,14 @@ $(document).ready(function() {
           format: "yyyy-mm-dd",
           showMeridian: true,
           minView: 2,
-          endDate: '+0d',  
           autoclose: true,
           todayBtn: true
         });
 
         $('#add_more').click(function() {
           count_line++;
-          $('<div class="col-md-4">'+
-          '<input type="text" class="form-control field_name" name="10_name[]" placeholder="'+count_line+'-ใส่ ชื่อ เว้นวรรค นามสกุล">'+
+          $('<div class="col-md-2">'+
+          '<input type="text" class="form-control field_name" name="10_name[]" placeholder="'+count_line+'-ชื่อ-นามสกุล">'+
           '</div>'+
           '<div class="col-md-2">'+
           '<input type="text" class="form-control field_age" name="10_age[]" placeholder="อายุ">'+
@@ -222,7 +224,7 @@ $(document).ready(function() {
                 <div class="form-group">
                   <label class="col-md-4 control-label">อายุ</label>
                   <div class='col-md-6' >
-                    <input type="text" class="form-control" name="age" id="age" value="">
+                    <input type="text" class="form-control" name="age" value="">
                   </div>
                 </div>
                 <div class="form-group">
@@ -444,7 +446,7 @@ $(document).ready(function() {
                 </div>
 
                 <div class="form-group">
-                  <label class="col-md-2 text-left"> &nbsp&nbsp 7.1 Multiplex PCR </label>
+                  <label class="col-md-2 text-left">7.1 Multiplex PCR </label>
                   <div class="col-md-3 btn-group" data-toggle="buttons">
                     <label class="btn btn-primary active">
                       <input type="radio" name="7_1_symptom" id="7_1_symptom" value="ปกติ"  autocomplete="off" checked> ปกติ
@@ -461,7 +463,7 @@ $(document).ready(function() {
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-md-2 text-left" > &nbsp&nbsp 7.2 MLPA </label>
+                  <label class="col-md-2 text-left" >7.2 MLPA </label>
                   <div class="col-md-3 btn-group" data-toggle="buttons">
                     <label class="btn btn-primary active">
                       <input type="radio" name="7_2_symptom" id="7_4_symptom" value="ไม่เป็น" autocomplete="off" checked> ปกติ
@@ -478,7 +480,7 @@ $(document).ready(function() {
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-md-2 text-left"> &nbsp&nbsp 7.3 Sequencing</label>
+                  <label class="col-md-2 text-left">7.3 Sequencing</label>
                   <div class="col-md-3 btn-group" data-toggle="buttons">
                     <label class="btn btn-primary active">
                       <input type="radio" name="7_3_symptom" id="7_7_symptom" value="ปกติ" autocomplete="off" checked> ปกติ
@@ -509,7 +511,7 @@ $(document).ready(function() {
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-md-4 text-left">9. ผู้ป่วยมีพี่น้องแม่เดียวกันกี่คน (ไม่นับผู้ป่วยเอง)</label>
+                  <label class="col-md-3 text-left">	9. ผู้ป่วยมีพี่น้องแม่เดียวกันกี่คน </label>
                   <div class="checkbox col-md-1">
                     <label>
                       ชาย
@@ -532,7 +534,7 @@ $(document).ready(function() {
                 </div>
                 <div class="form-group">
                   <label class="col-md-5">
-                    10.1 มีหรือเคยมีพี่น้องเพศชาย หรือญาติเพศชายป่วยเป็นโรคกล้ามเนื้อหรือไม่ (ไม่นับผู้ป่วยเอง)
+                    10.1 มีหรือเคยมีพี่น้องเพศชาย หรือญาติเพศชายป่วยเป็นโรคกล้ามเนื้อหรือไม่
                   </label>
                   <div class="col-md-2 btn-group"  data-toggle="buttons">
                     <label class="btn btn-primary active">
@@ -559,8 +561,8 @@ $(document).ready(function() {
                 </div>
 
                 <div class="form-group form-group_10">
-                  <div class="col-md-4">
-                    <input type="text" class="form-control field_name" name="10_name[]" placeholder="1- ใส่ ชื่อ เว้นวรรค นามสกุล" required="true">
+                  <div class="col-md-2">
+                    <input type="text" class="form-control field_name" name="10_name[]" placeholder="1-ชื่อ-นามสกุล" required="true">
                   </div>
                   <div class="col-md-2">
                     <input type="text" class="form-control field_age" name="10_age[]" placeholder="อายุ" required="true">
@@ -585,7 +587,7 @@ $(document).ready(function() {
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-md-4 text-left">10.2 มารดามีพี่น้องแม่เดียวกัน กี่คน (ไม่นับผู้ป่วยเอง) </label>
+                  <label class="col-md-3 text-left">10.2 มารดามีพี่น้องแม่เดียวกัน กี่คน  </label>
                   <div class="checkbox col-md-1">
                     <label>
                       ชาย

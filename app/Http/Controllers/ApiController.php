@@ -19,6 +19,7 @@ class ApiController extends Controller
     public function show_tree($id)
     {
         try{
+            //$request = \Request::ajax();
             $result = array();
             $r =DB::table('persons')->where('person_citizenID', '=', $id)->first();
             if ( count($r) == 0 )
@@ -30,31 +31,31 @@ class ApiController extends Controller
             }
             $result['Info']['status'] = "Success";
             $result['Info']['message'] = "";
-            $result['person']['id']  = $r->person_id;
-            $result['person']['title']['first_name']  = $r->person_first_name;
-            $result['person']['title']['last_name'] = $r->person_last_name;
-            $result['person']['description']['sex']  = $r->person_sex;
-            $result['person']['description']['birth_date']  = $r->person_birth_date;
-            $result['person']['description']['age']  = $r->person_age;
-            $result['person']['description']['citizen_id']  = $r->person_citizenID;
-            $result['person']['description']['house_num']  = $r->person_house_num;
-            $result['person']['description']['mooh_num']  = $r->person_mooh_num;
-            $result['person']['description']['soi']  = $r->person_soi;
-            $result['person']['description']['road']  = $r->person_road;
-            $result['person']['description']['tumbon']  = $r->person_tumbon;
-            $result['person']['description']['amphur']  = $r->person_amphur;
-            $result['person']['description']['province']  = $r->person_province;
-            $result['person']['description']['post_code']  = $r->person_post_code;
-            $result['person']['description']['phone']  = $r->person_phone;
-            $result['person']['description']['mobile_phone']  = $r->person_mobile_phone;
-            $result['person']['image']  = "";
+            $result['id']  = $r->person_id;
+            $result['title'] = $r->person_first_name." ".$r->person_last_name;
+
+            $result['description']['sex']  = $r->person_sex;
+            $result['description']['birth_date']  = $r->person_birth_date;
+            $result['description']['age']  = $r->person_age;
+            $result['description']['citizen_id']  = $r->person_citizenID;
+            $result['description']['house_num']  = $r->person_house_num;
+            $result['description']['mooh_num']  = $r->person_mooh_num;
+            $result['description']['soi']  = $r->person_soi;
+            $result['description']['road']  = $r->person_road;
+            $result['description']['tumbon']  = $r->person_tumbon;
+            $result['description']['amphur']  = $r->person_amphur;
+            $result['description']['province']  = $r->person_province;
+            $result['description']['post_code']  = $r->person_post_code;
+            $result['description']['phone']  = $r->person_phone;
+            $result['description']['mobile_phone']  = $r->person_mobile_phone;
+            $result['image']  = null;
             if($r->person_sex == "female"){
-                $result['person']['itemTitleColor'] = "pink";
+                $result['itemTitleColor'] = "pink";
             }else{
-                $result['person']['itemTitleColor'] = "";
+                $result['itemTitleColor'] = null;
             }
-            $result['person']['groupTitle'] = "";
-            $result['person']['groupTitlecolor'] = "";
+            $result['groupTitle'] =null;
+            $result['groupTitlecolor'] =null;
             $relation_parent_array = array();
             // check parents for this guys
             $relation_parent = DB::table('relationship')
@@ -74,8 +75,8 @@ class ApiController extends Controller
                             $person_dad = DB::table('persons')
                                 ->where('person_id', '=', $rp->person_2_id)
                                 ->first();
-                            $rp_array['first_name'] = $person_dad->person_first_name;
-                            $rp_array['last_name'] = $person_dad->person_last_name;
+                            $rp_array['title'] = $person_dad->person_first_name." ".$person_dad->person_last_name;
+                            $rp_array['id'] = $person_dad->person_id;
                             $rp_array['role']=$role_dad->role_description;
                         }
                         // find mom
@@ -86,16 +87,16 @@ class ApiController extends Controller
                             $person_mom = DB::table('persons')
                                 ->where('person_id', '=', $rp->person_2_id)
                                 ->first();
-                            $rp_array['first_name'] = $person_mom->person_first_name;
-                            $rp_array['last_name'] = $person_mom->person_last_name;
+                            $rp_array['title'] = $person_mom->person_first_name." ".$person_mom->person_last_name;
+                            $rp_array['id'] = $person_mom->person_id;
                             $rp_array['role']=$role_mom->role_description;
 
                         }
                             array_push($relation_parent_array, $rp_array);
                     }
-                    $result['person']['parents'] =$relation_parent_array;
+                    $result['parents'] =$relation_parent_array;
                 }else{
-                    $result['person']['parents'] ="";
+                    $result['parents'] ="";
             }
             //find_married
             $relation_married = DB::table('relationship')
@@ -108,19 +109,19 @@ class ApiController extends Controller
                 $person_2 = DB::table('persons')
                     ->where('person_id', '=', $relation_married->person_2_id)
                     ->first();
-                $result['person']['spouses']['first_name'] = $person_2->person_first_name;
-                $result['person']['spouses']['last_name'] = $person_2->person_last_name;
-                $result['person']['spouses']['role']=$role->role_description;
+                $result['spouses']['title'] = $person_2->person_first_name." ".$person_2->person_last_name;
+                $result['spouses']['id'] = $person_2->person_id;
+                $result['spouses']['role']=$role->role_description;
             }else{
-                $result['person']['spouses'] = "";
+                $result['spouses'] = "";
             }
-            return response()->json($result, 200);
+            return response()->json($result, 200)->setCallback(Input::get('callbackName'));
         }catch(Exception $e) {
             $result['Info']['status'] = "Error";
             $result['Info']['message'] = "$e";
-            return response()->json($result, 200);
+            return response()->json($result,200)->setCallback(Input::get('callbackName'));
         }
     }
-    
+
 }
 ?>
