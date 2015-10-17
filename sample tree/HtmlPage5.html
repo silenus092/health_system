@@ -2,12 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
-    <script src="scripts/jquery-1.9.1.min.js"></script>
+    <!-- <script src="scripts/jquery-1.9.1.min.js"></script>
     <script src="scripts/jquery-ui-1.9.2.custom.min.js"></script>
+      <link href="styles/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" />-->
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <script src="scripts/primitives.min.js"></script>
     <script src="scripts/treeControl.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
-    <link href="styles/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" />
     <link href="styles/primitives.latest.css" rel="stylesheet" />
 
     <script>
@@ -15,22 +18,20 @@
         var imageWomen = "/imagesTest/women.png";
         var colorSick = primitives.common.Colors.Orange;
         var colorWomen = primitives.common.Colors.Pink;
-    var items = null;
+        var items = null;
       $(document).ready(function() {
 
 		 $.ajax({
-          url: 'http://localhost/health_system/public/get_tree/1103300053746',
-          dataType: 'text',
-          type: 'get',
-          contentType: 'application/json',
-          crossDomain: true,
-          dataType: 'json',
-		  jsonpCallback:'callbackName',
-          success: function(data) {
-            
+          url: 'http://www.cavaros.com/health_system/public/get_tree/1103300053746',
+          dataType: 'jsonp',
+          type: 'GET',
+          jsonpCallback: "callback",
+          contentType: "application/json",
+          success: function(data, textStatus, jQxhr) {
+            console.log(JSON.stringify(data));
+          },error: function(data, textStatus, jQxhr) {
 
-
-          }
+          },
         });
             /*items = [
                            {
@@ -120,7 +121,7 @@
 
             ];*/
 
-            $("#basicdiagram").treeControl({ data: items });
+            //$("#basicdiagram").treeControl({ data: items });
         })
     </script>
 </head>

@@ -55,12 +55,22 @@ class ApiController extends Controller
             $result['description']['post_code']  = $r->person_post_code;
             $result['description']['phone']  = $r->person_phone;
             $result['description']['mobile_phone']  = $r->person_mobile_phone;*/
-            $person_array['image']  = null ;
-            $person_array['itemTitleColor']  = $this->check_female($r->person_sex);
+            //$person_array['image']  = null ;
+            $pink = $this->check_female($r->person_sex);
+            if($pink != null){
+                $person_array['itemTitleColor']  = $pink;
+            }
+
             $person_array['groupTitle'] ="ผู้ป่วย";
-            $person_array['groupTitlecolor'] ="orange";
-            $person_array['parent'] = $this->find_parent($r);
-            $person_array['spouse'][]  = $this->find_spouse($r);
+            $person_array['groupTitleColor'] ="orange";
+            $parents = $this->find_parent($r);
+            if($parents != null){
+                $person_array['parents']  = $parents;
+            }
+            $spouses  = $this->find_spouse($r);
+            if($spouses != null){
+                $person_array['spouses'][] = $spouses;
+            }
             $result['person'][] = $person_array;
 
             // Let's find people who is left in list.
@@ -71,20 +81,25 @@ class ApiController extends Controller
                         $r =DB::table('persons')->where('person_id', '=', $this->list[$i])->first();
                         $person_array =array();
                         $person_array  = $this->set_person($person_array , $r);
-                        $person_array['parent'] = $this->find_parent($r);
-                        $person_array['spouse'][]  = $this->find_spouse($r);
+                        $parents = $this->find_parent($r);
+                        if($parents != null){
+                            $person_array['parents']  = $parents;
+                        }
+                        $spouses  = $this->find_spouse($r);
+                        if($spouses != null){
+                            $person_array['spouses'][] = $spouses;
+                        }
                         $result['person'][] = $person_array;
                         unset($this->list[$i]);
                     }
 
-
             }
 
-            return response()->json($result, 200)->setCallback(Input::get('callbackName'));
+            return response()->json($result, 200)->setCallback(Input::get('callback'));
         }catch(Exception $e) {
             $result['status'] = "Error";
-            $result['message'] = "$e";
-            return response()->json($result,200)->setCallback(Input::get('callbackName'));
+            $result['message'] = $e;
+            return response()->json($result, 200)->setCallback(Input::get('callback'));
         }
     }
 
@@ -169,14 +184,18 @@ class ApiController extends Controller
         $person_array['id']  = $r->person_id;
         $person_array['title'] = $r->person_first_name." ".$r->person_last_name;
         $person_array['description'] = "Sex: ".$r->person_sex." Age: ".$r->person_age;
-        $person_array['image']  = null ;
-        $person_array['itemTitleColor']  = $this->check_female($r->person_sex);
+        //$person_array['image']  = null ;
+        //$person_array['itemTitleColor']  = $this->check_female($r->person_sex);
+        $pink = $this->check_female($r->person_sex);
+        if($pink != null){
+            $person_array['itemTitleColor']  = $pink;
+        }
         if ( count(DB::table('patients')->where('person_id', '=',$r->person_id)->first()) > 0 ){
             $person_array['groupTitle'] ="ผู้ป่วย";
-            $person_array['groupTitlecolor'] ="orange";
+            $person_array['groupTitleColor'] ="orange";
         }else{
-            $person_array['groupTitle'] =null;
-            $person_array['groupTitlecolor'] =null;
+            /*$person_array['groupTitle'] =null;
+            $person_array['groupTitleColor'] =null;*/
         }
 
         return $person_array;
