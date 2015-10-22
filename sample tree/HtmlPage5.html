@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
@@ -28,7 +28,8 @@
           jsonpCallback: "callback",
           contentType: "application/json",
           success: function(data, textStatus, jQxhr) {
-            console.log(JSON.stringify(data));
+              
+               $("#basicdiagram").treeControl({ data: data.person });
           },error: function(data, textStatus, jQxhr) {
 
           },

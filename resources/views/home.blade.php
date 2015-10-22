@@ -37,7 +37,18 @@
                         ->create();
                         !!}
                     @endif
-
+                     
+        <div class="typeahead-field">
+            <span class="typeahead-query">
+                <input id="search_patient" class="form-control" name="search_patient" type="search" placeholder="Search" autocomplete="off">
+            </span>
+            <span class="typeahead-button">
+                <button type="submit">
+                    <i class="typeahead-search-icon"></i>
+                </button>
+            </span>
+        </div>
+    
 				</div>
 			</div>
 		</div>

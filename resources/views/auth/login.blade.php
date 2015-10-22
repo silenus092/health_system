@@ -27,7 +27,7 @@
        	                ->inEffect('slideTop')
                         ->create();
                         !!}
-                    @else if (Session::has('come'))
+                    @elseif (Session::has('come'))
                      {!! Amaran::theme('user blue')->content([
                         'message'=>'Howdy , Do you have an account yet ? , register if you not have it ',
                         'user'=>' ICBS',
