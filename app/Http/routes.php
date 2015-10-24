@@ -34,7 +34,7 @@ Route::get('/', 'HomeController@index');
 Route::get('home', 'HomeController@index');
 
 Route::get('form', 'FormController@index');
-Route::get('all', 'BeaconController@getAllBeacons');
+
 Route::post('form_add', [
     'as' => 'form_add', 'uses' => 'FormController@store'
 ]);
@@ -44,3 +44,6 @@ Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
+Route::get('persons_index','PersonController@index');
+Route::post('show_person','PersonController@show');

@@ -5,19 +5,6 @@
 <script type="text/javascript" CHARSET="UTF-8">
 var count_line = 1 ;
 $(document).ready(function() {
-  $.ajax({
-        url: 'http://www.cavaros.com/health_system/public/get_tree/1103300053746',
-        dataType: 'text',
-        type: 'get',
-        contentType: 'application/json',
-        processData: false,
-        success: function (data, textStatus, jQxhr) {
-            console.log(JSON.stringify(data));
-        },
-        error: function (jqXhr, textStatus, errorThrown) {
-            console.log(errorThrown);
-        }
-    });
   $.ajaxSetup({
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

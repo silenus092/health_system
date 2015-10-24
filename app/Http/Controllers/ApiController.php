@@ -94,7 +94,6 @@ class ApiController extends Controller
                     }
 
             }
-
             return response()->json($result, 200)->setCallback(Input::get('callback'));
         }catch(Exception $e) {
             $result['status'] = "Error";
