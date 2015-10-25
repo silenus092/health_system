@@ -34,7 +34,7 @@ $(document).ready(function() {
       order: "desc",
       minLength: 1,
       hint: true,
-      cache: true,
+
       correlativeTemplate: true,
       source: {
          person: {

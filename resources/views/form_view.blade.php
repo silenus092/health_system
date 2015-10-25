@@ -453,7 +453,7 @@ $(document).ready(function() {
                   <label class="col-md-2 text-left" >7.2 MLPA </label>
                   <div class="col-md-3 btn-group" data-toggle="buttons">
                     <label class="btn btn-primary active">
-                      <input type="radio" name="7_2_symptom" id="7_4_symptom" value="ไม่เป็น" autocomplete="off" checked> ปกติ
+                      <input type="radio" name="7_2_symptom" id="7_4_symptom" value="ปกติ" autocomplete="off" checked> ปกติ
                     </label>
                     <label class="btn btn-primary">
                       <input type="radio" name="7_2_symptom" id="7_5_symptom" value="ไม่ได้ตรวจ" autocomplete="off"> ไม่ได้ตรวจ
