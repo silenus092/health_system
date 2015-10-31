@@ -88,11 +88,16 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
     padding-top: 5px;
     letter-spacing: -0.8px;
 }
+
+
 </style>
 
 <script type="text/javascript">
-$(document).ready(function() {
 
+$(document).ready(function() {
+    $("#grid-basic").bootgrid();
+    $("#grid-basic-1").bootgrid();
+    $("#grid-basic-2").bootgrid();
     $('#PCR').highcharts({
         chart: {
             plotBackgroundColor: null,
@@ -153,32 +158,99 @@ $(document).ready(function() {
         $("div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
         $("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
     });
-
 });
 </script>
 <div id="container">
+    <center><h2 style="margin-top: 0;">Duchenne Report</h2></center>
     <div class="row">
         <div class="col-md-11 bhoechie-tab-container">
-            <div class="col-md-1  bhoechie-tab-menu">
+            <div class="col-md-2  bhoechie-tab-menu">
                 <div class="list-group">
                     <a href="#" class="list-group-item active text-center">
                         <h4 class="glyphicon glyphicon-dashboard"></h4><br/>Dashbroad
                     </a>
                     <a href="#" class="list-group-item text-center">
+                        <h4 class="glyphicon glyphicon-home"></h4><br/>Echocardiogram and CK
+                    </a>
+                    <a href="#" class="list-group-item text-center">
                         <h4 class="glyphicon glyphicon-user"></h4><br/>ByPerson
                     </a>
                     <a href="#" class="list-group-item text-center">
-                        <h4 class="glyphicon glyphicon-home"></h4><br/>Hotel
-                    </a>
-                    <a href="#" class="list-group-item text-center">
-                        <h4 class="glyphicon glyphicon-cutlery"></h4><br/>Restaurant
+                        <h4 class="glyphicon glyphicon-heart"></h4><br/>Hospital
                     </a>
                 </div>
             </div>
             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 bhoechie-tab">
                 <!-- Dashbroad section -->
                 <div class="bhoechie-tab-content active">
-                    <h3 style="margin-top: 0;">ผลตรวจยีนของผู้ป่วย</h3>
+                    <center><h3 style="margin-top: 0;">จากผู้ป่วย Duchenne ในฐานข้อมูล</h3></center>
+                        <hr class="separator">
+                        <div class="row" >
+                            <div class="col-xs-6 col-md-3">
+                                <div class="panel status panel-info">
+                                    <div class="panel-heading">
+                                        <h1 class="panel-title text-center"><?php echo $Duchenne_total[0]->total ; ?></h1>
+                                    </div>
+                                    <div class="panel-body text-center">
+                                        <strong>จำนวนผู้ป่วย</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-md-3">
+                                <div class="panel status panel-info">
+                                    <div class="panel-heading">
+                                        <h1 class="panel-title text-center"><?php echo $Family_total[0]->total ; ?></h1>
+                                    </div>
+                                    <div class="panel-body text-center">
+                                        <strong>จำนวนครอบครัว</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <div class="row" >
+                        <div class="col-xs-6 col-md-3">
+                            <div class="panel status panel-info">
+                                <div class="panel-heading">
+                                    <h1 class="panel-title text-center"><?php echo $Attention_Deficit_Disorder[0]->disorder ; ?></h1>
+                                </div>
+                                <div class="panel-body text-center">
+                                    <strong>สมาธิสั้น</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <div class="panel status panel-info">
+                                <div class="panel-heading">
+                                    <h1 class="panel-title text-center"><?php echo $Autistic[0]->disorder ; ?></h1>
+                                </div>
+                                <div class="panel-body text-center">
+                                    <strong>ลักษณะคล้ายออทิสติก</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <div class="panel status panel-info">
+                                <div class="panel-heading">
+                                    <h1 class="panel-title text-center"><?php echo $Tired[0]->disorder ; ?></h1>
+                                </div>
+                                <div class="panel-body text-center">
+                                    <strong>เหนื่อยง่ายนอนราบไม่ได้</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <div class="panel status panel-info">
+                                <div class="panel-heading">
+                                    <h1 class="panel-title text-center"><?php echo $Snorring[0]->disorder ; ?></h1>
+                                </div>
+                                <div class="panel-body text-center">
+                                    <strong>นอนกรน</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 style="margin-top: 0;">ผลตรวจยีนของผู้ป่วยทั้งหมด</h3>
                     <div class="row" >
                         <div class="col-xs-6 col-md-3">
                             <div class="panel status panel-danger">
@@ -273,9 +345,105 @@ $(document).ready(function() {
                             </div>
                         </div>
                     </div>
+
+
+                </div>
+
+                <!-- Echocardiogram & Ck search -->
+                <div class="bhoechie-tab-content">
+                    <center><h3 style="margin-top: 0;">Echocardiogram</h3></center>
+                    <div class="row" >
+                        <div class="col-xs-6 col-md-3">
+                            <div class="panel status panel-info">
+                                <div class="panel-heading">
+                                    <h1 class="panel-title text-center"><?php echo $Echocardiogram[0]->tested; ?></h1>
+                                </div>
+                                <div class="panel-body text-center">
+                                    <strong>จำนวนคนที่ตรวจ</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <div class="panel status panel-danger">
+                                <div class="panel-heading">
+                                    <h1 class="panel-title text-center"><?php echo $UnEchocardiogram[0]->un_test; ?></h1>
+                                </div>
+                                <div class="panel-body text-center">
+                                    <strong>จำนวนคนที่ไม่ได้ตรวจ</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 style="margin-top: 0;">คนที่ตรวจเเล้วเเต่ไม่มีผลตรวจ</h4>
+                    <table id="grid-basic" class="table table-condensed table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th data-column-id="id" data-type="numeric">ID</th>
+                                <th data-column-id="name">ชื่อ นามสกุล</th>
+                                <th data-column-id="sex">เพศ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            foreach($Echocardiogram_noresult as $noresult): ?>
+                            <tr>
+                                <td><?php echo $noresult->person_id ?></td>
+                                <td><?php echo $noresult->person_first_name. " " . $noresult->person_last_name ?></td>
+                                <td><?php echo $noresult->person_sex ?></td>
+                            </tr>
+                             <?php endforeach; ?>
+                        </tbody>
+                    </table>
+
+                    <hr class="separator">
+
+                    <center><h3 style="margin-top: 0;">Creatinine Kinase</h3></center>
+                    <div class="row" >
+                        <div class="col-xs-6 col-md-3">
+                            <div class="panel status panel-info">
+                                <div class="panel-heading">
+                                    <h1 class="panel-title text-center"><?php echo $Ck[0]->tested; ?></h1>
+                                </div>
+                                <div class="panel-body text-center">
+                                    <strong>จำนวนที่ตรวจทั้งหมด</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <div class="panel status panel-danger">
+                                <div class="panel-heading">
+                                    <h1 class="panel-title text-center"><?php echo $UnCk[0]->un_test; ?></h1>
+                                </div>
+                                <div class="panel-body text-center">
+                                    <strong>จำนวนคนที่ไม่ได้ตรวจ</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 style="margin-top: 0;">คนที่ตรวจเเล้วเเต่ไม่มีผลตรวจ</h4>
+                    <table id="grid-basic-1" class="table table-condensed table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th data-column-id="id_1" data-type="numeric">ID</th>
+                                <th data-column-id="name_1">ชื่อ นามสกุล</th>
+                                <th data-column-id="sex_1">เพศ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            foreach($Ck_noresult as $noresult): ?>
+                            <tr>
+                                <td><?php echo $noresult->person_id ?></td>
+                                <td><?php echo $noresult->person_first_name. " " . $noresult->person_last_name ?></td>
+                                <td><?php echo $noresult->person_sex ?></td>
+                            </tr>
+                             <?php endforeach; ?>
+                        </tbody>
+                    </table>
                 </div>
                 <!-- ByPerson section -->
                 <div class="bhoechie-tab-content">
+                    <center><h3 style="margin-top: 0;">ค้นหารายชื่อผู้ป่วยโรค Duchenne </h3></center>
                     <div class="typeahead-container">
                         <div class="typeahead-field">
                             <span class="typeahead-query">
@@ -289,29 +457,31 @@ $(document).ready(function() {
                         </div>
                     </div>
                 </div>
+                <div class="bhoechie-tab-content">
+                    <center>
+                        <h3 style="margin-top: 0;">จำนวนผู้ป่วยในโรงพยาบาล</h3>
+                    </center>
+                    <table id="grid-basic-2" class="table table-condensed table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th data-column-id="id_2" data-type="numeric">ID</th>
+                                <th data-column-id="name_hospital">ชื่อโรงพยาบาล</th>
+                                <th data-column-id="hospital_number">คน</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            foreach($Ck_noresult as $noresult): ?>
+                            <tr>
+                                <td><?php echo $noresult->person_id ?></td>
+                                <td><?php echo $noresult->person_first_name. " " . $noresult->person_last_name ?></td>
+                                <td><?php echo $noresult->person_sex ?></td>
+                            </tr>
+                             <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
 
-                <!-- hotel search -->
-                <div class="bhoechie-tab-content">
-                    <center>
-                        <h1 class="glyphicon glyphicon-home" style="font-size:12em;color:#55518a"></h1>
-                        <h2 style="margin-top: 0;color:#55518a">Cooming Soon</h2>
-                        <h3 style="margin-top: 0;color:#55518a">Hotel Directory</h3>
-                    </center>
-                </div>
-                <div class="bhoechie-tab-content">
-                    <center>
-                        <h1 class="glyphicon glyphicon-cutlery" style="font-size:12em;color:#55518a"></h1>
-                        <h2 style="margin-top: 0;color:#55518a">Cooming Soon</h2>
-                        <h3 style="margin-top: 0;color:#55518a">Restaurant Diirectory</h3>
-                    </center>
-                </div>
-                <div class="bhoechie-tab-content">
-                    <center>
-                        <h1 class="glyphicon glyphicon-credit-card" style="font-size:12em;color:#55518a"></h1>
-                        <h2 style="margin-top: 0;color:#55518a">Cooming Soon</h2>
-                        <h3 style="margin-top: 0;color:#55518a">Credit Card</h3>
-                    </center>
-                </div>
             </div>
         </div>
     </div>

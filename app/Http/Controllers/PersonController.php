@@ -36,7 +36,6 @@ class PersonController extends Controller {
 														$data[] = $p;
 												}
 				return response()->json($data, 200);
-
 	}
 
 	/**
@@ -74,6 +73,7 @@ class PersonController extends Controller {
 								->where('person_last_name' ,'=', $name[1])
 								->where('person_citizenID' ,'=', $name[2])
 								->first();
+
 		return view('profile')
 							->with('person' ,$person);
 

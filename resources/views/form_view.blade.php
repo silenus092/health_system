@@ -261,11 +261,11 @@ $(document).ready(function() {
                 <div class="form-group">
                   <label class="col-md-1 control-label">โทรศัพท์</label>
                   <div class="col-md-4">
-                    <input type="text" class="form-control" name="mobi_phone_number">
+                    <input type="text" class="form-control" name="house_number">
                   </div>
                   <label class="col-md-1 control-label">มือถือ</label>
                   <div class="col-md-4">
-                    <input type="text" class="form-control" name="house_number">
+                    <input type="text" class="form-control" name="mobi_phone_number">
                   </div>
                 </div>
                 <hr>
