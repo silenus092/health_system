@@ -49,3 +49,5 @@ Route::get('persons_index','PersonController@index');
 Route::post('show_person','PersonController@show');
 
 Route::get('duc_report','DuchenneController@index');
+
+Route::get('show_patient_duchenne','DuchenneController@show_patient_duchenne');

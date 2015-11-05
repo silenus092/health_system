@@ -93,8 +93,45 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
 </style>
 
 <script type="text/javascript">
-
+var datas = "" ;
+    
 $(document).ready(function() {
+    
+   
+   $('#search_patient-query').typeahead({
+      order: "desc",
+      minLength: 1,
+      hint: true,
+
+      correlativeTemplate: true,
+      source: {
+         person: {
+          url: {
+             type: "get",
+             url: "{{ url('/show_patient_duchenne') }}",
+          }
+      }
+      },
+      callback: {
+         onClickAfter: function (node, a, item, event) {
+         },
+         onResult: function (node, query, obj, objCount) {
+
+            var text = "";
+            if (query !== "") {
+               text = objCount + ' elements matching "' + query + '"';
+            }else {
+               text ="";
+            }
+            $('#result-container').text(text);
+
+         },
+         fail: function (jqXHR, textStatus, errorThrown) {
+            alert("Cannot Search this time");
+         },
+      }
+      });
+    
     $("#grid-basic").bootgrid();
     $("#grid-basic-1").bootgrid();
     $("#grid-basic-2").bootgrid();
@@ -161,6 +198,7 @@ $(document).ready(function() {
 });
 </script>
 <div id="container">
+ 
     <center><h2 style="margin-top: 0;">Duchenne Report</h2></center>
     <div class="row">
         <div class="col-md-11 bhoechie-tab-container">
@@ -374,7 +412,49 @@ $(document).ready(function() {
                             </div>
                         </div>
                     </div>
-                    <h4 style="margin-top: 0;">คนที่ตรวจเเล้วเเต่ไม่มีผลตรวจ</h4>
+                        <div class="row" >
+                        <div class="col-xs-6 col-md-3">
+                            <div class="panel status panel-info">
+                                <div class="panel-heading">
+                                    <h1 class="panel-title text-center"><?php echo number_format($Echo_mean[0]->mean,2); ?></h1>
+                                </div>
+                                <div class="panel-body text-center">
+                                    <strong>Mean</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <div class="panel status panel-info">
+                                <div class="panel-heading">
+                                    <h1 class="panel-title text-center"><?php echo number_format($Echo_SD[0]->sd ,2); ?></h1>
+                                </div>
+                                <div class="panel-body text-center">
+                                    <strong>SD</strong>
+                                </div>
+                            </div>
+                        </div>
+                                  <div class="col-xs-6 col-md-3">
+                            <div class="panel status panel-info">
+                                <div class="panel-heading">
+                                    <h1 class="panel-title text-center"><?php echo number_format($Echo_median[0]->median_val ,2); ?></h1>
+                                </div>
+                                <div class="panel-body text-center">
+                                    <strong>Median</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <div class="panel status panel-info">
+                                <div class="panel-heading">
+                                    <h1 class="panel-title text-center"><?php echo $Echo_range[0]->Min." - ".$Echo_range[0]->Max; ?></h1>
+                                </div>
+                                <div class="panel-body text-center">
+                                    <strong>Range(Min - Max)</strong>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    <h4 style="margin-top: 0;">คนที่ไม่มีผลตรวจ</h4>
                     <table id="grid-basic" class="table table-condensed table-hover table-striped">
                         <thead>
                             <tr>
@@ -420,7 +500,50 @@ $(document).ready(function() {
                             </div>
                         </div>
                     </div>
-                    <h4 style="margin-top: 0;">คนที่ตรวจเเล้วเเต่ไม่มีผลตรวจ</h4>
+                          <div class="row" >
+                        <div class="col-xs-6 col-md-3">
+                            <div class="panel status panel-info">
+                                <div class="panel-heading">
+                                    <h1 class="panel-title text-center"><?php echo number_format($CK_mean[0]->mean,2); ?></h1>
+                                </div>
+                                <div class="panel-body text-center">
+                                    <strong>Mean</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <div class="panel status panel-info">
+                                <div class="panel-heading">
+                                    <h1 class="panel-title text-center"><?php echo number_format($CK_SD[0]->sd ,2); ?></h1>
+                                </div>
+                                <div class="panel-body text-center">
+                                    <strong>SD</strong>
+                                </div>
+                            </div>
+                        </div>
+                                  <div class="col-xs-6 col-md-3">
+                            <div class="panel status panel-info">
+                                <div class="panel-heading">
+                                    <h1 class="panel-title text-center"><?php echo number_format($CK_median[0]->median_val ,2); ?></h1>
+                                </div>
+                                <div class="panel-body text-center">
+                                    <strong>Median</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <div class="panel status panel-info">
+                                <div class="panel-heading">
+                                    <h1 class="panel-title text-center"><?php echo $CK_range[0]->Min." - ".$CK_range[0]->Max; ?></h1>
+                                </div>
+                                <div class="panel-body text-center">
+                                    <strong>Range(Min - Max)</strong>
+                                </div>
+                            </div>
+                        </div>
+                              
+                    </div>
+                    <h4 style="margin-top: 0;">คนที่ไม่มีผลตรวจ</h4>
                     <table id="grid-basic-1" class="table table-condensed table-hover table-striped">
                         <thead>
                             <tr>
@@ -444,6 +567,8 @@ $(document).ready(function() {
                 <!-- ByPerson section -->
                 <div class="bhoechie-tab-content">
                     <center><h3 style="margin-top: 0;">ค้นหารายชื่อผู้ป่วยโรค Duchenne </h3></center>
+                    <form action="{{ url('/show_person')}}" method="post">
+                     <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                     <div class="typeahead-container">
                         <div class="typeahead-field">
                             <span class="typeahead-query">
@@ -456,6 +581,7 @@ $(document).ready(function() {
                             </span>
                         </div>
                     </div>
+                    </form>
                 </div>
                 <div class="bhoechie-tab-content">
                     <center>

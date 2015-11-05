@@ -73,17 +73,50 @@ class DuchenneController extends Controller {
 			where patients_disease_forms.question_id  = disease_1.questions_id
 			AND patients_disease_forms.patient_id = patients.patient_id
 			AND patients.person_id = persons.person_id
-			AND disease_1.symptom_6 = "ตรวจ" AND disease_1.symptom_6_result = "" ');
-
-			// Find CK
-			$Ck= DB::select('SELECT count(disease_1.questions_id) as tested FROM disease_1 where symptom_5 = "มี" ');
+			AND disease_1.symptom_6 = "ไม่ได้ตรวจ" ');
+        $Echo_mean = DB::select('SELECT AVG(disease_1.questions_id) as mean FROM disease_1 where symptom_6 = "ตรวจ" ');
+        $Echo_median = DB::select('SELECT avg(t1.symptom_6_result) as median_val FROM (
+SELECT @rownum:=@rownum+1 as `row_number`, d.symptom_6_result
+  FROM disease_1 d,  (SELECT @rownum:=0) r
+  WHERE d.symptom_6 = "ตรวจ"
+  ORDER BY d.symptom_6_result
+) as t1, 
+(
+  SELECT count(*) as total_rows
+  FROM disease_1 d
+  WHERE d.symptom_6 = "ตรวจ"
+) as t2
+WHERE 1
+AND t1.row_number in ( floor((total_rows+1)/2), floor((total_rows+2)/2) ) ');
+        $Echo_SD = DB::select('SELECT STD(`symptom_6_result`)  as sd from disease_1 where symptom_6 = "ตรวจ" '); 
+        $Echo_range =   DB::select('SELECT  MIN(symptom_6_result) AS Min, MAX(symptom_6_result) AS Max FROM   disease_1 where symptom_6 = "ตรวจ" ');
+        
+        
+        	// Find CK
+        $CK_mean = DB::select('SELECT AVG(disease_1.questions_id) as mean FROM disease_1 where symptom_6 = "มี" ');
+        $CK_median = DB::select('SELECT avg(t1.symptom_5_result) as median_val FROM (
+SELECT @rownum:=@rownum+1 as `row_number`, d.symptom_5_result
+  FROM disease_1 d,  (SELECT @rownum:=0) r
+  WHERE d.symptom_5 = "มี"
+  ORDER BY d.symptom_5_result
+) as t1, 
+(
+  SELECT count(*) as total_rows
+  FROM disease_1 d
+  WHERE d.symptom_5 = "มี"
+) as t2
+WHERE 1
+AND t1.row_number in ( floor((total_rows+1)/2), floor((total_rows+2)/2) ) ');
+        $CK_SD = DB::select('SELECT STD(`symptom_5_result`)  as sd from disease_1 where symptom_5 = "มี" '); 
+        $CK_range =   DB::select('SELECT  MIN(symptom_5_result) AS Min, MAX(symptom_5_result) AS Max FROM   disease_1 where symptom_5 = "มี" ');
+            $Ck= DB::select('SELECT count(disease_1.questions_id) as tested FROM disease_1 where symptom_5 = "มี" ');
 			$UnCk= DB::select('SELECT count(disease_1.questions_id) as un_test FROM disease_1 where symptom_5 = "ไม่มี" ');
 			$Ck_noresult =  DB::select('SELECT persons.person_id , persons.person_first_name , persons.person_last_name ,persons.person_sex
 				FROM  persons ,patients ,disease_1 ,patients_disease_forms
 				where patients_disease_forms.question_id  = disease_1.questions_id
 				AND patients_disease_forms.patient_id = patients.patient_id
 				AND patients.person_id = persons.person_id
-				AND disease_1.symptom_5 = "มี" AND disease_1.symptom_5_result = "" ');
+				AND disease_1.symptom_5 = "ไม่มี"  ');
 
 				//Find hostpital
 
@@ -97,9 +130,17 @@ class DuchenneController extends Controller {
 				->with('Echocardiogram' ,$Echocardiogram)
 				->with('UnEchocardiogram' ,$UnEchocardiogram)
 				->with('Echocardiogram_noresult' ,$Echocardiogram_noresult)
+                ->with('Echo_mean' ,$Echo_mean)
+				->with('Echo_median' ,$Echo_median)
+				->with('Echo_SD' ,$Echo_SD)
+                ->with('Echo_range' ,$Echo_range)
 				->with('Ck' ,$Ck)
 				->with('UnCk' ,$UnCk)
 				->with('Ck_noresult' ,$Ck_noresult)
+                ->with('CK_mean' ,$CK_mean)
+				->with('CK_median' ,$CK_median)
+				->with('CK_SD' ,$CK_SD)
+                ->with('CK_range' ,$CK_range)
 				->with('TakeAnyTreatment' , $Attention_Deficit_Disorder)
 				->with('DontTakeTreatment' , $Autistic)
 				->with('PCR' ,$Snorring)
@@ -132,14 +173,31 @@ class DuchenneController extends Controller {
 			}
 
 			/**
-			* Display the specified resource.
+			* Display the duchenne patients
 			*
-			* @param  int  $id
-			* @return Response
+			* 
+			* 
 			*/
-			public function show($id)
+			public function show_patient_duchenne()
 			{
-				//
+				 $persons = 	DB::select('SELECT persons.person_id , persons.person_first_name , persons.person_last_name ,persons.person_citizenID
+				FROM  persons ,patients ,disease_1 ,patients_disease_forms ,disease_forms
+				where patients_disease_forms.question_id  = disease_1.questions_id
+				AND patients_disease_forms.patient_id = patients.patient_id
+				AND patients.person_id = persons.person_id
+                AND disease_forms.question_id = patients_disease_forms.question_id
+				AND disease_forms.disease_type_id =  1 ');
+						$data = array();
+										foreach ($persons as $person) {
+														$p = array();
+														/*$p['firstname']  = $person->person_first_name ; // add dad to list
+														$p['lastname'] = $person->person_last_name;
+														$p['citizenID'] = $person->person_citizenID;*/
+												        $p['ID'] = $person->person_id;
+														$p['display'] = $person->person_first_name." ".$person->person_last_name." ".$person->person_citizenID;
+														$data[] = $p;
+												}
+				return response()->json($data, 200);
 			}
 
 			/**
