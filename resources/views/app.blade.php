@@ -19,11 +19,16 @@
 	<link rel="stylesheet" href="{{ URL::asset('scripts/css/jquery.typeahead.min.css') }}">
 	<link rel="stylesheet" href="{{ URL::asset('scripts/css/jquery.bootgrid.min.css') }}">
 	<link href="{{ URL::asset('scripts/css/bootstrap.icon-large.min.css') }}" rel="stylesheet">
+	 <link href="{{ URL::asset('scripts/css/primitives.latest.css') }}" rel="stylesheet" />
+	 <link rel="stylesheet" href="{{ URL::asset('scripts/css/jquery-ui.css') }}">
 	<!-- Fonts -->
-	<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+	<!--<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>-->
 	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+	<!--<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">-->
 	<!-- JS Scripts -->
+
 	<script src="{{ URL::asset('/scripts/jquery-1.11.2.min.js') }}"></script>
+    <script src="{{ URL::asset('/scripts/js/jquery-ui.min.js') }}"></script>
 	<script src="{{ URL::asset('/scripts/js/bootstrap.min.js') }}"></script>
 	<script src="{{ URL::asset('/scripts/js/bootstrap-datetimepicker.min.js') }}"></script>
 	<script src="{{ URL::asset('/scripts/custom-loading.js') }}"></script>
@@ -32,6 +37,8 @@
 	<script src="{{ URL::asset('/scripts/js/jquery.typeahead.min.js') }}"></script>
 	<script src="{{ URL::asset('/scripts/js/highcharts.js') }}"></script>
 	<script src="{{ URL::asset('/scripts/js/jquery.bootgrid.min.js') }}"></script>
+	<script src="{{ URL::asset('/scripts/js/primitives.min.js') }}"></script>
+    <script src="{{ URL::asset('/scripts/js/treeControl.js') }}"></script>
 	@include('amaran::javascript')
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

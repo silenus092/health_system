@@ -47,7 +47,16 @@ Route::controllers([
 
 Route::get('persons_index','PersonController@index');
 Route::post('show_person','PersonController@show');
+Route::get('show_report_by_type/{id}/{person_id}','PersonController@show_report_by_type');
 
 Route::get('duc_report','DuchenneController@index');
 
 Route::get('show_patient_duchenne','DuchenneController@show_patient_duchenne');
+
+Route::get('show_patient_duchenne','DuchenneController@show_patient_duchenne');
+
+Route::get('tree_constuct/{id}', [
+    'as' => 'lists.items.create', 
+    'uses' => 'TreeController@index'
+]);
+

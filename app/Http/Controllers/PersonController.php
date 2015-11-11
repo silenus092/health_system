@@ -68,15 +68,33 @@ class PersonController extends Controller {
 	public function show()
 	{
 		$name = explode ( " " , Input::get('search_patient-query'));
+		
+		
 		$person = DB::table('persons')
 								->where('person_first_name' ,'=', $name[0])
 								->where('person_last_name' ,'=', $name[1])
 								->where('person_citizenID' ,'=', $name[2])
 								->first();
-
+		$result =  DB::select('SELECT disease_types.disease_type_id ,disease_type_name_th ,disease_type_name_en
+				FROM  disease_forms ,patients_disease_forms ,disease_types ,patients
+				WHERE patients_disease_forms.question_id  = disease_forms.question_id
+                AND disease_types.disease_type_id = disease_forms.disease_type_id
+				AND patients_disease_forms.patient_id =  patients.patient_id
+				AND patients.person_id = '. $person->person_id);
+		
+		/*$result = DB::table('disease_forms')
+			->join('patients_disease_forms', 'patients_disease_forms.question_id', '=', 'disease_forms.question_id')
+            ->join('disease_types', 'disease_types.disease_type_id', '=', 'disease_forms.disease_type_id')
+			->where('patients_disease_forms.patient_id', '=' , $person->person_id)
+            ->select('disease_forms.question_id','disease_types.disease_type_name_th', 'disease_types.disease_type_name_en')
+            ->get();*/
+		
 		return view('profile')
-							->with('person' ,$person);
-
+					->with('person' ,$person)
+					->with('results',$result)
+					->with('result_callback_header', null)
+					->with('result_callback',null);
+	
 	}
 
 	/**
@@ -110,6 +128,43 @@ class PersonController extends Controller {
 	public function destroy($id)
 	{
 		//
+	}
+	
+	public function show_report_by_type($report_id = null , $person_id = null){
+		
+		
+		if($report_id == 1){ // Fuck Duchenne
+				$result =  DB::select('SELECT disease_types.disease_type_id ,disease_type_name_th 								,disease_type_name_en
+				FROM  disease_forms ,patients_disease_forms ,disease_types ,patients
+				WHERE patients_disease_forms.question_id  = disease_forms.question_id
+                AND disease_types.disease_type_id = disease_forms.disease_type_id
+				AND patients_disease_forms.patient_id =  patients.patient_id
+				AND patients.person_id = '. $person_id);
+			
+				$result_callback =  DB::select('SELECT disease_1.*
+				FROM  disease_forms ,patients_disease_forms ,disease_1 ,patients
+				WHERE patients_disease_forms.question_id  = disease_forms.question_id
+               	AND disease_1.questions_id = disease_forms.question_id
+				AND disease_forms.disease_type_id = '.$report_id.'
+				AND patients_disease_forms.patient_id =  patients.patient_id
+				AND patients.person_id = '. $person_id);
+			
+				$person = DB::table('persons')
+								->where('person_id' ,'=', $person_id )
+								->first();
+			
+				if(count($result_callback)>0 && count($person)){
+					 return view('profile')
+					->with('person' ,$person)
+					->with('results',$result)
+				    ->with('result_callback_header', "ผลการรักษา")
+					->with('result_callback',$result_callback);
+				}else{
+					$this->show();
+				}
+		}else{
+			
+		}
 	}
 
 }

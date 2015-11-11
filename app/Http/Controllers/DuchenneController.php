@@ -15,6 +15,16 @@ class DuchenneController extends Controller {
 	*/
 	public function index()
 	{
+		//จากจำนวนผู้ป่วยทั้งหมด มีกี่คนที่มีประวัติมีคนเป็นโรคแบบผู้ป่วยมาก่อนในครอบครัว และกี่คนที่ไม่มีประวัติมีคนเป็นแบบเดียวกันมาก่อน
+
+ 		// ในรายที่ไม่มีประวัติมีคนเป็นแบบเดียวกันมาก่อนนั้น มารดาได้รับการตรวจพาะหะกี่ราย และผลพบเป็นพาหะกี่ราย ไม่เป็นพาหะกี่ราย
+
+		// ผู้ป่วยมีพี่น้องเพศหญิงที่เกิดจากแม่เดียวกัน กี่คน
+		
+		// มารดาของผู้ป่วยมีพี่น้องเพศหญิงที่เกิดจากแม่เดียวกัน กี่คน  
+
+		// ผู้ป่วยทั้งหมด เป็นคนไข้ รพ.รามาธิบดี กี่คน  รพ.อื่นกี่คน
+		
 		// Find Total records
 		$Duchenne_total = DB::select('SELECT  count(disease_1.questions_id) as total FROM disease_1 ');
 		// Find Family nubmer
@@ -25,8 +35,43 @@ class DuchenneController extends Controller {
 				AND patients_disease_forms.patient_id = patients.patient_id
 				AND patients.person_id = persons.person_id
 				AND disease_forms.disease_type_id = 1
-				GROUP BY person_last_name ) as family_name
-		');
+				GROUP BY person_last_name ) as family_name');
+		// Find ครั้งแรกที่เริ่มมีปัญหาการเดินหรือการลุกยืน อายุ
+		$Symp2_mean = DB::select('SELECT AVG(disease_1.symptom_2) as mean FROM disease_1 where symptom_2 != 0 ');
+        $Symp2_median = DB::select('SELECT avg(t1.symptom_2) as median_val FROM (
+SELECT @rownum:=@rownum+1 as row_number, d.symptom_2
+  FROM disease_1 d,  (SELECT @rownum:=0) r
+  WHERE symptom_2 != 0
+  ORDER BY d.symptom_2
+) as t1, 
+(
+  SELECT count(*) as total_rows
+  FROM disease_1 d
+  WHERE symptom_2 != 0
+) as t2
+WHERE 1
+AND t1.row_number in ( floor((total_rows+1)/2), floor((total_rows+2)/2) ) ');
+        $Symp2_SD = DB::select('SELECT STD(symptom_2)  as sd from disease_1 where symptom_2 != 0 '); 
+        $Symp2_range =   DB::select('SELECT  MIN(symptom_2) AS Min, MAX(symptom_2) AS Max FROM   disease_1 where symptom_2 != 0');
+		
+		//ครั้งแรกที่เริ่มพาไปตรวจเรื่องปัญหาการเดินหรือการลุกยืน อายุ 
+		$Symp3_mean = DB::select('SELECT AVG(disease_1.symptom_3) as mean FROM disease_1 where symptom_3 != 0 ');
+        $Symp3_median = DB::select('SELECT avg(t1.symptom_3) as median_val FROM (
+SELECT @rownum:=@rownum+1 as row_number, d.symptom_3
+  FROM disease_1 d,  (SELECT @rownum:=0) r
+  WHERE symptom_3 != 0
+  ORDER BY d.symptom_3
+) as t1, 
+(
+  SELECT count(*) as total_rows
+  FROM disease_1 d
+  WHERE symptom_3 != 0
+) as t2
+WHERE 1
+AND t1.row_number in ( floor((total_rows+1)/2), floor((total_rows+2)/2) ) ');
+        $Symp3_SD = DB::select('SELECT STD(symptom_3)  as sd from disease_1 where symptom_2 != 0 '); 
+        $Symp3_range =   DB::select('SELECT  MIN(symptom_3) AS Min, MAX(symptom_3) AS Max FROM   disease_1 where symptom_3 != 0');
+		
 		//Find  multiple PCR
 		$PCR = DB::select('SELECT disease_1_abnormal.abnormal as abnormal, count(disease_1.questions_id) as total FROM disease_1,  (SELECT count(symptom_7_1) as abnormal FROM disease_1 WHERE symptom_7_1 = "ผิดปกติ" ) as disease_1_abnormal');
 		//FInd MLPA
@@ -74,7 +119,7 @@ class DuchenneController extends Controller {
 			AND patients_disease_forms.patient_id = patients.patient_id
 			AND patients.person_id = persons.person_id
 			AND disease_1.symptom_6 = "ไม่ได้ตรวจ" ');
-        $Echo_mean = DB::select('SELECT AVG(disease_1.questions_id) as mean FROM disease_1 where symptom_6 = "ตรวจ" ');
+        $Echo_mean = DB::select('SELECT AVG(disease_1.symptom_6_result) as mean FROM disease_1 where symptom_6 = "ตรวจ" ');
         $Echo_median = DB::select('SELECT avg(t1.symptom_6_result) as median_val FROM (
 SELECT @rownum:=@rownum+1 as `row_number`, d.symptom_6_result
   FROM disease_1 d,  (SELECT @rownum:=0) r
@@ -88,14 +133,14 @@ SELECT @rownum:=@rownum+1 as `row_number`, d.symptom_6_result
 ) as t2
 WHERE 1
 AND t1.row_number in ( floor((total_rows+1)/2), floor((total_rows+2)/2) ) ');
-        $Echo_SD = DB::select('SELECT STD(`symptom_6_result`)  as sd from disease_1 where symptom_6 = "ตรวจ" '); 
+        $Echo_SD = DB::select('SELECT STD(symptom_6_result)  as sd from disease_1 where symptom_6 = "ตรวจ" '); 
         $Echo_range =   DB::select('SELECT  MIN(symptom_6_result) AS Min, MAX(symptom_6_result) AS Max FROM   disease_1 where symptom_6 = "ตรวจ" ');
         
         
         	// Find CK
-        $CK_mean = DB::select('SELECT AVG(disease_1.questions_id) as mean FROM disease_1 where symptom_6 = "มี" ');
+        $CK_mean = DB::select('SELECT AVG(disease_1.symptom_5_result) as mean FROM disease_1 where symptom_6 = "ตรวจ" ');
         $CK_median = DB::select('SELECT avg(t1.symptom_5_result) as median_val FROM (
-SELECT @rownum:=@rownum+1 as `row_number`, d.symptom_5_result
+SELECT @rownum:=@rownum+1 as row_number, d.symptom_5_result
   FROM disease_1 d,  (SELECT @rownum:=0) r
   WHERE d.symptom_5 = "มี"
   ORDER BY d.symptom_5_result
@@ -107,7 +152,7 @@ SELECT @rownum:=@rownum+1 as `row_number`, d.symptom_5_result
 ) as t2
 WHERE 1
 AND t1.row_number in ( floor((total_rows+1)/2), floor((total_rows+2)/2) ) ');
-        $CK_SD = DB::select('SELECT STD(`symptom_5_result`)  as sd from disease_1 where symptom_5 = "มี" '); 
+        $CK_SD = DB::select('SELECT STD(symptom_5_result)  as sd from disease_1 where symptom_5 = "มี" '); 
         $CK_range =   DB::select('SELECT  MIN(symptom_5_result) AS Min, MAX(symptom_5_result) AS Max FROM   disease_1 where symptom_5 = "มี" ');
             $Ck= DB::select('SELECT count(disease_1.questions_id) as tested FROM disease_1 where symptom_5 = "มี" ');
 			$UnCk= DB::select('SELECT count(disease_1.questions_id) as un_test FROM disease_1 where symptom_5 = "ไม่มี" ');
@@ -121,6 +166,14 @@ AND t1.row_number in ( floor((total_rows+1)/2), floor((total_rows+2)/2) ) ');
 				//Find hostpital
 
 				return view('duchenne_report' )
+					->with('Symp2_SD',$Symp2_SD)
+					->with('Symp2_range',$Symp2_range)
+					->with('Symp2_median',$Symp2_median)
+					->with('Symp2_mean',$Symp2_mean)
+					->with('Symp3_SD',$Symp3_SD)
+					->with('Symp3_range',$Symp3_range)
+					->with('Symp3_median',$Symp3_median)
+					->with('Symp3_mean',$Symp3_mean)
 				->with('Duchenne_total' ,$Duchenne_total)
 				->with('Family_total' ,$Family_total)
 				->with('Attention_Deficit_Disorder' ,$Attention_Deficit_Disorder)
@@ -199,7 +252,8 @@ AND t1.row_number in ( floor((total_rows+1)/2), floor((total_rows+2)/2) ) ');
 												}
 				return response()->json($data, 200);
 			}
-
+			
+	
 			/**
 			* Show the form for editing the specified resource.
 			*

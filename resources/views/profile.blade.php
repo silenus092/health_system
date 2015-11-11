@@ -1,7 +1,96 @@
 @extends('app')
 
 @section('content')
+<style >
+/*  bhoechie tab */
+div.bhoechie-tab-container{
+
+    height: 100%;
+    z-index: 10;
+    background-color: #ffffff;
+    padding: 0 !important;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    border:1px solid #ddd;
+    margin-top: 20px;
+    margin-left: 50px;
+    -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    -moz-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    background-clip: padding-box;
+    opacity: 0.97;
+    filter: alpha(opacity=97);
+}
+div.bhoechie-tab-menu{
+    padding-right: 0;
+    padding-left: 0;
+    padding-bottom: 0;
+}
+div.bhoechie-tab-menu div.list-group{
+    margin-bottom: 0;
+}
+div.bhoechie-tab-menu div.list-group>a{
+    margin-bottom: 0;
+}
+div.bhoechie-tab-menu div.list-group>a .glyphicon,
+div.bhoechie-tab-menu div.list-group>a .fa {
+    color: #5A55A3;
+}
+div.bhoechie-tab-menu div.list-group>a:first-child{
+    border-top-right-radius: 0;
+    -moz-border-top-right-radius: 0;
+}
+div.bhoechie-tab-menu div.list-group>a:last-child{
+    border-bottom-right-radius: 0;
+    -moz-border-bottom-right-radius: 0;
+}
+div.bhoechie-tab-menu div.list-group>a.active,
+div.bhoechie-tab-menu div.list-group>a.active .glyphicon,
+div.bhoechie-tab-menu div.list-group>a.active .fa{
+    background-color: #5A55A3;
+    background-image: #5A55A3;
+    color: #ffffff;
+}
+div.bhoechie-tab-menu div.list-group>a.active:after{
+    content: '';
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    margin-top: -13px;
+    border-left: 0;
+    border-bottom: 13px solid transparent;
+    border-top: 13px solid transparent;
+    border-left: 10px solid #5A55A3;
+}
+
+div.bhoechie-tab-content{
+    background-color: #ffffff;
+    /* border: 1px solid #eeeeee; */
+    padding-left: 20px;
+    padding-top: 10px;
+}
+
+div.bhoechie-tab div.bhoechie-tab-content:not(.active){
+    display: none;
+}
+.status {
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+.status .panel-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    color: #ffff;
+    line-height: 15px;
+    padding-top: 5px;
+    letter-spacing: -0.8px;
+}
+
+
+</style>
 <script type="text/javascript" CHARSET="UTF-8">
+var person_id = <?php echo $person->person_id; ?> ;
 $(document).ready(function() {
     var panels = $('.user-infos');
     var panelsButton = $('.dropdown-user');
@@ -31,9 +120,15 @@ $(document).ready(function() {
 
     $('[data-toggle="tooltip"]').tooltip();
 
-    $('button').click(function(e) {
+    $('#btn_submit').click(function(e) {
         e.preventDefault();
-        alert("This is a demo.\n :-)");
+		var select_value = $("#select_list_report" ).val();
+        
+		if(select_value == -1){
+		alert("Nothing to search :-)");	
+		}else{
+		window.location='<?=URL::to('/')?>/show_report_by_type/'+select_value+'/'+person_id;
+		}
     });
 });
 
@@ -82,7 +177,7 @@ $(document).ready(function() {
                     </div>
                 </div>
                 <div class="panel-footer">
-                    <a data-original-title="View as tree diagram" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-tree-conifer"></i></a>
+                    <a data-original-title="View as tree diagram" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary" href="{{route('lists.items.create', ['id' => $person->person_citizenID ])}}"><i class="glyphicon glyphicon-tree-conifer"></i></a>
                     <span class="pull-right">
                         <a href="edit.html" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
                         <a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
@@ -93,32 +188,66 @@ $(document).ready(function() {
     </div>
 </div>
     <div class="row">
-    <h3 style="margin-top: 0;">ประวัติการรักษา</h3>
+    <h3 style="margin-top: 0;">เลื่อกประวัติการรักษา </h3>
         <hr class="separator">
-    <ul class="nav nav-tabs">
-       <li><a data-toggle="tab" href="#home">Home</a></li>
-       <li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
-       <li><a data-toggle="tab"  href="#menu2">Menu 2</a></li>
-       <li><a data-toggle="tab" href="#menu3">Menu 3</a></li>
-     </ul>
-     <div class="tab-content">
-       <div id="home" class="tab-pane fade in active">
-         <h3>HOME</h3>
-         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-       </div>
-       <div id="menu1" class="tab-pane fade">
-         <h3>Menu 1</h3>
-         <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-       </div>
-       <div id="menu2" class="tab-pane fade">
-         <h3>Menu 2</h3>
-         <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-       </div>
-       <div id="menu3" class="tab-pane fade">
-         <h3>Menu 3</h3>
-         <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-       </div>
-     </div>
+	<div class="form-group">
+        <label class="col-xs-3 control-label">ชื่อโรคที่รับการรักษา</label>
+        <div class="col-xs-5 selectContainer">
+            <select id="select_list_report" name="select_list_report" class="form-control">
+
+					<?php 
+			if(count($results)>0){
+			 
+			foreach($results as $result){
+				echo "<option value='".$result->disease_type_id."' >".$result->disease_type_name_en."</option>" ;
+			}
+				
+			}else{
+			  echo "<option value='-1'>ไม่มีประวัติการรักษา</option>";
+			}
+		?>
+         
+            </select>
+       
+        </div>
+    </div>
+     <button id="btn_submit" class="btn btn-primary">View</button>
+    </div>
+    <hr class="separator">
+    <div id="show_result" class="row">
+    	<?php if(count($result_callback) > 0 || $result_callback != null ) { ?>
+   						 <center><h3 style="margin-top: 0;"><?php echo $result_callback_header ?> </h3></center>
+    					<div class="col-xs-6 col-md-3">
+                            <div class="panel status panel-info">
+                                <div class="panel-heading">
+                                    <h1 class="panel-title text-center"><?php echo $result_callback[0]->symptom_1_1; ?></h1>
+                                </div>
+                                <div class="panel-body text-center">
+                                    <strong>เดินเขย่ง หลังแอ่น เดินขาปัด ล้มบ่อย</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <div class="panel status panel-info">
+                                <div class="panel-heading">
+                                    <h1 class="panel-title text-center"><?php echo $result_callback[0]->symptom_1_2; ?></h1>
+                                </div>
+                                <div class="panel-body text-center">
+                                    <strong> ลุกขึ้นยืนลำบากต้องเหนี่ยวจับหรือเกาะขึ้นยืน (ท่าโกเวอร์)</strong>
+                                </div>
+                            </div>
+                        </div>
+                           <div class="col-xs-6 col-md-3">
+                            <div class="panel status panel-info">
+                                <div class="panel-heading">
+                                    <h1 class="panel-title text-center"><?php echo $result_callback[0]->symptom_1_3; ?></h1>
+                                </div>
+                                <div class="panel-body text-center">
+                                    <strong> เดินไม่ได้เเล้ว </strong>
+                                </div>
+                            </div>
+                        </div>
+    	<?php }?>
     </div>
 </div>
 @endsection

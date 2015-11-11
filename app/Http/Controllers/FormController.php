@@ -139,7 +139,7 @@ class FormController extends Controller
     *
     * @return Response
     */
-    public function show_tree($id)
+   /* public function show_tree($id)
     {
         try{
             $result = array();
@@ -244,7 +244,7 @@ class FormController extends Controller
             return response()->json($result, 200);
         }
     }
-
+*/
 
     /**
     * Show the form for editing the specified resource.
