@@ -78,6 +78,17 @@ abstract class Controller extends BaseController {
 		
 	 	// this function   is not finish yet!!
 	}
+	
+	function equal_array($arr){
+  		$ArrayObject = new \ArrayObject($arr);
+  		return $ArrayObject->getArrayCopy();  
+	}
+	function check_key_has_exists_value($array, $key, $val) {
+    foreach ($array as $item)
+        if (isset($item['person'][$key]) && $item['person'][$key] == $val)
+            return true;
+    return false;
+}
 
 
 }

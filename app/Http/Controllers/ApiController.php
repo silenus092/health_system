@@ -41,7 +41,7 @@ class ApiController extends Controller
 			$person_array['id']  = $r->person_id;
 			$person_array['title'] = $r->person_first_name." ".$r->person_last_name;
 			$person_array['description'] = "Sex: ".$r->person_sex." Age: ".$r->person_age;
-			/*    $result['description']['sex']  = $r->person_sex;
+			/* $result['description']['sex']  = $r->person_sex;
             $result['description']['birth_date']  = $r->person_birth_date;
             $result['description']['age']  = $r->person_age;
             $result['description']['citizen_id']  = $r->person_citizenID;
@@ -61,41 +61,63 @@ class ApiController extends Controller
 				$person_array['itemTitleColor']  = $pink;
 			}
 			//
-			//	เดี่ยวต้อง เช็ค ว่าเป็นผู้ป่วยรึเปล่า
+			//	เดี่ยวต้อง เช็ค ว่าเป็นผู้ป่วยรึเปล่า 
 			//		
 			$person_array['groupTitle'] ="ผู้ป่วย";
 			$person_array['groupTitleColor'] ="orange";
-			
-			$parents = $this->find_parent($r);
+
+			$parents = $this->find_parent($result,$r);
 			if($parents != null){
 				$person_array['parents']  = $parents;
 			}
-			$spouses  = $this->find_spouse($r);
+			$spouses  = $this->find_spouse($result,$r);
 			if($spouses != null){
 				$person_array['spouses'][] = $spouses;
 			}
 			$result['person'][] = $person_array;
-
-			// Let's fill personal information to id left  in the list.
-
-			while(count($this->list) >0){
-				$size= count($this->list);
+			// หาพี่น้องตัวเองด้วย
+			// Let's fill personal information to id array list.
+			
+			
+			
+			
+			$depth = 3 ;
+			while(count($this->list) >0 && $depth > 0 ){
+				//echo "Start " .var_dump($this->list);
+				$size = count($this->list);
 				for( $i=0 ; $i < $size ; $i++){
-					$r =DB::table('persons')->where('person_id', '=', $this->list[$i])->first();
-					$person_array =array();
-					$person_array  = $this->set_person($person_array , $r);
-					$parents = $this->find_parent($r);
-					if($parents != null){
-						$person_array['parents']  = $parents;
+					if(isset($this->list[$i])){
+						$r = DB::table('persons')->where('person_id', '=', $this->list[$i])->first();
+						if(!$this->check_key_has_exists_value($result,'id',$r->person_id )&& in_array($r->person_id, $this->list)){
+							$person_array =array();
+							$person_array  = $this->set_personal_info($person_array , $r);
+
+							// Find his/her parent
+							$parents = $this->find_parent($result,$r);
+							if($parents != null){
+								$person_array['parents']  = $parents;
+							}
+
+							// Find his/her spouse
+							$spouses  = $this->find_spouse($result,$r);
+							if($spouses != null){
+								$person_array['spouses'][] = $spouses;
+							}
+							// store it into array
+							$result['person'][] = $person_array;
+							// finish this person , remove it so we will not serach for this person again
+
+							//$this->list[$i] = null;
+							
+						}else{
+							 
+						}
+						$this->list[$i] = null;
 					}
-					$spouses  = $this->find_spouse($r);
-					if($spouses != null){
-						$person_array['spouses'][] = $spouses;
-					}
-					$result['person'][] = $person_array;
-					unset($this->list[$i]);
+
 				}
 
+				$depth--;	
 			}
 			return response()->json($result, 200);
 		}catch(Exception $e) {
@@ -113,7 +135,15 @@ class ApiController extends Controller
 		}
 
 	}
-	public function find_parent($r){
+	
+	
+	
+	public function find_relatives(){
+		
+	}
+	public function find_parent($result,$r){
+		
+		
 		$relation_parent_array = array();
 		$relation_parent = DB::table('relationship')
 			->where('person_1_id', '=', $r->person_id)
@@ -133,7 +163,9 @@ class ApiController extends Controller
 						->where('person_id', '=', $rp->person_2_id)
 						->first();
 					//$rp_array['title'] = $person_dad->person_first_name." ".$person_dad->person_last_name;
-					$this->list[]  = $person_dad->person_id ; // add dad to list
+					if(!$this->check_key_has_exists_value($result,'id',$person_dad->person_id)&&!in_array($person_dad->person_id, $this->list)){
+						$this->list[]  = $person_dad->person_id ; // add dad to list
+					}
 					$relation_parent_array[]= $person_dad->person_id;
 					//$rp_array['role']=$role_dad->role_description;
 				}
@@ -147,20 +179,23 @@ class ApiController extends Controller
 						->where('person_id', '=', $rp->person_2_id)
 						->first();
 					//$rp_array['title'] = $person_mom->person_first_name." ".$person_mom->person_last_name;
-					$this->list[] = $person_mom->person_id ; // add mom to list
+					if(!$this->check_key_has_exists_value($result,'id',$person_mom->person_id )&&!in_array($person_mom->person_id, $this->list)){
+						$this->list[] = $person_mom->person_id ; // add mom to list
+					}
 					$relation_parent_array[]= $person_mom->person_id;
 					//$rp_array['role']=$role_mom->role_description;
 
 				}
 				//array_push($relation_parent_array, $rp_array);
 			}
+		
 			return  $relation_parent_array;
 		}else{
 			return null;
 		}
 	}
 
-	public function find_spouse($r){
+	public function find_spouse($result,$r){
 		//find_married
 
 		$relation_married = DB::table('relationship')
@@ -169,11 +204,15 @@ class ApiController extends Controller
 			->where('relationship_type_description', '=', "คู่สมรส")
 			->first();
 		if(count($relation_married) != 0 ){
-			$role= DB::table('roles')->where('role_id', '=', $relation_married->role_2_id)->first();
+			//$role= DB::table('roles')->where('role_id', '=', $relation_married->role_2_id)->first();
 			$person_2 = DB::table('persons')
 				->where('person_id', '=', $relation_married->person_2_id)
 				->first();
-			$this->list[]  =   $person_2->person_id;
+
+			if(!$this->check_key_has_exists_value($result,'id',$person_2->person_id) && !in_array($person_2->person_id, $this->list)){
+				$this->list[]  =   $person_2->person_id;
+			}
+	
 			return  $person_2->person_id;
 
 		}else{
@@ -181,7 +220,7 @@ class ApiController extends Controller
 		}
 	}
 
-	public function set_person($person_array , $r)
+	public function set_personal_info($person_array , $r)
 	{
 		$person_array['id']  = $r->person_id;
 		$person_array['title'] = $r->person_first_name." ".$r->person_last_name;
@@ -209,32 +248,45 @@ class ApiController extends Controller
 				DB::beginTransaction();
 				$person_sex = Input::get('sex');
 				$Person_id = DB::table('persons')->insertGetId(['person_first_name' => Input::get('first_name'), 					 'person_last_name' => Input::get('last_name'),
-                    'person_sex' => $person_sex ]);
+																'person_sex' => $person_sex ]);
 				$parents = Input::get('parents_id');
 				$spouses = Input::get('spouses_id');
-				$relatives = Input::get('relative');
-					// find parent
+				$relatives = Input::get('relatives_id');
+				$sons = Input::get('sons_id');
+				$type_of_relationship  = Input::get('type_of_relationship');
+				/*if(){
+
+				}else if(){
+
+				}else if(){
+
+				}else if(){
+
+				}else{
+
+				}*/
+				// find parent
 				/*foreach($parents as $parent){
 					$this->find_parent($parent);
 				}
 				   //  find spouse
 				foreach($spouses as ){
-					
+
 				}
 				 // find relative
 				foreach(){
-					
+
 				}*/
-                    
+
 			}
 		}catch (Exception $e) {
-                DB::rollback();
-                $result['status'] = 2;
-                $result['message'] = $e->getMessage();
-                return response()->json($result, 200); 
-        }
-    }
-	
+			DB::rollback();
+			$result['status'] = 2;
+			$result['message'] = $e->getMessage();
+			return response()->json($result, 200); 
+		}
+	}
+
 	public function edit_person(){
 
 	}
