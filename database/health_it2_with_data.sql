@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.7.1
+-- version 4.2.11
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 17, 2015 at 04:52 AM
--- Server version: 5.6.20
--- PHP Version: 5.5.15
+-- Generation Time: Nov 17, 2015 at 11:21 AM
+-- Server version: 5.6.21
+-- PHP Version: 5.6.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -78,7 +78,7 @@ INSERT INTO `disease_1` (`symptom_1_1`, `symptom_1_2`, `symptom_1_3`, `symptom_2
 CREATE TABLE IF NOT EXISTS `disease_forms` (
 `question_id` int(11) NOT NULL,
   `disease_type_id` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=62 ;
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `disease_forms`
@@ -101,7 +101,7 @@ CREATE TABLE IF NOT EXISTS `disease_types` (
 `disease_type_id` int(11) NOT NULL,
   `disease_type_name_th` varchar(45) DEFAULT NULL,
   `disease_type_name_en` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `disease_types`
@@ -125,7 +125,7 @@ CREATE TABLE IF NOT EXISTS `doctors` (
   `doctor_phone` varchar(45) DEFAULT NULL,
   `hospital` varchar(45) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=62 ;
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `doctors`
@@ -180,7 +180,7 @@ CREATE TABLE IF NOT EXISTS `patients` (
   `doctor_id` int(11) NOT NULL,
   `registration_date` date DEFAULT NULL,
   `person_id` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=59 ;
+) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `patients`
@@ -203,7 +203,7 @@ CREATE TABLE IF NOT EXISTS `patients_disease_forms` (
   `question_id` int(11) NOT NULL,
   `registration_date` date DEFAULT NULL,
   `patient_id` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=59 ;
+) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `patients_disease_forms`
@@ -240,7 +240,7 @@ CREATE TABLE IF NOT EXISTS `persons` (
   `person_sex` varchar(45) DEFAULT NULL,
   `person_mooh_num` varchar(45) DEFAULT NULL,
   `person_alive` tinyint(1) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=83 ;
+) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `persons`
@@ -272,7 +272,7 @@ CREATE TABLE IF NOT EXISTS `relationship` (
   `relationship_type_id` int(11) NOT NULL,
   `person_2_id` int(11) NOT NULL,
   `role_2_id` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='The relationship uses to identify role and relationship  between two people' AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='The relationship uses to identify role and relationship  between two people';
 
 --
 -- Dumping data for table `relationship`
@@ -286,7 +286,10 @@ INSERT INTO `relationship` (`relationship_id`, `person_1_id`, `role_1_id`, `rela
 (7, 65, 17, 1, 82, 9),
 (8, 67, 20, 3, 82, 1),
 (9, 67, 20, 3, 81, 2),
-(10, 81, 22, 4, 82, 23);
+(10, 81, 22, 4, 82, 23),
+(11, 65, 5, 2, 68, 4),
+(12, 68, 19, 3, 66, 1),
+(13, 68, 19, 3, 67, 2);
 
 -- --------------------------------------------------------
 
@@ -297,7 +300,7 @@ INSERT INTO `relationship` (`relationship_id`, `person_1_id`, `role_1_id`, `rela
 CREATE TABLE IF NOT EXISTS `relationship_type` (
 `relationship_type_id` int(11) NOT NULL,
   `relationship_type_description` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='eg  Parent ,Child , Married' AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='eg  Parent ,Child , Married';
 
 --
 -- Dumping data for table `relationship_type`
@@ -306,9 +309,9 @@ CREATE TABLE IF NOT EXISTS `relationship_type` (
 INSERT INTO `relationship_type` (`relationship_type_id`, `relationship_type_description`) VALUES
 (1, 'ญาติ'),
 (2, 'พี่น้อง'),
-(3, 'พ่อเเม่'),
+(3, 'พ่อเเม่ลูก'),
 (4, 'คู่สมรส'),
-(5, 'ลูก');
+(5, 'ระบุสถานะไม่ได้');
 
 -- --------------------------------------------------------
 
@@ -319,7 +322,7 @@ INSERT INTO `relationship_type` (`relationship_type_id`, `relationship_type_desc
 CREATE TABLE IF NOT EXISTS `roles` (
 `role_id` int(11) NOT NULL,
   `role_description` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='eg Father , Son ,Husban , Wife' AUTO_INCREMENT=26 ;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COMMENT='eg Father , Son ,Husban , Wife';
 
 --
 -- Dumping data for table `roles`
@@ -367,7 +370,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users`
@@ -484,7 +487,7 @@ MODIFY `person_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=83;
 -- AUTO_INCREMENT for table `relationship`
 --
 ALTER TABLE `relationship`
-MODIFY `relationship_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+MODIFY `relationship_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `relationship_type`
 --
