@@ -77,10 +77,10 @@ class ApiController extends Controller
 			$result['person'][] = $person_array;
 			// หาพี่น้องตัวเองด้วย
 			// Let's fill personal information to id array list.
+
 			
-			
-			
-			
+
+
 			$depth = 3 ;
 			while(count($this->list) >0 && $depth > 0 ){
 				//echo "Start " .var_dump($this->list);
@@ -108,9 +108,9 @@ class ApiController extends Controller
 							// finish this person , remove it so we will not serach for this person again
 
 							//$this->list[$i] = null;
-							
+
 						}else{
-							 
+
 						}
 						$this->list[$i] = null;
 					}
@@ -135,15 +135,36 @@ class ApiController extends Controller
 		}
 
 	}
-	
-	
-	
-	public function find_relatives(){
-		
+
+
+
+	public function find_relatives($result,$r){
+		$relation_relatives_array = array();
+		$relation_relatives = DB::table('relationship')
+			->where('person_1_id', '=', $r->person_id)
+			->join('relationship_type', 'relationship.relationship_type_id', '=', 'relationship_type.relationship_type_id')
+			->where('relationship_type_description', '=', "พี่น้อง")
+			->get();
+		if(count($relation_married) != 0 ){
+			//$role= DB::table('roles')->where('role_id', '=', $relation_married->role_2_id)->first();
+			$person_2 = DB::table('persons')
+				->where('person_id', '=', $relation_married->person_2_id)
+				->first();
+
+			if(!$this->check_key_has_exists_value($result,'id',$person_2->person_id) && !in_array($person_2->person_id, $this->list)){
+				$this->list[]  =   $person_2->person_id;
+			}
+
+			return  $person_2->person_id;
+
+		}else{
+			return null;
+		}
 	}
+
 	public function find_parent($result,$r){
-		
-		
+
+
 		$relation_parent_array = array();
 		$relation_parent = DB::table('relationship')
 			->where('person_1_id', '=', $r->person_id)
@@ -188,7 +209,7 @@ class ApiController extends Controller
 				}
 				//array_push($relation_parent_array, $rp_array);
 			}
-		
+
 			return  $relation_parent_array;
 		}else{
 			return null;
@@ -212,7 +233,7 @@ class ApiController extends Controller
 			if(!$this->check_key_has_exists_value($result,'id',$person_2->person_id) && !in_array($person_2->person_id, $this->list)){
 				$this->list[]  =   $person_2->person_id;
 			}
-	
+
 			return  $person_2->person_id;
 
 		}else{

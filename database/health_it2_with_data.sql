@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 18, 2015 at 11:59 AM
+-- Generation Time: Nov 17, 2015 at 04:52 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -30,18 +30,18 @@ CREATE TABLE IF NOT EXISTS `disease_1` (
   `symptom_1_1` varchar(45) DEFAULT NULL,
   `symptom_1_2` varchar(45) DEFAULT NULL,
   `symptom_1_3` varchar(45) DEFAULT NULL,
-  `symptom_2` varchar(45) DEFAULT NULL,
-  `symptom_3` varchar(45) DEFAULT NULL,
+  `symptom_2` int(11) DEFAULT NULL,
+  `symptom_3` int(11) DEFAULT NULL,
   `symptom_4_1` varchar(45) DEFAULT NULL,
   `symptom_4_2` varchar(45) DEFAULT NULL,
   `symptom_4_3` varchar(45) DEFAULT NULL,
   `symptom_4_4` varchar(45) DEFAULT NULL,
   `symptom_5` varchar(45) DEFAULT NULL,
   `symptom_5_date` date DEFAULT NULL,
-  `symptom_5_result` varchar(100) DEFAULT NULL,
+  `symptom_5_result` int(100) DEFAULT NULL,
   `symptom_6` varchar(45) DEFAULT NULL,
   `symptom_6_date` date DEFAULT NULL,
-  `symptom_6_result` varchar(100) DEFAULT NULL,
+  `symptom_6_result` int(100) DEFAULT NULL,
   `symptom_7_1` varchar(45) DEFAULT NULL,
   `symptom_7_1_result` varchar(45) DEFAULT NULL,
   `symptom_7_2` varchar(45) DEFAULT NULL,
@@ -64,10 +64,10 @@ CREATE TABLE IF NOT EXISTS `disease_1` (
 --
 
 INSERT INTO `disease_1` (`symptom_1_1`, `symptom_1_2`, `symptom_1_3`, `symptom_2`, `symptom_3`, `symptom_4_1`, `symptom_4_2`, `symptom_4_3`, `symptom_4_4`, `symptom_5`, `symptom_5_date`, `symptom_5_result`, `symptom_6`, `symptom_6_date`, `symptom_6_result`, `symptom_7_1`, `symptom_7_1_result`, `symptom_7_2`, `symptom_7_2_result`, `symptom_7_3`, `symptom_7_3_result`, `symptom_8`, `symptom_9_male`, `symptom_9_female`, `symptom_10_2_female`, `symptom_10_2_male`, `symptom_10_1`, `symptom_10_1_number`, `symptom_10_1_check`, `questions_id`) VALUES
-('ไม่เป็น', 'ไม่เป็น', 'ไม่เป็น', '0', '0', 'ไม่เป็น', 'ไม่เป็น', 'ไม่เป็น', 'ไม่เป็น', 'มี', '2015-09-08', 'ปลอดภัยดี', 'ตรวจ', '2015-09-09', 'ปลอดภัยดี', 'ปกติ', 'ปลอดภัยดี', 'ไม่เป็น', 'ปลอดภัยดี', 'ปกติ', 'ปลอดภัยดี', 'ไม่รู้', 0, 0, 1, 3, 'มี', '0', NULL, 55),
-('ไม่เป็น', 'ไม่เป็น', 'ไม่เป็น', '0', '0', 'ไม่เป็น', 'ไม่เป็น', 'ไม่เป็น', 'ไม่เป็น', 'ไม่มี', '2015-09-08', 'ปลอดภัยดี', 'ไม่ได้ตรวจ', '2015-09-09', 'ปลอดภัยดี', 'ปกติ', 'ปลอดภัยดี', 'ไม่เป็น', 'ปลอดภัยดี', 'ปกติ', 'ปลอดภัยดี', 'เป็นพาหะ', 0, 0, 1, 3, 'ไม่มี', '0', NULL, 56),
-('ไม่เป็น', 'ไม่เป็น', 'ไม่เป็น', '0', '0', 'ไม่เป็น', 'ไม่เป็น', 'ไม่เป็น', 'ไม่เป็น', 'ไม่มี', '2015-09-08', 'ปลอดภัยดี', 'ไม่ได้ตรวจ', '2015-09-09', 'ปลอดภัยดี', 'ปกติ', 'ปลอดภัยดี', 'ไม่เป็น', 'ปลอดภัยดี', 'ปกติ', 'ปลอดภัยดี', 'เป็นพาหะ', 0, 0, 1, 3, 'ไม่มี', '0', NULL, 57),
-('ไม่เป็น', 'ไม่เป็น', 'ไม่เป็น', '0', '0', 'ไม่เป็น', 'ไม่เป็น', 'ไม่เป็น', 'ไม่เป็น', 'ไม่มี', '2015-09-08', 'ปลอดภัยดี', 'ไม่ได้ตรวจ', '2015-09-09', 'ปลอดภัยดี', 'ปกติ', 'ปลอดภัยดี', 'ไม่เป็น', 'ปลอดภัยดี', 'ปกติ', 'ปลอดภัยดี', 'เป็นพาหะ', 0, 0, 1, 3, 'ไม่มี', '0', NULL, 58);
+('ไม่เป็น', 'ไม่เป็น', 'ไม่เป็น', 10, 20, 'ไม่เป็น', 'ไม่เป็น', 'ไม่เป็น', 'ไม่เป็น', 'มี', '2015-09-08', 50, 'ตรวจ', '2015-09-09', 85, 'ปกติ', 'ปลอดภัยดี', 'ปกติ', 'ปลอดภัยดี', 'ปกติ', 'ปลอดภัยดี', 'ไม่รู้', 0, 0, 1, 3, 'มี', '0', NULL, 55),
+('ไม่เป็น', 'ไม่เป็น', 'ไม่เป็น', 48, 100, 'ไม่เป็น', 'ไม่เป็น', 'ไม่เป็น', 'ไม่เป็น', 'มี', '2015-09-08', 10, 'ตรวจ', '2015-09-09', 42, 'ปกติ', 'ปลอดภัยดี', 'ปกติ', 'ปลอดภัยดี', 'ปกติ', 'ปลอดภัยดี', 'เป็นพาหะ', 0, 0, 1, 3, 'ไม่มี', '0', NULL, 56),
+('ไม่เป็น', 'ไม่เป็น', 'ไม่เป็น', 42, 80, 'ไม่เป็น', 'ไม่เป็น', 'ไม่เป็น', 'ไม่เป็น', 'มี', '2015-09-08', 120, 'ตรวจ', '2015-09-09', 15, 'ปกติ', 'ปลอดภัยดี', 'ปกติ', 'ปลอดภัยดี', 'ปกติ', 'ปลอดภัยดี', 'เป็นพาหะ', 0, 0, 1, 3, 'ไม่มี', '0', NULL, 57),
+('ไม่เป็น', 'ไม่เป็น', 'ไม่เป็น', 50, 120, 'ไม่เป็น', 'ไม่เป็น', 'ไม่เป็น', 'ไม่เป็น', 'มี', '2015-09-08', 70, 'ตรวจ', '2015-09-09', 75, 'ปกติ', 'ปลอดภัยดี', 'ปกติ', 'ปลอดภัยดี', 'ปกติ', 'ปลอดภัยดี', 'เป็นพาหะ', 0, 0, 1, 3, 'ไม่มี', '0', NULL, 58);
 
 -- --------------------------------------------------------
 
@@ -78,7 +78,7 @@ INSERT INTO `disease_1` (`symptom_1_1`, `symptom_1_2`, `symptom_1_3`, `symptom_2
 CREATE TABLE IF NOT EXISTS `disease_forms` (
 `question_id` int(11) NOT NULL,
   `disease_type_id` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=59 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=62 ;
 
 --
 -- Dumping data for table `disease_forms`
@@ -88,7 +88,8 @@ INSERT INTO `disease_forms` (`question_id`, `disease_type_id`) VALUES
 (55, 1),
 (56, 1),
 (57, 1),
-(58, 1);
+(58, 1),
+(61, 1);
 
 -- --------------------------------------------------------
 
@@ -124,7 +125,7 @@ CREATE TABLE IF NOT EXISTS `doctors` (
   `doctor_phone` varchar(45) DEFAULT NULL,
   `hospital` varchar(45) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=59 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=62 ;
 
 --
 -- Dumping data for table `doctors`
@@ -134,7 +135,8 @@ INSERT INTO `doctors` (`doctor_id`, `doctor_name`, `doctor_mobile_phone`, `docto
 (55, 'ใหม่ ดาวิกา', '0840919392', '027416163', 'สมิติเวช', 'mai.davi@gmail.com'),
 (56, 'ใหม่ ดาวิกา', '0840919392', '027416163', 'สมิติเวช', 'mai.davi@gmail.com'),
 (57, 'ใหม่ ดาวิกา', '0840919392', '027416163', 'สมิติเวช', 'mai.davi@gmail.com'),
-(58, 'ใหม่ ดาวิกา', '0840919392', '027416163', 'สมิติเวช', 'mai.davi@gmail.com');
+(58, 'ใหม่ ดาวิกา', '0840919392', '027416163', 'สมิติเวช', 'mai.davi@gmail.com'),
+(61, 'ใหม่ ดาวิกา', '0840919392', '027416163', 'สมิติเวช', 'mai.davi@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -236,21 +238,26 @@ CREATE TABLE IF NOT EXISTS `persons` (
   `person_mobile_phone` varchar(45) DEFAULT NULL,
   `person_phone` varchar(45) DEFAULT NULL,
   `person_sex` varchar(45) DEFAULT NULL,
-  `person_mooh_num` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=73 ;
+  `person_mooh_num` varchar(45) DEFAULT NULL,
+  `person_alive` tinyint(1) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=83 ;
 
 --
 -- Dumping data for table `persons`
 --
 
-INSERT INTO `persons` (`person_id`, `person_first_name`, `person_last_name`, `person_age`, `person_birth_date`, `person_citizenID`, `person_house_num`, `person_soi`, `person_road`, `person_tumbon`, `person_amphur`, `person_province`, `person_post_code`, `person_mobile_phone`, `person_phone`, `person_sex`, `person_mooh_num`) VALUES
-(65, 'คุณาภาส ', 'คงกิติมานนท์', 24, '1991-11-29 00:00:00', '1103300053746', '137/5', 'สุขุมวิท 60/1', 'สุขุมวิท ', 'บางจาก', 'เขตพระโขนง', 'กรุงเทพ', 10260, '027416163', '0840919392', 'male', '-'),
-(66, 'ทศพล', 'คงกิติมานนท์', 80, NULL, '11560002352', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL),
-(67, 'สุนันท์', 'คงกิติมานนท์', 24, '1991-11-29 00:00:00', '1103300053748', '137/5', 'สุขุมวิท 60/1', 'สุขุมวิท ', 'บางจาก', 'เขตพระโขนง', 'กรุงเทพ', 10260, '027416163', '0840919392', 'female', '-'),
-(68, 'ณัฐพล', 'คงกิติมานนท์', 80, NULL, '11560002353', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL),
-(69, 'พลอย', 'เฌอมาลย์', 24, '1991-11-29 00:00:00', '1103300053747', '137/5', 'สุขุมวิท 60/1', 'สุขุมวิท ', 'บางจาก', 'เขตพระโขนง', 'กรุงเทพ', 10260, '027416163', '0840919392', 'female', '-'),
-(71, 'ได', 'ไดอาน่า', 24, '1991-11-29 00:00:00', '1103300053749', '137/5', 'สุขุมวิท 60/1', 'สุขุมวิท ', 'บางจาก', 'เขตพระโขนง', 'กรุงเทพ', 10260, '027416163', '0840919392', 'female', '-'),
-(72, 'สามารถ', 'กมลรัต', 80, NULL, '11560002354', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL);
+INSERT INTO `persons` (`person_id`, `person_first_name`, `person_last_name`, `person_age`, `person_birth_date`, `person_citizenID`, `person_house_num`, `person_soi`, `person_road`, `person_tumbon`, `person_amphur`, `person_province`, `person_post_code`, `person_mobile_phone`, `person_phone`, `person_sex`, `person_mooh_num`, `person_alive`) VALUES
+(65, 'คุณาภาส', 'คงกิติมานนท์', 24, '1991-11-29 00:00:00', '1103300053746', '137/5', 'สุขุมวิท 60/1', 'ถนนสุขุมวิท', 'บางจาก', 'เขตพระโขนง', 'กรุงเทพ', 10260, '027416163', '0840919392', 'male', '-', 1),
+(66, 'ทศพล', 'คงกิติมานนท์', 61, NULL, '1103300053770', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 0),
+(67, 'สุนันท์', 'คงกิติมานนท์', 56, '1991-11-29 00:00:00', '1103300053748', '137/5', 'สุขุมวิท 60/1', 'ถนนสุขุมวิท', 'บางจาก', 'เขตพระโขนง', 'กรุงเทพ', 10260, '027416163', '0840919392', 'female', '-', 1),
+(68, 'ณัฐพล', 'คงกิติมานนท์', 29, NULL, '1103300053710', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1),
+(69, 'พลอย', 'เฌอมาลย์', 25, '1991-11-29 00:00:00', '1103300053747', '137/5', 'สุขุมวิท 60/1', 'ถนนสุขุมวิท', 'บางจาก', 'เขตพระโขนง', 'กรุงเทพ', 10260, '027416163', '0840919392', 'female', '-', 1),
+(71, 'ได', 'ไดอาน่า', 24, '1991-11-29 00:00:00', '1103300053749', '137/5', 'สุขุมวิท 60/1', 'ถนนสุขุมวิท', 'บางจาก', 'เขตพระโขนง', 'กรุงเทพ', 10260, '027416163', '0840919392', 'female', '-', 1),
+(72, 'สามารถ', 'กมลรัต', 35, NULL, '1103300053720', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1),
+(79, 'เเป๊ะท้ง', 'กมลรัต', 32, NULL, '1103300053790', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1),
+(80, 'GG', 'HH', 40, NULL, '1103300053775', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1),
+(81, 'จินตนา', 'เหลืองกระจ่าง', 85, '1930-09-16 00:00:00', '1103300053999', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'female', NULL, 1),
+(82, 'มากมาย', 'เหลืองกระจ่าง', 88, '1927-11-16 00:00:00', '1103300053998', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', 1);
 
 -- --------------------------------------------------------
 
@@ -265,7 +272,7 @@ CREATE TABLE IF NOT EXISTS `relationship` (
   `relationship_type_id` int(11) NOT NULL,
   `person_2_id` int(11) NOT NULL,
   `role_2_id` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='The relationship uses to identify role and relationship  between two people' AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='The relationship uses to identify role and relationship  between two people' AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `relationship`
@@ -274,7 +281,12 @@ CREATE TABLE IF NOT EXISTS `relationship` (
 INSERT INTO `relationship` (`relationship_id`, `person_1_id`, `role_1_id`, `relationship_type_id`, `person_2_id`, `role_2_id`) VALUES
 (3, 65, 23, 4, 69, 22),
 (4, 65, 19, 3, 66, 1),
-(5, 65, 19, 3, 67, 2);
+(5, 65, 19, 3, 67, 2),
+(6, 65, 17, 1, 81, 10),
+(7, 65, 17, 1, 82, 9),
+(8, 67, 20, 3, 82, 1),
+(9, 67, 20, 3, 81, 2),
+(10, 81, 22, 4, 82, 23);
 
 -- --------------------------------------------------------
 
@@ -285,7 +297,7 @@ INSERT INTO `relationship` (`relationship_id`, `person_1_id`, `role_1_id`, `rela
 CREATE TABLE IF NOT EXISTS `relationship_type` (
 `relationship_type_id` int(11) NOT NULL,
   `relationship_type_description` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='eg  Parent ,Child , Married' AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='eg  Parent ,Child , Married' AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `relationship_type`
@@ -402,7 +414,7 @@ ALTER TABLE `patients`
 -- Indexes for table `patients_disease_forms`
 --
 ALTER TABLE `patients_disease_forms`
- ADD PRIMARY KEY (`patients_do_questions_id`), ADD KEY `fk_patients_do_questions_questions1_idx` (`question_id`), ADD KEY `fk_patients_do_questions_patients1_idx` (`patient_id`);
+ ADD PRIMARY KEY (`patients_do_questions_id`,`question_id`,`patient_id`), ADD KEY `fk_patients_do_questions_questions1_idx` (`question_id`), ADD KEY `fk_patients_do_questions_patients1_idx` (`patient_id`), ADD KEY `question_id` (`question_id`,`patient_id`);
 
 --
 -- Indexes for table `persons`
@@ -442,7 +454,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `disease_forms`
 --
 ALTER TABLE `disease_forms`
-MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=59;
+MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=62;
 --
 -- AUTO_INCREMENT for table `disease_types`
 --
@@ -452,7 +464,7 @@ MODIFY `disease_type_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 -- AUTO_INCREMENT for table `doctors`
 --
 ALTER TABLE `doctors`
-MODIFY `doctor_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=59;
+MODIFY `doctor_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=62;
 --
 -- AUTO_INCREMENT for table `patients`
 --
@@ -467,17 +479,17 @@ MODIFY `patients_do_questions_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT
 -- AUTO_INCREMENT for table `persons`
 --
 ALTER TABLE `persons`
-MODIFY `person_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=73;
+MODIFY `person_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=83;
 --
 -- AUTO_INCREMENT for table `relationship`
 --
 ALTER TABLE `relationship`
-MODIFY `relationship_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+MODIFY `relationship_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `relationship_type`
 --
 ALTER TABLE `relationship_type`
-MODIFY `relationship_type_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+MODIFY `relationship_type_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `roles`
 --
