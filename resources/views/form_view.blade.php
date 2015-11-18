@@ -10,6 +10,7 @@ $(document).ready(function() {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
   });
+	
   jQuery(document).ajaxStart(function () {
     //show ajax indicator
     ajaxindicatorstart(' please wait..');
