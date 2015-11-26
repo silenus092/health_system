@@ -12,18 +12,7 @@
 */
 Route::filter('csrf', function()
 {
-    if (Request::ajax())
-    {
-        if (Session::token() !== Request::header('csrftoken'))
-        {
-            // Change this to return something your JavaScript can read...
-            throw new Illuminate\Session\TokenMismatchException;
-        }
-    }
-    elseif (Session::token() !== Input::get('_token'))
-    {
-        throw new Illuminate\Session\TokenMismatchException;
-    }
+    
 });
 
 
@@ -38,7 +27,11 @@ Route::get('form', 'FormController@index');
 Route::post('form_add', [
     'as' => 'form_add', 'uses' => 'FormController@store'
 ]);
-Route::get('get_tree/{citizen_id}', 'ApiController@show_tree');
+Route::get('get_tree_api/{citizen_id}', 'ApiController@show_tree');
+Route::post('add_person_api','ApiController@add_person');
+
+Route::get('get_tree/{citizen_id}', 'TreeController@show_tree');
+Route::post('add_person','TreeController@add_person');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
@@ -59,4 +52,7 @@ Route::get('tree_constuct/{id}', [
     'as' => 'lists.items.create', 
     'uses' => 'TreeController@index'
 ]);
+
+Route::get('gettoken','DuchenneController@getToken');
+
 

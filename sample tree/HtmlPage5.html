@@ -22,12 +22,13 @@
     var items = null;
     $(document).ready(function() {
 
-      /*$.ajax({
-        url: 'http://www.cavaros.com/health_system/public/get_tree/1103300053746',
-        dataType: 'jsonp',
+      $.ajax({
+        url: 'http://www.cavaros.com/health_system/public/get_tree_api/1103300053746',
+        dataType: 'json',
         type: 'GET',
-        jsonpCallback: "callback",
-        contentType: "application/json",
+         
+         crossDomain: true,
+		  
         success: function(data, textStatus, jQxhr) {
 
           $("#basicdiagram").treeControl({
@@ -37,8 +38,10 @@
         error: function(data, textStatus, jQxhr) {
 
         },
-      });*/
-      items = [
+      });
+	
+		
+      /*items = [
                      {
                          id: 0
                          , spouses: [3]
@@ -126,8 +129,8 @@
 
       ];
 
-     $("#basicdiagram").treeControl({ data: items });
-    })
+     $("#basicdiagram").treeControl({ data: items });*/
+    });
   </script>
 </head>
 

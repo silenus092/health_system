@@ -187,7 +187,7 @@ $(document).ready(function() {
                 <div class="form-group">
                   <label class="col-md-4 control-label">เพศ</label>
                   <div class="col-md-6">
-                    <input checked="checked" name="sex" type="radio" value="male" />&nbsp;ชาย&nbsp;<input name="sex" type="radio" value="female" />&nbsp;หญิง&nbsp;</p>
+                    <input checked="checked" name="sex" type="radio" value="male" />&nbsp;ชาย&nbsp;<input name="sex" type="radio" value="female" />&nbsp;หญิง&nbsp;
                   </div>
                   <label class="col-md-4 control-label">ชื่อ</label>
                   <div class="col-md-6">

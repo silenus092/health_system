@@ -8,7 +8,8 @@ use DB ;
 abstract class Controller extends BaseController {
 
 	use DispatchesCommands, ValidatesRequests;
-
+	
+	
 	function check_my_relationship($that_relationship){
 		$relationship_id = 5 ;
 		if($that_relationship == 'พ่อเเม่ลูก'){
