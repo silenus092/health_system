@@ -189,11 +189,14 @@ $(document).ready(function() {
                   <div class="col-md-6">
                     <input checked="checked" name="sex" type="radio" value="male" />&nbsp;ชาย&nbsp;<input name="sex" type="radio" value="female" />&nbsp;หญิง&nbsp;
                   </div>
+                                 </div>
+                   <div class="form-group">
                   <label class="col-md-4 control-label">ชื่อ</label>
                   <div class="col-md-6">
                     <input type="text" class="form-control" name="first_name" value="">
                   </div>
-                </div>
+					</div>
+
                 <div class="form-group">
                   <label class="col-md-4 control-label">นามสกุล</label>
                   <div class="col-md-6">
