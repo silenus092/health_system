@@ -136,6 +136,7 @@ return [
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Html\HtmlServiceProvider',
+		
 		/*
 		 * Application Service Providers...
 		 */
@@ -148,7 +149,9 @@ return [
         * Plugin ... 
         */
         'Xuma\Amaran\AmaranServiceProvider',
-
+		//'Barryvdh\DomPDF\ServiceProvider',
+		'Servit\Mpdf\ServiceProvider', 
+      
 	],
 
 	/*
@@ -199,6 +202,8 @@ return [
 		'Html' => 'Illuminate\Html\HtmlFacade',
 		'Form' => 'Illuminate\Html\FormFacade',
         'Amaran' => 'Xuma\Amaran\Facades\Amaran',
+		//'PDF' => 'Barryvdh\DomPDF\Facade',
+		'PDF'     => 'Servit\Mpdf\Facades\Pdf', 
 	],
 
 ];

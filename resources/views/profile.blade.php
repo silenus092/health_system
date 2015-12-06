@@ -179,7 +179,7 @@ $(document).ready(function() {
                 <div class="panel-footer">
                     <a data-original-title="View as tree diagram" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary" href="{{route('lists.items.create', ['id' => $person->person_citizenID ])}}"><i class="glyphicon glyphicon-tree-conifer"></i></a>
                     <span class="pull-right">
-                        <a href="edit.html" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
+                        <a href="{{ url('/underconstruct') }}" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
                         <a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
                     </span>
                 </div>
@@ -188,7 +188,7 @@ $(document).ready(function() {
     </div>
 </div>
     <div class="row">
-    <h3 style="margin-top: 0;">เลื่อกประวัติการรักษา </h3>
+    <h3 style="margin-top: 0;">เลือกประวัติการรักษา </h3>
         <hr class="separator">
 	<div class="form-group">
         <label class="col-xs-3 control-label">ชื่อโรคที่รับการรักษา</label>
@@ -215,8 +215,9 @@ $(document).ready(function() {
     </div>
     <hr class="separator">
     <div id="show_result" class="row">
-    	<?php if(count($result_callback) > 0 || $result_callback != null ) { ?>
-   						 <center><h3 style="margin-top: 0;"><?php echo $result_callback_header ?> </h3></center>
+    	<?php if(count($result_callback) > 0 || $result_callback != null && $result_callback_header->disease_type_id == 1) { ?>
+  						    <a data-original-title="View as PDF" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary" href="{{ route('view_pdf.type', [ $person->person_id ,$result_callback_header->disease_type_id ]) }}"><i class="glyphicon glyphicon-download-alt"></i></a>                
+   						 <center><h3 style="margin-top: 0;">ผลการรักษาโรค <?php echo " ".$result_callback_header->disease_type_name_en ?> </h3>  </center>
     					<div class="col-xs-6 col-md-3">
                             <div class="panel status panel-info">
                                 <div class="panel-heading">
@@ -247,7 +248,12 @@ $(document).ready(function() {
                                 </div>
                             </div>
                         </div>
-    	<?php }?>
+    		
+			<?php }else if($result_callback_header == "Error"){
+					 echo '<script type="text/javascript">alert('.$result_callback.');</script>';
+						
+                   }				
+		      ?>
     </div>
 </div>
 @endsection

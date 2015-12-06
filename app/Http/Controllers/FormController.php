@@ -281,4 +281,20 @@ class FormController extends Controller
     {
         //
     }
+	
+	
+	public function view_form($person_id ,$type_id){
+		
+		
+		return DB::table('persons')
+            ->join('patients', 'patients.person_id', '=', 'persons.person_id')
+			->join('doctors', 'doctors.doctor_id', '=', 'patients.doctor_id')	
+            ->join('patients_disease_forms', 'patients_disease_forms.patient_id', '=', 'patients.patient_id')
+			->join('disease_forms','disease_forms.question_id','=','patients_disease_forms.question_id')
+			->join('disease_1', 'disease_1.questions_id', '=', 'patients_disease_forms.question_id')
+            ->where('persons.person_id', '=', $person_id)
+			->where('disease_forms.disease_type_id', '=', $type_id)
+            ->first();
+		
+	}
 }

@@ -133,7 +133,7 @@ class PersonController extends Controller {
 	public function show_report_by_type($report_id = null , $person_id = null){
 		
 		
-		if($report_id == 1){ // Fuck Duchenne
+		if($report_id !=null && $person_id!= null){ // Fuck Duchenne
 				$result =  DB::select('SELECT disease_types.disease_type_id ,disease_type_name_th 								,disease_type_name_en
 				FROM  disease_forms ,patients_disease_forms ,disease_types ,patients
 				WHERE patients_disease_forms.question_id  = disease_forms.question_id
@@ -152,18 +152,27 @@ class PersonController extends Controller {
 				$person = DB::table('persons')
 								->where('person_id' ,'=', $person_id )
 								->first();
-			
+	
+				 $result_callback_header = DB::table('disease_types')
+								->where('disease_type_id' ,'=', $report_id)
+								->first();
+				
 				if(count($result_callback)>0 && count($person)){
 					 return view('profile')
 					->with('person' ,$person)
 					->with('results',$result)
-				    ->with('result_callback_header', "ผลการรักษา")
+				    ->with('result_callback_header', $result_callback_header)
 					->with('result_callback',$result_callback);
+
 				}else{
 					$this->show();
 				}
 		}else{
-			
+			 return view('profile')
+					->with('person' ,$person)
+					->with('results',$result)
+				    ->with('result_callback_header', "Error")
+					->with('result_callback',"Cannot find patient profile");
 		}
 	}
 

@@ -33,7 +33,9 @@
 	</head>
 	<body>
 		<div class="container">
+			
 			<div class="content">
+				 <img src="{{ URL::asset('/images/ajax-loader.gif') }}" alt="HTML5 Icon" style="width:128px;height:128px;"><br>
 				<div class="title">Be right back.</div>
 			</div>
 		</div>

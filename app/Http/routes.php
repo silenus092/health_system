@@ -46,7 +46,6 @@ Route::get('duc_report','DuchenneController@index');
 
 Route::get('show_patient_duchenne','DuchenneController@show_patient_duchenne');
 
-Route::get('show_patient_duchenne','DuchenneController@show_patient_duchenne');
 
 Route::get('tree_constuct/{id}', [
     'as' => 'lists.items.create', 
@@ -54,5 +53,17 @@ Route::get('tree_constuct/{id}', [
 ]);
 
 Route::get('gettoken','DuchenneController@getToken');
+
+Route::get('view_pdf/{id}/type/{type}', [
+    'as' => 'view_pdf.type', 
+    'uses' => 'PrintController@view_pdf'
+]);  
+
+Route::get('underconstruct', function () { 
+	return view('errors.503');
+	
+} );
+
+
 
 
