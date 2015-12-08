@@ -53,13 +53,13 @@ class FormController extends Controller
                     // keep the doctor profile
                     $Doctor_id = DB::table('doctors')->insertGetId(
                     ['doctor_name' => Input::get('doctor_name'), 'doctor_mobile_phone' => Input::get('doctor_mobilephonenumber'),
-                    'doctor_phone' => Input::get('doctor_phonenumber'), 'hospital' => Input::get('hospital_name'),
+                    'doctor_phone' => Input::get('doctor_phonenumber'), 'hospital' => Input::get('hospital_name'), 'doctor_care_date' => Input::get('doctor_care_date') ,
                     'email' => Input::get('doctor_email')
                     ]);
                     // keep the patient profile
                     $Patient_id = DB::table('patients')->insertGetId(
                     ['doctor_id' => $Doctor_id, 'person_id' => $Person_id,
-                    'registration_date' => Input::get('doctor_care_date')
+                    'registration_date' => date('Y-m-d')
                     ]);
 
                     $disease_types = DB::table('disease_types')->where('disease_type_name_en', 'Duchenne muscular dystrophy, DMD')->first();
@@ -284,8 +284,6 @@ class FormController extends Controller
 	
 	
 	public function view_form($person_id ,$type_id){
-		
-		
 		return DB::table('persons')
             ->join('patients', 'patients.person_id', '=', 'persons.person_id')
 			->join('doctors', 'doctors.doctor_id', '=', 'patients.doctor_id')	
@@ -297,4 +295,6 @@ class FormController extends Controller
             ->first();
 		
 	}
+	
+	
 }

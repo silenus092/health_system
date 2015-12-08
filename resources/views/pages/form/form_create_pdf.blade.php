@@ -1,484 +1,275 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-  </head>
-  <body>
-<!-- <div class="loader"></div> -->
-<div class="container">
-	<div class="row">
-		<div class="panel panel-default">
-			<div class="panel-heading">แบบการบันทึกความผิดปกติแต่กำเนิดแห่งประเทศไทย
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;" charset="utf-8"/>
+		<!-- <link rel="stylesheet" href="http://localhost/health_system/public/scripts/css/bootstrap.min.css">
+<link rel="stylesheet" href="http://localhost/health_system/public/scripts/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="http://localhost/health_system/public/css/app.css" rel="stylesheet">
+<link rel="stylesheet" href="http://localhost/health_system/public/scripts/css/jquery-ui.css">
+
+<script src="http://localhost/health_system/public/scripts/scripts/jquery-1.11.2.min.js"></script>
+<script src="http://localhost/health_system/public/scripts/scripts/js/jquery-ui.min.js"></script>
+<script src="http://localhost/health_system/public/scripts/scripts/js/bootstrap.min.js"></script> -->
+
+	</head>
+	<body>
+		<div class="">
+			<div class="">แบบการบันทึกความผิดปกติแต่กำเนิดแห่งประเทศไทย
 				( แบบที่ 3 สำหรับความผิดปกติโรคกล้ามเนื้อเสื่อมดูเชนน์ )</div>
-			<div class="panel-body">
+			<hr>
+				<h3>ประวัติผู้ป่วย 
+				</h3>
+				<div class="form-group">
+					<label class="col-md-4 control-label"> สถานะ :</label>
+					<?php if($patient_report->person_alive == 1){
+	echo "ยังมีชีวิตอยู่";
+}else if($patient_report->person_alive == 0){
+	echo "เสียชีวิตเเล้ว";
+}else{
+	echo "ระบุไม่ได้";
+}
+					?>
+
 					<div class="form-group">
-						<label class="col-md-4 control-label">เพศ</label>
+						<label class="col-md-4 control-label">เพศ :</label>
 						<?php echo $patient_report->person_sex; ?>
 					</div>
 					<div class="form-group">
-						<label class="col-md-4 control-label">ชื่อ</label>
-						<div class="col-md-6">
-							<input type="text" class="form-control" name="first_name" value="">
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label class="col-md-4 control-label">นามสกุล</label>
-						<div class="col-md-6">
-							<input type="text" class="form-control" name="last_name" value="">
-						</div>
+						<label class="col-md-4 control-label">ชื่อ :</label>
+						<?php echo $patient_report->person_first_name; ?>
+						&nbsp;&nbsp;
+						<label class="col-md-4 control-label">นามสกุล :</label>
+						<?php echo $patient_report->person_last_name; ?>
 					</div>
 					<div class="form-group">
-						<label class="col-md-4 control-label">วันเดือนปีเกิด</label>
-						<div class='col-md-6 input-group date' id='datetimepicker1'>
-							<input type='text' name="birth_date" class="form-control" />
-							<span class="input-group-addon">
-								<span class="glyphicon glyphicon-calendar"></span>
-							</span>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-md-4 control-label">อายุ</label>
-						<div class='col-md-6' >
-							<input type="text" class="form-control" name="age" value="">
-						</div>
+						<label class="col-md-4 control-label">วันเดือนปีเกิด :</label>
+						<?php echo $patient_report->person_birth_date; ?>
+						&nbsp;&nbsp;
+						<label class="col-md-4 control-label">อายุ :</label>
+						<?php echo $patient_report->person_age; ?>
 					</div>
 					<div class="form-group">
 						<label class="col-md-4 control-label">เลขที่บัตรประชาชน</label>
-						<div class="col-md-6">
-							<input type="text" class="form-control" name="citizen_id" >
-						</div>
+						<?php echo $patient_report->person_citizenID; ?>
 					</div>
 
 					<div class="form-group">
-						<label class="col-md-1 control-label">บ้านเลขที่</label>
-						<div class="col-md-2">
-							<input type="text" class="form-control" name="ban_number">
-						</div>
-						<label class="col-md-1 control-label">หมู่</label>
-						<div class="col-md-2">
-							<input type="text" class="form-control" name="mooh_number">
-						</div>
-						<label class="col-md-1 control-label">ซอย</label>
-						<div class="col-md-2">
-							<input type="text" class="form-control" name="soi">
-						</div>
-						<label class="col-md-1 control-label">ถนน</label>
-						<div class="col-md-2">
-							<input type="text" class="form-control" name="road">
-						</div>
+						<label class="col-md-1 control-label">บ้านเลขที่ :</label>
+						<?php echo $patient_report->person_house_num; ?>
+						<label class="col-md-1 control-label">หมู่ :</label>
+						<?php echo $patient_report->person_mooh_num; ?>
+						<label class="col-md-1 control-label">ซอย :</label>
+						<?php echo $patient_report->person_soi; ?>
+						<label class="col-md-1 control-label">ถนน :</label>
+						<?php echo $patient_report->person_road; ?>
 					</div>
 
 					<div class="form-group">
-						<label class="col-md-1 control-label">ตำบล</label>
-						<div class="col-md-2">
-							<input type="text" class="form-control" name="sub_district">
-						</div>
-						<label class="col-md-1 control-label">อำเภอ</label>
-						<div class="col-md-2">
-							<input type="text" class="form-control" name="district">
-						</div>
-						<label class="col-md-1 control-label">จังหวัด</label>
-						<div class="col-md-2">
-							<input type="text" class="form-control" name="province">
-						</div>
-						<label class="col-md-1 control-label">รหัสไปรษณีย์</label>
-						<div class="col-md-2">
-							<input type="text" class="form-control" name="postal_code">
-						</div>
+						<label class="col-md-1 control-label">ตำบล :</label>
+						<?php echo $patient_report->person_tumbon; ?>
+						<label class="col-md-1 control-label">อำเภอ :</label>
+						<?php echo $patient_report->person_amphur; ?>
+						<label class="col-md-1 control-label">จังหวัด :</label>
+						<?php echo $patient_report->person_province; ?>
+						<label class="col-md-1 control-label">รหัสไปรษณีย์ :</label>
+						<?php echo $patient_report->person_post_code; ?>
 					</div>
 					<div class="form-group">
-						<label class="col-md-1 control-label">โทรศัพท์</label>
-						<div class="col-md-4">
-							<input type="text" class="form-control" name="house_number">
-						</div>
-						<label class="col-md-1 control-label">มือถือ</label>
-						<div class="col-md-4">
-							<input type="text" class="form-control" name="mobi_phone_number">
-						</div>
+						<label class="col-md-1 control-label">โทรศัพท์ :</label>
+						<?php echo $patient_report->person_mobile_phone; ?>
+						<label class="col-md-1 control-label">มือถือ :</label>
+						<?php echo $patient_report->person_phone; ?>
 					</div>
 					<hr>
 					<div class="form-group">
 						<label class="col-md-4 text-left">1.อาการของผู้ป่วย ณ ปัจจุบัน</label>
 					</div>
 					<div class="form-group">
-						<label class="col-md-6 text-left">1.1 เดินเขย่ง หลังแอ่น เดินขาปัด ล้มบ่อย </label>
-						<div class="btn-group" data-toggle="buttons">
-							<label class="btn btn-primary active">
-								<input type="radio" name="1_1_symptom" id="1_1_symptom" value="ไม่เป็น" autocomplete="off" checked> ไม่เป็น
-							</label>
-							<label class="btn btn-primary">
-								<input type="radio" name="1_1_symptom" id="1_2_symptom" value="เป็น" autocomplete="off"> เป็น
-							</label>
-							<label class="btn btn-primary">
-								<input type="radio" name="1_1_symptom" id="1_3_symptom" value="ไม่ได้สังเกต" autocomplete="off"> ไม่ได้สังเกต
-							</label>
-						</div>
+						<label class="col-md-6 text-left">1.1 เดินเขย่ง หลังแอ่น เดินขาปัด ล้มบ่อย :</label>
+						<?php echo $patient_report->symptom_1_1; ?>
 					</div>
 					<div class="form-group">
-						<label class="col-md-6 text-left" >1.2 ลุกขึ้นยืนลำบากต้องเหนี่ยวจับหรือเกาะขึ้นยืน (ท่าโกเวอร์)</label>
-						<div class="btn-group" data-toggle="buttons">
-							<label class="btn btn-primary active">
-								<input type="radio" name="1_2_symptom" id="1_4_symptom" value="ไม่เป็น" autocomplete="off" checked> ไม่เป็น
-							</label>
-							<label class="btn btn-primary">
-								<input type="radio" name="1_2_symptom" id="1_5_symptom" value="เป็น" autocomplete="off"> เป็น
-							</label>
-							<label class="btn btn-primary">
-								<input type="radio" name="1_2_symptom" id="1_6_symptom" value="ไม่ได้สังเกต" autocomplete="off"> ไม่ได้สังเกต
-							</label>
-						</div>
+						<label class="col-md-6 text-left" >1.2 ลุกขึ้นยืนลำบากต้องเหนี่ยวจับหรือเกาะขึ้นยืน (ท่าโกเวอร์) :</label>
+						<?php echo $patient_report->symptom_1_2; ?>
 					</div>
 					<div class="form-group">
-						<label class="col-md-6 text-left">1.3 เดินไม่ได้แล้ว</label>
-						<div class="btn-group" data-toggle="buttons">
-							<label class="btn btn-primary active">
-								<input type="radio" name="1_3_symptom" id="1_7_symptom" value="ไม่เป็น" autocomplete="off" checked> ไม่เป็น
-							</label>
-							<label class="btn btn-primary">
-								<input type="radio" name="1_3_symptom" id="1_8_symptom" value="เป็น" autocomplete="off"> เป็น
-							</label>
-							<label class="btn btn-primary">
-								<input type="radio" name="1_3_symptom" id="1_9_symptom" value="ไม่ได้สังเกต" autocomplete="off"> ไม่ได้สังเกต
-							</label>
-						</div>
+						<label class="col-md-6 text-left">1.3 เดินไม่ได้แล้ว :</label>
+						<?php echo $patient_report->symptom_1_3; ?>
 					</div>
 					<div class="form-group">
-						<label class="col-md-6 text-left">2. ครั้งแรกที่เริ่มมีปัญหาการเดินหรือการลุกยืน  อายุ</label>
-						<div class="col-md-2">
-							<input type="text" class="form-control" name="2_symptom_age" placeholder="ปี">
-						</div>
+						<label class="col-md-6 text-left">2. ครั้งแรกที่เริ่มมีปัญหาการเดินหรือการลุกยืน  อายุ :</label>
+						<?php echo $patient_report->symptom_2; ?>
 					</div>
 					<div class="form-group">
-						<label class="col-md-6 text-left">3. ครั้งแรกที่เริ่มพาไปตรวจเรื่องปัญหาการเดินหรือการลุกยืน อายุ </label>
-						<div class="col-md-2">
-							<input type="text" class="form-control" name="3_symptom_age" placeholder="ปี">
-						</div>
+						<label class="col-md-6 text-left">3. ครั้งแรกที่เริ่มพาไปตรวจเรื่องปัญหาการเดินหรือการลุกยืน อายุ  :</label>
+						<?php echo $patient_report->symptom_3; ?>
 					</div>
 					<div class="form-group">
 						<label class="col-md-4 text-left">4.ปัญหาอื่นๆ</label>
 					</div>
 					<div class="form-group">
-						<label class="col-md-6 text-left">4.1 สมาธิสั้น</label>
-						<div class="btn-group" data-toggle="buttons">
-							<label class="btn btn-primary active">
-								<input type="radio" name="4_1_symptom" id="4_1_symptom" value="ไม่เป็น" autocomplete="off" checked> ไม่เป็น
-							</label>
-							<label class="btn btn-primary">
-								<input type="radio" name="4_1_symptom" id="4_2_symptom"  value="เป็น" autocomplete="off"> เป็น
-							</label>
+						<label class="col-md-6 text-left">4.1 สมาธิสั้น :</label>
+						<?php echo $patient_report->symptom_4_1; ?>
+					</div>
+					<div class="form-group">
+						<label class="col-md-6 text-left" >4.2 ลักษณะคล้ายออทิสติก :</label>
+						<?php echo $patient_report->symptom_4_2; ?>
+					</div>
+					<div class="form-group">
+						<label class="col-md-6 text-left">4.3 นอนกรน :</label>
+						<?php echo $patient_report->symptom_4_3; ?>
+					</div>
+					<div class="form-group">
+						<label class="col-md-6 text-left">4.4  เหนื่องง่าย หรือนอนราบไม่ได้ (ต้องใช้หมอนมากกว่า 1 ใบ) :</label>
+						<?php echo $patient_report->symptom_4_4; ?>
+					</div>
+					<div class="form-group">
+						<label class="col-md-6 text-left">5. มีผลตรวจระดับเอนไซม์กล้ามเนื้อ (ซีเค creatinine kinase) หรือไม่ :</label>			<?php echo $patient_report->symptom_5; ?>
+						<div class="form-group">
+							<label class="col-md-1 ">ผล :</label>
+							<?php echo $patient_report->symptom_5_result; ?>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2">ครั้งแรก เมื่อ วัน-เดือน-ปี :</label>
+							<?php echo $patient_report->symptom_5_date; ?>
+						</div>
+
+					</div>
+					<div class="form-group">
+						<label class="col-md-6 text-left">6. ได้ตรวจ เอคโค (Echocardiogram) หรือไม่ :</label>			
+						<?php echo $patient_report->symptom_5; ?>
+
+						<div class="form-group">
+							<label class="col-md-1 ">ผล :</label>
+							<?php echo $patient_report->symptom_6_result; ?>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2">ครั้งแรก เมื่อ วัน-เดือน-ปี :</label>
+							<?php echo $patient_report->symptom_6_date; ?>
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="col-md-6 text-left" >4.2 ลักษณะคล้ายออทิสติก</label>
-						<div class="btn-group" data-toggle="buttons">
-							<label class="btn btn-primary active">
-								<input type="radio" name="4_2_symptom" id="4_3_symptom" value="ไม่เป็น" autocomplete="off" checked> ไม่เป็น
-							</label>
-							<label class="btn btn-primary">
-								<input type="radio" name="4_2_symptom" id="4_4_symptom" value="เป็น" autocomplete="off"> เป็น
-							</label>
+						<label class="col-md-6 text-left">7. การตรวจยีนโรคกล้ามเนื้อเสื่อมดูเชน ของผู้ป่วย ด้วยวิธีต่อไปนี้และผลดังนี้ </label>
+					</div>
+
+					<div class="form-group">
+						<label class="col-md-2 text-left">7.1 Multiplex PCR :</label>
+						<?php echo $patient_report->symptom_7_1; ?>
+					</div>
+					<label class="col-md-2 text-left"> ผล :</label>
+					<?php echo $patient_report->symptom_7_1_result; ?>
+					<div class="form-group">
+						<label class="col-md-2 text-left" >7.2 MLPA :</label>
+						<?php echo $patient_report->symptom_7_2; ?>
+					</div>
+					<label class="col-md-2 text-left"> ผล :</label>
+					<?php echo $patient_report->symptom_7_2_result; ?>
+					<div class="form-group">
+						<label class="col-md-2 text-left">7.3 Sequencing :</label>
+						<?php echo $patient_report->symptom_7_3; ?>
+					</div>
+					<label class="col-md-2 text-left"> ผล :</label>
+					<?php echo $patient_report->symptom_7_3_result; ?>
+					<div class="form-group">
+						<label class="col-md-6 text-left">8. ผลตรวจยีนของมารดา :</label>
+						<?php echo $patient_report->symptom_8; ?>
+					</div>
+					<div class="form-group">
+						<label class="col-md-3 text-left">	9. ผู้ป่วยมีพี่น้องแม่เดียวกันกี่คน  :</label>
+						<div class="form-group">
+							<label class="col-md-6 text-left">ชาย :</label>
+							<?php echo $patient_report->symptom_9_male; ?>
+							<label class="col-md-6 text-left">  หญิง :</label>
+							<?php echo $patient_report->symptom_9_female; ?>
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="col-md-6 text-left">4.3 นอนกรน</label>
-						<div class="btn-group" data-toggle="buttons">
-							<label class="btn btn-primary active">
-								<input type="radio" name="4_3_symptom" id="4_5_symptom" value="ไม่เป็น" autocomplete="off" checked> ไม่เป็น
-							</label>
-							<label class="btn btn-primary">
-								<input type="radio" name="4_3_symptom" id="4_6_symptom" value="เป็น" autocomplete="off"> เป็น
-							</label>
-						</div>
+						<label class="col-md-3 text-left">10. ประวัติครอบครัว มารดา  </label>
 					</div>
 					<div class="form-group">
-						<label class="col-md-6 text-left">4.4  เหนื่องง่าย หรือนอนราบไม่ได้ (ต้องใช้หมอนมากกว่า 1 ใบ)</label>
-						<div class="btn-group" data-toggle="buttons">
-							<label class="btn btn-primary active">
-								<input type="radio" name="4_4_symptom" id="4_7_symptom" value="ไม่เป็น" autocomplete="off" checked> ไม่เป็น
-							</label>
-							<label class="btn btn-primary">
-								<input type="radio" name="4_4_symptom" id="4_8_symptom" value="เป็น" autocomplete="off"> เป็น
-							</label>
-							<label class="btn btn-primary">
-								<input type="radio" name="4_4_symptom" id="4_9_symptom" value="ไม่ได้สังเกต" autocomplete="off"> ไม่ได้สังเกต
-							</label>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-md-6 text-left">5. มีผลตรวจระดับเอนไซม์กล้ามเนื้อ (ซีเค creatinine kinase) หรือไม่</label>
-						<div class="btn-group" data-toggle="buttons">
-							<label class="btn btn-primary active">
-								<input type="radio" name="5_symptom" id="5_1_symptom" value="ไม่มี" autocomplete="off" checked> ไม่มี
-							</label>
-							<label class="btn btn-primary">
-								<input type="radio" name="5_symptom" id="5_2_symptom" value="มี" autocomplete="off"> มี
-							</label>
-						</div>
-						<p>
-						<div id="5_2_symptom_add_on">
-							<label class="col-md-1 ">ผล</label>
-							<div class="col-md-4">
-								<input type="text" class="form-control" id="5_2_symptom_add_on_result" name="5_2_symptom_add_on_result" disabled="true">
-							</div>
-							<label class="col-md-2">ครั้งแรก เมื่อ วัน-เดือน-ปี</label>
-							<div class='col-md-2 input-group date' id='datetimepicker2'>
-								<input type='text' id="5_2_symptom_add_on_result_date" name="5_2_symptom_add_on_result_date" class="form-control" disabled="true" />
-								<span class="input-group-addon">
-									<span class="glyphicon glyphicon-calendar"></span>
-								</span>
-							</div>
-						</div>
-						</p>
-					</div>
-				<div class="form-group">
-					<label class="col-md-6 text-left">6. ได้ตรวจ เอคโค (Echocardiogram) หรือไม่</label>
-					<div class="btn-group" data-toggle="buttons">
-						<label class="btn btn-primary active">
-							<input type="radio" name="6_symptom" id="6_1_symptom" value="ไม่ได้ตรวจ" autocomplete="off" checked> ไม่ได้ตรวจ
+						<label class="col-md-5">
+							10.1 มีหรือเคยมีพี่น้องเพศชาย หรือญาติเพศชายป่วยเป็นโรคกล้ามเนื้อหรือไม่ :
 						</label>
-						<label class="btn btn-primary">
-							<input type="radio" name="6_symptom" id="6_2_symptom" value="ตรวจ" autocomplete="off"> ตรวจ
+						<?php echo $patient_report->symptom_10_1; ?>
+					</div>
+					<div class="col-md-2">
+						<label class="col-md-5">
+							จำนวน :
 						</label>
+						<?php echo $patient_report->symptom_10_1_number; ?>
 					</div>
-					<p>
-					<div id="6_2_symptom_add_on" >
-						<label class="col-md-1 ">ผล</label>
-						<div class="col-md-4">
-							<input type="text" class="form-control" id="6_2_symptom_add_on_result" name="6_2_symptom_add_on_result" disabled="true">
-						</div>
-						<label class="col-md-2">ครั้งสุดท้าย เมื่อ วัน-เดือน-ปี</label>
-						<div class='col-md-2 input-group date' id='datetimepicker3'>
-							<input type='text' id="6_2_symptom_add_on_result_date" name="6_2_symptom_add_on_result_date"  class="form-control" disabled="true"/>
-							<span class="input-group-addon">
-								<span class="glyphicon glyphicon-calendar"></span>
-							</span>
+					
+					<div class="form-group">
+						<label class="col-md-6 control-label">รายชือญาติที่ป่วยเป็นโรคกล้ามเนื้อ ระบุว่าเป็นใครบ้าง และอายุเท่าไหร่ พร้อมเลขที่บัตรประชาชน</label>
+
+
+						<div class="checkbox col-md-2">
+							<label>
+								<input  type="checkbox" id="10_symptom_checkbox" name="10_symptom_checkbox">ไม่รู้: ติดตามเพิ่มเติม
+							</label>
 						</div>
 					</div>
-					</p>
-			</div>
-			<div class="form-group">
-				<label class="col-md-6 text-left">7. การตรวจยีนโรคกล้ามเนื้อเสื่อมดูเชน ของผู้ป่วย ด้วยวิธีต่อไปนี้และผลดังนี้ </label>
-			</div>
 
-			<div class="form-group">
-				<label class="col-md-2 text-left">7.1 Multiplex PCR </label>
-				<div class="col-md-3 btn-group" data-toggle="buttons">
-					<label class="btn btn-primary active">
-						<input type="radio" name="7_1_symptom" id="7_1_symptom" value="ปกติ"  autocomplete="off" checked> ปกติ
-					</label>
-					<label class="btn btn-primary">
-						<input type="radio" name="7_1_symptom" id="7_2_symptom" value="ไม่ได้ตรวจ" autocomplete="off"> ไม่ได้ตรวจ
-					</label>
-					<label class="btn btn-primary">
-						<input type="radio" name="7_1_symptom" id="7_3_symptom" value="ผิดปกติ" autocomplete="off"> ผิดปกติ
-					</label>
-				</div>
-				<div class="col-md-5" >
-					<input type="text" class="col-md-5 form-control" name="7_1_symptom_result" placeholder="ผล">
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-md-2 text-left" >7.2 MLPA </label>
-				<div class="col-md-3 btn-group" data-toggle="buttons">
-					<label class="btn btn-primary active">
-						<input type="radio" name="7_2_symptom" id="7_4_symptom" value="ปกติ" autocomplete="off" checked> ปกติ
-					</label>
-					<label class="btn btn-primary">
-						<input type="radio" name="7_2_symptom" id="7_5_symptom" value="ไม่ได้ตรวจ" autocomplete="off"> ไม่ได้ตรวจ
-					</label>
-					<label class="btn btn-primary">
-						<input type="radio" name="7_2_symptom" id="7_6_symptom" value="ผิดปกติ" autocomplete="off"> ผิดปกติ
-					</label>
-				</div>
-				<div class="col-md-5" >
-					<input type="text" class="col-md-5 form-control" name="7_2_symptom_result" placeholder="ผล">
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-md-2 text-left">7.3 Sequencing</label>
-				<div class="col-md-3 btn-group" data-toggle="buttons">
-					<label class="btn btn-primary active">
-						<input type="radio" name="7_3_symptom" id="7_7_symptom" value="ปกติ" autocomplete="off" checked> ปกติ
-					</label>
-					<label class="btn btn-primary">
-						<input type="radio" name="7_3_symptom" id="7_8_symptom" value="ไม่ได้ตรวจ" autocomplete="off"> ไม่ได้ตรวจ
-					</label>
-					<label class="btn btn-primary">
-						<input type="radio" name="7_3_symptom" id="7_9_symptom" value="ผิดปกติ" autocomplete="off"> ผิดปกติ
-					</label>
-				</div>
-				<div class="col-md-5" >
-					<input type="text" class="col-md-5 form-control" name="7_3_symptom_result" placeholder="ผล">
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-md-6 text-left">8. ผลตรวจยีนของมารดา</label>
-				<div class="btn-group" data-toggle="buttons">
-					<label class="btn btn-primary active">
-						<input type="radio" name="8_1_symptom" id="8_1_symptom" value="เป็นพาหะ" autocomplete="off" checked> เป็นพาหะ
-					</label>
-					<label class="btn btn-primary">
-						<input type="radio" name="8_1_symptom" id="8_2_symptom" value="ไม่เป็นพาหะ" autocomplete="off"> ไม่เป็นพาหะ
-					</label>
-					<label class="btn btn-primary">
-						<input type="radio" name="8_1_symptom" id="8_3_symptom" value="ไม่รู้" autocomplete="off">ยังไม่ได้ตรวจ / ไม่รู้
-					</label>
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-md-3 text-left">	9. ผู้ป่วยมีพี่น้องแม่เดียวกันกี่คน </label>
-				<div class="checkbox col-md-1">
-					<label>
-						ชาย
-					</label>
-				</div>
-				<div class="col-md-2 text-left">
-					<input type="text" class="form-control" name="9_male_number" value="" placeholder="คน">
-				</div>
-				<div class="checkbox col-md-1">
-					<label>
-						หญิง
-					</label>
-				</div>
-				<div class="col-md-2 text-left">
-					<input type="text" class="form-control" name="9_female_number" value="" placeholder="คน">
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-md-3 text-left">10. ประวัติครอบครัว มารดา  </label>
-			</div>
-			<div class="form-group">
-				<label class="col-md-5">
-					10.1 มีหรือเคยมีพี่น้องเพศชาย หรือญาติเพศชายป่วยเป็นโรคกล้ามเนื้อหรือไม่
-				</label>
-				<div class="col-md-2 btn-group"  data-toggle="buttons">
-					<label class="btn btn-primary active">
-						<input type="radio" name="10_symptom" id="10_1_symptom" value="ไม่มี" autocomplete="off" checked> ไม่มี
-					</label>
-					<label class="btn btn-primary">
-						<input type="radio" name="10_symptom" id="10_2_symptom" value="มี" autocomplete="off"> มี
-					</label>
-				</div>
-				<div class="col-md-2">
-					<input type="text" class="form-control" id="10_symptom_number" name="10_symptom_number" disabled="true" placeholder="กี่คน">
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-md-6 control-label">รายชือญาติที่ป่วยเป็นโรคกล้ามเนื้อ ระบุว่าเป็นใครบ้าง และอายุเท่าไหร่ พร้อมเลขที่บัตรประชาชน</label>
-
-				<input type="button" id="add_more" value="Add More"  class="btn btn-primary" />
-
-				<div class="checkbox col-md-2">
-					<label>
-						<input  type="checkbox" id="10_symptom_checkbox" name="10_symptom_checkbox">ไม่รู้: ติดตามเพิ่มเติม
-					</label>
-				</div>
-			</div>
-
-			<div class="form-group form-group_10">
-				<div class="col-md-2">
-					<input type="text" class="form-control field_name" name="10_name[]" placeholder="1-ชื่อ-นามสกุล" required="true">
-				</div>
-				<div class="col-md-2">
-					<input type="text" class="form-control field_age" name="10_age[]" placeholder="อายุ" required="true">
-				</div>
-				<div class="col-md-2">
-					<input type="text" class="form-control field_id" name="10_citizen_number[]" placeholder="เลขประจำตัวประชาชน" required="true">
-				</div>
-				<div class="form-group">
-					<label class="col-md-1 control-label">Relationship</label>
-					<div class="col-md-2  selectContainer">
-						<select name="10_roles[] " class="form-control field_roles">
-							<option value="ปู่ทวด">ปู่ทวด</option>
-							<option value="ปู่">ปู่</option>
-							<option value="ตา">ตา</option>
-							<option value="น้า">น้า</option>
-							<option value="ลุง">ลุง</option>
-							<option value="พ่อ">พ่อ</option>
-							<option value="พี่ชาย">พี่ชาย</option>
-							<option value="น้องชาย">น้องชาย</option>
-						</select>
+					<div class="form-group form-group_10">
+						<div class="col-md-2">
+							<input type="text" class="form-control field_name" name="10_name[]" placeholder="1-ชื่อ-นามสกุล" required="true">
+						</div>
+						<div class="col-md-2">
+							<input type="text" class="form-control field_age" name="10_age[]" placeholder="อายุ" required="true">
+						</div>
+						<div class="col-md-2">
+							<input type="text" class="form-control field_id" name="10_citizen_number[]" placeholder="เลขประจำตัวประชาชน" required="true">
+						</div>
+				
 					</div>
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-md-3 text-left">10.2 มารดามีพี่น้องแม่เดียวกัน กี่คน  </label>
-				<div class="checkbox col-md-1">
-					<label>
-						ชาย
-					</label>
-				</div>
-				<div class="col-md-2 text-left">
-					<input type="text" class="form-control" name="10_2_male_number" value="" placeholder="คน">
-				</div>
-				<div class="checkbox col-md-1">
-					<label>
-						หญิง
-					</label>
-				</div>
-				<div class="col-md-2 text-left">
-					<input type="text" class="form-control" name="10_2_female_number" value="" placeholder="คน">
-				</div>
-			</div>
-			<hr>
-			<div class="form-group">
-				<label class="col-md-4 control-label">คนไข้จากโรงพยาบาล </label>
-				<div class='col-md-6' >
-					<input type="text" class="form-control" name="hospital_name" value="">
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-md-8 control-label">แพทย์เจ้าของไข้</label>
-			</div>
-			<div class="form-group">
-				<label class="col-md-4 control-label">วัน-เดือน-ปี ที่บันทึกข้อมูลโดยแพทย์เจ้าของไข้</label>
-				<div class='col-md-6 input-group date' id='datetimepicker4'>
-					<input type='text' name="doctor_care_date" class="form-control" />
-					<span class="input-group-addon">
-						<span class="glyphicon glyphicon-calendar"></span>
-					</span>
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-md-4 control-label">ชื่อ-นามสกุล</label>
-				<div class="col-md-6">
-					<input type="text" class="form-control" name="doctor_name" >
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-md-4 control-label">เบอร์โทร</label>
-				<div class='col-md-6' >
-					<input type="text" class="form-control" name="doctor_mobilephonenumber" value="">
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-md-4 control-label">โทรสาร</label>
-				<div class="col-md-6">
-					<input type="text" class="form-control" name="doctor_phonenumber" >
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-md-4 control-label">email</label>
-				<div class="col-md-6">
-					<input type="text" class="form-control" name="doctor_email" >
-				</div>
-			</div>
+					<div class="form-group">
+						<label class="col-md-3 text-left">10.2 มารดามีพี่น้องแม่เดียวกัน กี่คน  </label>
+						<div class="checkbox col-md-1">
+							<label>
+								ชาย : 
+							</label>
+							<?php echo $patient_report->symptom_10_2_male; ?>
+						</div>
+						<div class="checkbox col-md-1">
+							<label>
+								หญิง :
+							</label>
+							<?php echo $patient_report->symptom_10_2_female; ?>
+						</div>
+					</div>
+					<hr>
+					<div class="form-group">
+						<label class="col-md-4 control-label">คนไข้จากโรงพยาบาล :</label>
+						<?php echo $patient_report->hospital; ?>
+					</div>
+					<div class="form-group">
+						<label class="col-md-8 control-label">ประวัติแพทย์เจ้าของไข้</label>
+					</div>
+					<div class="form-group">
+						<label class="col-md-4 control-label">วัน-เดือน-ปี ที่บันทึกข้อมูลโดยแพทย์เจ้าของไข้ :</label>
+						<?php echo $patient_report->doctor_care_date; ?>
+					</div>
+					<div class="form-group">
+						<label class="col-md-4 control-label">ชื่อ-นามสกุล :</label>
+							<?php echo $patient_report->doctor_name; ?>
+					</div>
+					<div class="form-group">
+						<label class="col-md-4 control-label">เบอร์โทร :</label>
+							<?php echo $patient_report->doctor_phone; ?>
+					</div>
+					<div class="form-group">
+						<label class="col-md-4 control-label">โทรสาร :</label>
+							<?php echo $patient_report->doctor_mobile_phobe; ?>
+					</div>
+					<div class="form-group">
+						<label class="col-md-4 control-label">email :</label>
+							<?php echo $patient_report->email; ?>
+					</div>
 
-			<hr>
-			<div class="form-group">
-				<div class="col-md-6 col-md-offset-4">
-					<input type="button" id="submit" value="submit"  class="btn btn-primary" />
+					<hr>
 				</div>
+
 			</div>
-	
-
-	</div>
-	<div class="panel-footer">Panel footer</div>
-</div>
-
-</div>
-</div>
-
-</body>
+		</div>
+	</body>
 </html>

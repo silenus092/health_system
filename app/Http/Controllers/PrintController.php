@@ -19,6 +19,8 @@ class PrintController extends Controller
 		$patient_report =  $form_controller->view_form($id , $type);
 		//var_dump($this->view_form($id , $type));
 		if(count($patient_report)>0){
+			
+		
 		$html_view =  \View::make('pages.form.form_create_pdf', compact('patient_report'))->render();
 		$pdf = \App::make('mpdf.wrapper',['th','A4','','',10,10,10,10,10,5]);
        // $pdf = \App::make('mpdf.wrapper');

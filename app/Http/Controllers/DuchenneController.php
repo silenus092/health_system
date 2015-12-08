@@ -286,5 +286,9 @@ AND t1.row_number in ( floor((total_rows+1)/2), floor((total_rows+2)/2) ) ');
 			{
 				//
 			}
+	
+			public function duchenne_find_namelist_symptom_10($id){
+				
+			}
 
 		}
