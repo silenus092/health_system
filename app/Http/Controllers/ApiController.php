@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Response;
@@ -363,7 +364,7 @@ class ApiController extends Controller
 			DB::commit();
 			$result['status'] = "Success";
 			$result['message'] = "";
-			return response()->json($result, 200);
+			return response()->json($result, 200)->setCallback(Input::get('callback'));
 			/*lse {
 				$result['status'] = "Not Ajax requests";
 				$result['message'] = "please contact admin, thank yous";

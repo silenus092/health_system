@@ -32,10 +32,12 @@
 			var person_birth_date = "1990-10-11";
 			$.ajax({
 				url: 'http://www.cavaros.com/health_system/public/add_person_api',
-				contentType: "application/x-www-form-urlencoded;charset=utf-8", 
+				
 				cache: false,
         		type: 'post',
-        	    dataType: 'json',
+        	    dataType: 'jsonp' ,
+				 jsonpCallback: 'callback',
+				 jsonp: '$callback',
 				data: "sex=" + sex + "&age=" + age + "&first_name=" + first_name + "&last_name=" + last_name +
 					"&parents_id=" + JSON.stringify(parents_id) + "&spouses_id=" + JSON.stringify(spouses_id) +
 					"&sons_id=" + JSON.stringify(sons_id) + "&relatives_id=" + JSON.stringify(relatives_id) +
@@ -47,6 +49,9 @@
 				 error: function (xhr, ajaxOptions, thrownError) { //Add these parameters to display the required response
             alert(xhr.status);
             alert(xhr.responseText);
+					  console.log(xhr);
+        console.log(ajaxOptions);
+        console.log(thrownError);
         }
 			});
 
