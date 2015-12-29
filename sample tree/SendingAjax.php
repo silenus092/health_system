@@ -30,24 +30,36 @@
 			var person_citizenID = "1103300053888";
 			var person_alive = "1";
 			var person_birth_date = "1990-10-11";
+			var items ={"first_name":"rt","last_name":"qqqq",				"sex":"male","isSick":"","person_alive":1,"type_of_relationship":"ลูก",
+"parents_id":[68],"person_birth_date":"1990-10-11",
+"person_citizenID":"1103300053888","relatives_id":[],"spouses_id":[],"sons_id":[]};
+			
 			$.ajax({
-				url: 'http://www.cavaros.com/health_system/public/add_person_api',
+				url: 'http://localhost/health_system/public/add_person',
 				contentType: "application/x-www-form-urlencoded;charset=utf-8", 
 				cache: false,
         		type: 'post',
+<<<<<<< HEAD
         	    dataType: 'json',
 
 				data: "sex=" + sex + "&age=" + age + "&first_name=" + first_name + "&last_name=" + last_name +
+=======
+        		data: {inputs:items },
+				/*data: "sex=" + sex + "&age=" + age + "&first_name=" + first_name + "&last_name=" + last_name +
+>>>>>>> 894d515b16ff17f40730df48c3ecf9a9133e1cb4
 					"&parents_id=" + JSON.stringify(parents_id) + "&spouses_id=" + JSON.stringify(spouses_id) +
 					"&sons_id=" + JSON.stringify(sons_id) + "&relatives_id=" + JSON.stringify(relatives_id) +
 					"&type_of_relationship=" + type_of_relationship + "&person_citizenID=" + person_citizenID +
-					"&person_alive=" + person_alive + "&person_birth_date=" + person_birth_date,
+					"&person_alive=" + person_alive + "&person_birth_date=" + person_birth_date,*/
 				success: function (msg) {
 					$('#basicdiagram').html(msg['status'] + "<br>" + msg['message']);
 				},
 				 error: function (xhr, ajaxOptions, thrownError) { //Add these parameters to display the required response
-            alert(xhr.status);
-            alert(xhr.responseText);
+            console.log(xhr.status);
+            console.log(xhr.responseText);
+			 console.log(xhr);
+      			console.log(ajaxOptions);
+        			console.log(thrownError);
         }
 			});
 
