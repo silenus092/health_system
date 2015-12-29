@@ -36,6 +36,7 @@
 				cache: false,
         		type: 'post',
         	    dataType: 'json',
+
 				data: "sex=" + sex + "&age=" + age + "&first_name=" + first_name + "&last_name=" + last_name +
 					"&parents_id=" + JSON.stringify(parents_id) + "&spouses_id=" + JSON.stringify(spouses_id) +
 					"&sons_id=" + JSON.stringify(sons_id) + "&relatives_id=" + JSON.stringify(relatives_id) +
