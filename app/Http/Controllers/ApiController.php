@@ -324,20 +324,39 @@ class ApiController extends Controller
 	*/
 
 	public function add_person(){
-		try {
+		//try {
+			/*if (isset(Input::get('inputs'))) {
 
-			DB::beginTransaction();
-			$person_sex = Input::get('sex');
+			//DB::beginTransaction();
+			$items ='{
+			"first_name":"rt","last_name":"qqqq",																			"sex":"male","isSick":"","person_alive":1,"type_of_relationship":"ลูก",
+             "parents_id":[68],"person_birth_date":"1990-10-11",
+			 "person_citizenID":"1103300053888","relatives_id":[],"spouses_id":[],"sons_id":[]
+			 }';
+			$obj = json_decode($items,true);*/
+			/*$person_sex = Input::get('sex');
 			$person_age = Input::get('age');
 			$parents = json_decode(stripslashes(Input::get('parents_id')));
 			$spouses = json_decode(stripslashes(Input::get('spouses_id')));
 			$relatives = json_decode(stripslashes(Input::get('relatives_id')));
 			$sons = json_decode(stripslashes(Input::get('sons_id')));
 			$type_of_relationship  = Input::get('type_of_relationship');
-			$Person_id = DB::table('persons')->insertGetId(['person_first_name' => Input::get('first_name'), 					 'person_last_name' => Input::get('last_name'),
+			$Person_id = DB::table('persons')->insertGetId(['person_first_name' => Input::get('first_name'), 			    'person_last_name' => Input::get('last_name'),
 			'person_citizenID' =>Input::get('person_citizenID'),'person_alive' => Input::get('person_alive'), 
-		'person_sex' => $person_sex , 'person_age' => $person_age ,'person_birth_date'=> 							     Input::get('person_birth_date')]);
-
+		    'person_sex' => $person_sex , 'person_age' => $person_age ,'person_birth_date'=> 							    Input::get('person_birth_date')]);*/
+			
+			
+			/*$person_sex =$obj->sex;
+			$person_age =$obj->age;
+			$parents = $obj->parents_id;
+			$spouses =$obj->spouses_id;
+			$relatives = $obj->relatives_id;
+			$sons = $obj->sons_id;
+			$type_of_relationship  =$obj->type_of_relationship;
+			$Person_id = DB::table('persons')->insertGetId(['person_first_name' => $obj->first_name, 			    'person_last_name' => $obj->last_name,
+			'person_citizenID' =>$obj->person_citizenID,'person_alive' => $obj->person_alive, 
+		    'person_sex' => $person_sex , 'person_age' => $person_age ,'person_birth_date'=> 							    $obj->person_birth_date ]);
+			
 			if($type_of_relationship  == "พ่อเเม่"){
 				$this->add_spouse($Person_id ,$spouses,	$person_sex);
 				$this->add_child($Person_id,$sons,$person_sex);
@@ -350,7 +369,6 @@ class ApiController extends Controller
 				$this->add_parent($Person_id ,$parents ,$person_sex);
 				$this->add_relative($Person_id ,$relatives ,$person_sex,$person_age);
 			}else{
-
 				DB::rollback();
 				$result['status'] = "No relationship found ";
 				$result['message'] = "please select relationship before submit.";
@@ -364,18 +382,18 @@ class ApiController extends Controller
 			DB::commit();
 			$result['status'] = "Success";
 			$result['message'] = "";
-			return response()->json($result, 200)->setCallback(Input::get('callback'));
-			/*lse {
-				$result['status'] = "Not Ajax requests";
-				$result['message'] = "please contact admin, thank yous";
-				return response()->json($result, 200);
-			}*/
+			return response()->json($result, 200);
+			}else{
+			$result['status'] = "Fail";
+			$result['message'] = "Inputs  are not detected";
+			return response()->json($result, 200);
+			}
 		}catch (Exception $e) {
 			DB::rollback();
 			$result['status'] = "Error";
 			$result['message'] = $e->getMessage();
 			return response()->json($result, 200);
-		}
+		}*/
 	}
 	// กรณีที่ตัวเองเป็นลูก
 	public function add_parent($my_id ,$parnets ,$my_sex){

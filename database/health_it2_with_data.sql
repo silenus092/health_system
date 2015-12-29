@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.11
+-- version 4.5.2
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 17, 2015 at 11:21 AM
--- Server version: 5.6.21
--- PHP Version: 5.6.3
+-- Generation Time: Dec 25, 2015 at 09:47 AM
+-- Server version: 5.6.20
+-- PHP Version: 5.5.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `health_it2`
@@ -26,7 +26,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `disease_1`
 --
 
-CREATE TABLE IF NOT EXISTS `disease_1` (
+CREATE TABLE `disease_1` (
   `symptom_1_1` varchar(45) DEFAULT NULL,
   `symptom_1_2` varchar(45) DEFAULT NULL,
   `symptom_1_3` varchar(45) DEFAULT NULL,
@@ -75,10 +75,10 @@ INSERT INTO `disease_1` (`symptom_1_1`, `symptom_1_2`, `symptom_1_3`, `symptom_2
 -- Table structure for table `disease_forms`
 --
 
-CREATE TABLE IF NOT EXISTS `disease_forms` (
-`question_id` int(11) NOT NULL,
+CREATE TABLE `disease_forms` (
+  `question_id` int(11) NOT NULL,
   `disease_type_id` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `disease_forms`
@@ -97,11 +97,11 @@ INSERT INTO `disease_forms` (`question_id`, `disease_type_id`) VALUES
 -- Table structure for table `disease_types`
 --
 
-CREATE TABLE IF NOT EXISTS `disease_types` (
-`disease_type_id` int(11) NOT NULL,
+CREATE TABLE `disease_types` (
+  `disease_type_id` int(11) NOT NULL,
   `disease_type_name_th` varchar(45) DEFAULT NULL,
   `disease_type_name_en` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `disease_types`
@@ -118,25 +118,26 @@ INSERT INTO `disease_types` (`disease_type_id`, `disease_type_name_th`, `disease
 -- Table structure for table `doctors`
 --
 
-CREATE TABLE IF NOT EXISTS `doctors` (
-`doctor_id` int(11) NOT NULL,
+CREATE TABLE `doctors` (
+  `doctor_id` int(11) NOT NULL,
   `doctor_name` varchar(45) DEFAULT NULL,
   `doctor_mobile_phone` varchar(45) DEFAULT NULL,
   `doctor_phone` varchar(45) DEFAULT NULL,
   `hospital` varchar(45) DEFAULT NULL,
-  `email` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8;
+  `email` varchar(45) DEFAULT NULL,
+  `doctor_care_date` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `doctors`
 --
 
-INSERT INTO `doctors` (`doctor_id`, `doctor_name`, `doctor_mobile_phone`, `doctor_phone`, `hospital`, `email`) VALUES
-(55, 'ใหม่ ดาวิกา', '0840919392', '027416163', 'สมิติเวช', 'mai.davi@gmail.com'),
-(56, 'ใหม่ ดาวิกา', '0840919392', '027416163', 'สมิติเวช', 'mai.davi@gmail.com'),
-(57, 'ใหม่ ดาวิกา', '0840919392', '027416163', 'สมิติเวช', 'mai.davi@gmail.com'),
-(58, 'ใหม่ ดาวิกา', '0840919392', '027416163', 'สมิติเวช', 'mai.davi@gmail.com'),
-(61, 'ใหม่ ดาวิกา', '0840919392', '027416163', 'สมิติเวช', 'mai.davi@gmail.com');
+INSERT INTO `doctors` (`doctor_id`, `doctor_name`, `doctor_mobile_phone`, `doctor_phone`, `hospital`, `email`, `doctor_care_date`) VALUES
+(55, 'ใหม่ ดาวิกา', '0840919392', '027416163', 'สมิติเวช', 'mai.davi@gmail.com', NULL),
+(56, 'ใหม่ ดาวิกา', '0840919392', '027416163', 'สมิติเวช', 'mai.davi@gmail.com', NULL),
+(57, 'ใหม่ ดาวิกา', '0840919392', '027416163', 'สมิติเวช', 'mai.davi@gmail.com', NULL),
+(58, 'ใหม่ ดาวิกา', '0840919392', '027416163', 'สมิติเวช', 'mai.davi@gmail.com', NULL),
+(61, 'ใหม่ ดาวิกา', '0840919392', '027416163', 'สมิติเวช', 'mai.davi@gmail.com', NULL);
 
 -- --------------------------------------------------------
 
@@ -144,7 +145,7 @@ INSERT INTO `doctors` (`doctor_id`, `doctor_name`, `doctor_mobile_phone`, `docto
 -- Table structure for table `migrations`
 --
 
-CREATE TABLE IF NOT EXISTS `migrations` (
+CREATE TABLE `migrations` (
   `migration` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -163,7 +164,7 @@ INSERT INTO `migrations` (`migration`, `batch`) VALUES
 -- Table structure for table `password_resets`
 --
 
-CREATE TABLE IF NOT EXISTS `password_resets` (
+CREATE TABLE `password_resets` (
   `email` varchar(255) DEFAULT NULL,
   `token` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
@@ -175,12 +176,12 @@ CREATE TABLE IF NOT EXISTS `password_resets` (
 -- Table structure for table `patients`
 --
 
-CREATE TABLE IF NOT EXISTS `patients` (
-`patient_id` int(11) NOT NULL,
+CREATE TABLE `patients` (
+  `patient_id` int(11) NOT NULL,
   `doctor_id` int(11) NOT NULL,
   `registration_date` date DEFAULT NULL,
   `person_id` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `patients`
@@ -198,12 +199,12 @@ INSERT INTO `patients` (`patient_id`, `doctor_id`, `registration_date`, `person_
 -- Table structure for table `patients_disease_forms`
 --
 
-CREATE TABLE IF NOT EXISTS `patients_disease_forms` (
-`patients_do_questions_id` int(11) NOT NULL,
+CREATE TABLE `patients_disease_forms` (
+  `patients_do_questions_id` int(11) NOT NULL,
   `question_id` int(11) NOT NULL,
   `registration_date` date DEFAULT NULL,
   `patient_id` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `patients_disease_forms`
@@ -221,12 +222,12 @@ INSERT INTO `patients_disease_forms` (`patients_do_questions_id`, `question_id`,
 -- Table structure for table `persons`
 --
 
-CREATE TABLE IF NOT EXISTS `persons` (
-`person_id` int(11) NOT NULL,
+CREATE TABLE `persons` (
+  `person_id` int(11) NOT NULL,
   `person_first_name` varchar(45) DEFAULT NULL,
   `person_last_name` varchar(45) DEFAULT NULL,
   `person_age` int(11) DEFAULT NULL,
-  `person_birth_date` datetime DEFAULT NULL,
+  `person_birth_date` date DEFAULT NULL,
   `person_citizenID` varchar(45) DEFAULT NULL,
   `person_house_num` varchar(45) DEFAULT NULL,
   `person_soi` varchar(45) DEFAULT NULL,
@@ -240,24 +241,29 @@ CREATE TABLE IF NOT EXISTS `persons` (
   `person_sex` varchar(45) DEFAULT NULL,
   `person_mooh_num` varchar(45) DEFAULT NULL,
   `person_alive` tinyint(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `persons`
 --
 
 INSERT INTO `persons` (`person_id`, `person_first_name`, `person_last_name`, `person_age`, `person_birth_date`, `person_citizenID`, `person_house_num`, `person_soi`, `person_road`, `person_tumbon`, `person_amphur`, `person_province`, `person_post_code`, `person_mobile_phone`, `person_phone`, `person_sex`, `person_mooh_num`, `person_alive`) VALUES
-(65, 'คุณาภาส', 'คงกิติมานนท์', 24, '1991-11-29 00:00:00', '1103300053746', '137/5', 'สุขุมวิท 60/1', 'ถนนสุขุมวิท', 'บางจาก', 'เขตพระโขนง', 'กรุงเทพ', 10260, '027416163', '0840919392', 'male', '-', 1),
+(65, 'คุณาภาส', 'คงกิติมานนท์', 24, '1991-11-29', '1103300053746', '137/5', 'สุขุมวิท 60/1', 'ถนนสุขุมวิท', 'บางจาก', 'เขตพระโขนง', 'กรุงเทพ', 10260, '027416163', '0840919392', 'male', '-', 1),
 (66, 'ทศพล', 'คงกิติมานนท์', 61, NULL, '1103300053770', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 0),
-(67, 'สุนันท์', 'คงกิติมานนท์', 56, '1991-11-29 00:00:00', '1103300053748', '137/5', 'สุขุมวิท 60/1', 'ถนนสุขุมวิท', 'บางจาก', 'เขตพระโขนง', 'กรุงเทพ', 10260, '027416163', '0840919392', 'female', '-', 1),
+(67, 'สุนันท์', 'คงกิติมานนท์', 56, '1991-11-29', '1103300053748', '137/5', 'สุขุมวิท 60/1', 'ถนนสุขุมวิท', 'บางจาก', 'เขตพระโขนง', 'กรุงเทพ', 10260, '027416163', '0840919392', 'female', '-', 1),
 (68, 'ณัฐพล', 'คงกิติมานนท์', 29, NULL, '1103300053710', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1),
-(69, 'พลอย', 'เฌอมาลย์', 25, '1991-11-29 00:00:00', '1103300053747', '137/5', 'สุขุมวิท 60/1', 'ถนนสุขุมวิท', 'บางจาก', 'เขตพระโขนง', 'กรุงเทพ', 10260, '027416163', '0840919392', 'female', '-', 1),
-(71, 'ได', 'ไดอาน่า', 24, '1991-11-29 00:00:00', '1103300053749', '137/5', 'สุขุมวิท 60/1', 'ถนนสุขุมวิท', 'บางจาก', 'เขตพระโขนง', 'กรุงเทพ', 10260, '027416163', '0840919392', 'female', '-', 1),
+(69, 'พลอย', 'เฌอมาลย์', 25, '1991-11-29', '1103300053747', '137/5', 'สุขุมวิท 60/1', 'ถนนสุขุมวิท', 'บางจาก', 'เขตพระโขนง', 'กรุงเทพ', 10260, '027416163', '0840919392', 'female', '-', 1),
+(71, 'ได', 'ไดอาน่า', 24, '1991-11-29', '1103300053749', '137/5', 'สุขุมวิท 60/1', 'ถนนสุขุมวิท', 'บางจาก', 'เขตพระโขนง', 'กรุงเทพ', 10260, '027416163', '0840919392', 'female', '-', 1),
 (72, 'สามารถ', 'กมลรัต', 35, NULL, '1103300053720', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1),
 (79, 'เเป๊ะท้ง', 'กมลรัต', 32, NULL, '1103300053790', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1),
 (80, 'GG', 'HH', 40, NULL, '1103300053775', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1),
-(81, 'จินตนา', 'เหลืองกระจ่าง', 85, '1930-09-16 00:00:00', '1103300053999', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'female', NULL, 1),
-(82, 'มากมาย', 'เหลืองกระจ่าง', 88, '1927-11-16 00:00:00', '1103300053998', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', 1);
+(81, 'จินตนา', 'เหลืองกระจ่าง', 85, '1930-09-16', '1103300053999', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'female', NULL, 1),
+(82, 'มากมาย', 'เหลืองกระจ่าง', 88, '1927-11-16', '1103300053998', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1),
+(95, 'Phasinee', 'Boonrod', 24, '1992-11-30', '1103300053888', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1),
+(97, 'Phasinee', 'Boonrod', 24, '1990-10-11', '1103300053888', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1),
+(98, 'Phasinee', 'Boonrod', 24, '1990-10-11', '1103300053888', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1),
+(99, 'Phasinee', 'Boonrod', 24, '1990-10-11', '1103300053888', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1),
+(100, 'Skykick ', 'Ranger', 24, '1990-10-11', '1103300053888', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -265,14 +271,14 @@ INSERT INTO `persons` (`person_id`, `person_first_name`, `person_last_name`, `pe
 -- Table structure for table `relationship`
 --
 
-CREATE TABLE IF NOT EXISTS `relationship` (
-`relationship_id` int(11) NOT NULL,
+CREATE TABLE `relationship` (
+  `relationship_id` int(11) NOT NULL,
   `person_1_id` int(11) NOT NULL,
   `role_1_id` int(11) NOT NULL,
   `relationship_type_id` int(11) NOT NULL,
   `person_2_id` int(11) NOT NULL,
   `role_2_id` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='The relationship uses to identify role and relationship  between two people';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='The relationship uses to identify role and relationship  between two people';
 
 --
 -- Dumping data for table `relationship`
@@ -289,7 +295,27 @@ INSERT INTO `relationship` (`relationship_id`, `person_1_id`, `role_1_id`, `rela
 (10, 81, 22, 4, 82, 23),
 (11, 65, 5, 2, 68, 4),
 (12, 68, 19, 3, 66, 1),
-(13, 68, 19, 3, 67, 2);
+(13, 68, 19, 3, 67, 2),
+(42, 95, 19, 3, 66, 1),
+(43, 95, 19, 3, 67, 2),
+(44, 95, 5, 2, 65, 3),
+(45, 95, 5, 2, 68, 3),
+(50, 97, 19, 3, 66, 1),
+(51, 97, 19, 3, 67, 2),
+(52, 97, 5, 2, 65, 3),
+(53, 97, 5, 2, 68, 3),
+(54, 98, 19, 3, 66, 1),
+(55, 98, 19, 3, 67, 2),
+(56, 98, 5, 2, 65, 3),
+(57, 98, 5, 2, 68, 3),
+(58, 99, 19, 3, 66, 1),
+(59, 99, 19, 3, 67, 2),
+(60, 99, 5, 2, 65, 3),
+(61, 99, 5, 2, 68, 3),
+(62, 100, 19, 3, 66, 1),
+(63, 100, 19, 3, 67, 2),
+(64, 100, 5, 2, 65, 3),
+(65, 100, 5, 2, 68, 3);
 
 -- --------------------------------------------------------
 
@@ -297,10 +323,10 @@ INSERT INTO `relationship` (`relationship_id`, `person_1_id`, `role_1_id`, `rela
 -- Table structure for table `relationship_type`
 --
 
-CREATE TABLE IF NOT EXISTS `relationship_type` (
-`relationship_type_id` int(11) NOT NULL,
+CREATE TABLE `relationship_type` (
+  `relationship_type_id` int(11) NOT NULL,
   `relationship_type_description` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='eg  Parent ,Child , Married';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='eg  Parent ,Child , Married';
 
 --
 -- Dumping data for table `relationship_type`
@@ -319,10 +345,10 @@ INSERT INTO `relationship_type` (`relationship_type_id`, `relationship_type_desc
 -- Table structure for table `roles`
 --
 
-CREATE TABLE IF NOT EXISTS `roles` (
-`role_id` int(11) NOT NULL,
+CREATE TABLE `roles` (
+  `role_id` int(11) NOT NULL,
   `role_description` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COMMENT='eg Father , Son ,Husban , Wife';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='eg Father , Son ,Husban , Wife';
 
 --
 -- Dumping data for table `roles`
@@ -361,8 +387,8 @@ INSERT INTO `roles` (`role_id`, `role_description`) VALUES
 -- Table structure for table `users`
 --
 
-CREATE TABLE IF NOT EXISTS `users` (
-`id` int(10) unsigned NOT NULL,
+CREATE TABLE `users` (
+  `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(60) NOT NULL,
@@ -370,7 +396,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users`
@@ -387,67 +413,79 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `staff_type`, `remember_
 -- Indexes for table `disease_1`
 --
 ALTER TABLE `disease_1`
- ADD PRIMARY KEY (`questions_id`);
+  ADD PRIMARY KEY (`questions_id`);
 
 --
 -- Indexes for table `disease_forms`
 --
 ALTER TABLE `disease_forms`
- ADD PRIMARY KEY (`question_id`,`disease_type_id`), ADD KEY `fk_disease_forms_disease_types1_idx` (`disease_type_id`);
+  ADD PRIMARY KEY (`question_id`,`disease_type_id`),
+  ADD KEY `fk_disease_forms_disease_types1_idx` (`disease_type_id`);
 
 --
 -- Indexes for table `disease_types`
 --
 ALTER TABLE `disease_types`
- ADD PRIMARY KEY (`disease_type_id`);
+  ADD PRIMARY KEY (`disease_type_id`);
 
 --
 -- Indexes for table `doctors`
 --
 ALTER TABLE `doctors`
- ADD PRIMARY KEY (`doctor_id`);
+  ADD PRIMARY KEY (`doctor_id`);
 
 --
 -- Indexes for table `patients`
 --
 ALTER TABLE `patients`
- ADD PRIMARY KEY (`patient_id`), ADD KEY `fk_patients_doctors1_idx` (`doctor_id`), ADD KEY `fk_patients_persons1_idx` (`person_id`);
+  ADD PRIMARY KEY (`patient_id`),
+  ADD KEY `fk_patients_doctors1_idx` (`doctor_id`),
+  ADD KEY `fk_patients_persons1_idx` (`person_id`);
 
 --
 -- Indexes for table `patients_disease_forms`
 --
 ALTER TABLE `patients_disease_forms`
- ADD PRIMARY KEY (`patients_do_questions_id`,`question_id`,`patient_id`), ADD KEY `fk_patients_do_questions_questions1_idx` (`question_id`), ADD KEY `fk_patients_do_questions_patients1_idx` (`patient_id`), ADD KEY `question_id` (`question_id`,`patient_id`);
+  ADD PRIMARY KEY (`patients_do_questions_id`,`question_id`,`patient_id`),
+  ADD KEY `fk_patients_do_questions_questions1_idx` (`question_id`),
+  ADD KEY `fk_patients_do_questions_patients1_idx` (`patient_id`),
+  ADD KEY `question_id` (`question_id`,`patient_id`);
 
 --
 -- Indexes for table `persons`
 --
 ALTER TABLE `persons`
- ADD PRIMARY KEY (`person_id`);
+  ADD PRIMARY KEY (`person_id`);
 
 --
 -- Indexes for table `relationship`
 --
 ALTER TABLE `relationship`
- ADD PRIMARY KEY (`relationship_id`), ADD KEY `fk_relationships_person1_idx` (`person_1_id`), ADD KEY `fk_relationships_roles1_idx` (`role_1_id`), ADD KEY `fk_relationships_relationship_type1_idx` (`relationship_type_id`), ADD KEY `fk_relationship_persons1_idx` (`person_2_id`), ADD KEY `fk_relationship_roles1_idx` (`role_2_id`);
+  ADD PRIMARY KEY (`relationship_id`),
+  ADD KEY `fk_relationships_person1_idx` (`person_1_id`),
+  ADD KEY `fk_relationships_roles1_idx` (`role_1_id`),
+  ADD KEY `fk_relationships_relationship_type1_idx` (`relationship_type_id`),
+  ADD KEY `fk_relationship_persons1_idx` (`person_2_id`),
+  ADD KEY `fk_relationship_roles1_idx` (`role_2_id`);
 
 --
 -- Indexes for table `relationship_type`
 --
 ALTER TABLE `relationship_type`
- ADD PRIMARY KEY (`relationship_type_id`);
+  ADD PRIMARY KEY (`relationship_type_id`);
 
 --
 -- Indexes for table `roles`
 --
 ALTER TABLE `roles`
- ADD PRIMARY KEY (`role_id`);
+  ADD PRIMARY KEY (`role_id`);
 
 --
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `users_email_unique` (`email`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -457,52 +495,52 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `disease_forms`
 --
 ALTER TABLE `disease_forms`
-MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=62;
+  MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 --
 -- AUTO_INCREMENT for table `disease_types`
 --
 ALTER TABLE `disease_types`
-MODIFY `disease_type_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `disease_type_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `doctors`
 --
 ALTER TABLE `doctors`
-MODIFY `doctor_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=62;
+  MODIFY `doctor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 --
 -- AUTO_INCREMENT for table `patients`
 --
 ALTER TABLE `patients`
-MODIFY `patient_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=59;
+  MODIFY `patient_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 --
 -- AUTO_INCREMENT for table `patients_disease_forms`
 --
 ALTER TABLE `patients_disease_forms`
-MODIFY `patients_do_questions_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=59;
+  MODIFY `patients_do_questions_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 --
 -- AUTO_INCREMENT for table `persons`
 --
 ALTER TABLE `persons`
-MODIFY `person_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=83;
+  MODIFY `person_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 --
 -- AUTO_INCREMENT for table `relationship`
 --
 ALTER TABLE `relationship`
-MODIFY `relationship_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
+  MODIFY `relationship_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 --
 -- AUTO_INCREMENT for table `relationship_type`
 --
 ALTER TABLE `relationship_type`
-MODIFY `relationship_type_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `relationship_type_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=26;
+  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- Constraints for dumped tables
 --
@@ -511,37 +549,37 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 -- Constraints for table `disease_1`
 --
 ALTER TABLE `disease_1`
-ADD CONSTRAINT `fk_question_questions1` FOREIGN KEY (`questions_id`) REFERENCES `disease_forms` (`question_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_question_questions1` FOREIGN KEY (`questions_id`) REFERENCES `disease_forms` (`question_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `disease_forms`
 --
 ALTER TABLE `disease_forms`
-ADD CONSTRAINT `fk_disease_forms_disease_types1` FOREIGN KEY (`disease_type_id`) REFERENCES `disease_types` (`disease_type_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_disease_forms_disease_types1` FOREIGN KEY (`disease_type_id`) REFERENCES `disease_types` (`disease_type_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `patients`
 --
 ALTER TABLE `patients`
-ADD CONSTRAINT `fk_patients_doctors1` FOREIGN KEY (`doctor_id`) REFERENCES `doctors` (`doctor_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_patients_persons1` FOREIGN KEY (`person_id`) REFERENCES `persons` (`person_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_patients_doctors1` FOREIGN KEY (`doctor_id`) REFERENCES `doctors` (`doctor_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_patients_persons1` FOREIGN KEY (`person_id`) REFERENCES `persons` (`person_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `patients_disease_forms`
 --
 ALTER TABLE `patients_disease_forms`
-ADD CONSTRAINT `fk_patients_do_questions_patients1` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`patient_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_patients_do_questions_questions1` FOREIGN KEY (`question_id`) REFERENCES `disease_forms` (`question_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_patients_do_questions_patients1` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`patient_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_patients_do_questions_questions1` FOREIGN KEY (`question_id`) REFERENCES `disease_forms` (`question_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `relationship`
 --
 ALTER TABLE `relationship`
-ADD CONSTRAINT `fk_relationship_persons1` FOREIGN KEY (`person_2_id`) REFERENCES `persons` (`person_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_relationship_roles1` FOREIGN KEY (`role_2_id`) REFERENCES `roles` (`role_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_relationships_person1` FOREIGN KEY (`person_1_id`) REFERENCES `persons` (`person_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_relationships_relationship_type1` FOREIGN KEY (`relationship_type_id`) REFERENCES `relationship_type` (`relationship_type_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_relationships_roles1` FOREIGN KEY (`role_1_id`) REFERENCES `roles` (`role_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_relationship_persons1` FOREIGN KEY (`person_2_id`) REFERENCES `persons` (`person_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_relationship_roles1` FOREIGN KEY (`role_2_id`) REFERENCES `roles` (`role_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_relationships_person1` FOREIGN KEY (`person_1_id`) REFERENCES `persons` (`person_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_relationships_relationship_type1` FOREIGN KEY (`relationship_type_id`) REFERENCES `relationship_type` (`relationship_type_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_relationships_roles1` FOREIGN KEY (`role_1_id`) REFERENCES `roles` (`role_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
