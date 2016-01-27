@@ -73,7 +73,6 @@ class PersonController extends Controller {
 		$person = DB::table('persons')
 								->where('person_first_name' ,'=', $name[0])
 								->where('person_last_name' ,'=', $name[1])
-								->where('person_citizenID' ,'=', $name[2])
 								->first();
 		$result =  DB::select('SELECT disease_types.disease_type_id ,disease_type_name_th ,disease_type_name_en
 				FROM  disease_forms ,patients_disease_forms ,disease_types ,patients
@@ -125,9 +124,38 @@ class PersonController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function destroy( )
 	{
-		//
+		try{
+			DB::beginTransaction();
+			$id = Input::get('person_id');
+			// check this guy exist or not
+			
+			$patient =DB::table('patients')->where('person_id', '=', $id)->first();
+			if ( count($patient) > 0 )
+			{
+			$patients_disease_forms = DB::table('patients_disease_forms')->where('patient_id', '=', $patient_id)->get();
+				foreach($patients_disease_forms as $pdf){
+					 DB::table('disease_1')->where('questions_id', '=', $pdf->question_id)->delete();
+				}
+			$patients_disease_forms->delete();
+			$patient->delete();
+			}
+			
+		    DB::table('relationship')->where('person_1_id', '=', $id)->delete();
+			DB::table('relationship')->where('person_2_id', '=', $id)->delete();
+			DB::table('persons')->where('person_id', '=', $id)->delete();
+			DB::commit();
+			$result['status'] = "Success";
+			$result['message'] = "Good bye";
+			return response()->json($result, 200);
+		
+		}catch (Exception $e) {
+			DB::rollback();
+			$result['status'] = "Error";
+			$result['message'] = $e->getMessage();
+			return response()->json($result, 200);
+		}
 	}
 	
 	public function show_report_by_type($report_id = null , $person_id = null){

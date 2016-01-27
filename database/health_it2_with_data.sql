@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 25, 2015 at 09:47 AM
+-- Generation Time: Jan 15, 2016 at 11:06 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -263,7 +263,10 @@ INSERT INTO `persons` (`person_id`, `person_first_name`, `person_last_name`, `pe
 (97, 'Phasinee', 'Boonrod', 24, '1990-10-11', '1103300053888', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1),
 (98, 'Phasinee', 'Boonrod', 24, '1990-10-11', '1103300053888', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1),
 (99, 'Phasinee', 'Boonrod', 24, '1990-10-11', '1103300053888', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1),
-(100, 'Skykick ', 'Ranger', 24, '1990-10-11', '1103300053888', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1);
+(100, 'Skykick ', 'Ranger', 24, '1990-10-11', '1103300053888', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1),
+(101, 'rt', 'qqqq', NULL, '1990-10-11', '1103300053888', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1),
+(102, 'rt', 'qqqq', NULL, '1990-10-11', '1103300053888', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1),
+(103, 'rt', 'qqqq', NULL, '1990-10-11', '1103300053888', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -315,7 +318,10 @@ INSERT INTO `relationship` (`relationship_id`, `person_1_id`, `role_1_id`, `rela
 (62, 100, 19, 3, 66, 1),
 (63, 100, 19, 3, 67, 2),
 (64, 100, 5, 2, 65, 3),
-(65, 100, 5, 2, 68, 3);
+(65, 100, 5, 2, 68, 3),
+(66, 101, 19, 3, 68, 1),
+(67, 102, 19, 3, 68, 1),
+(68, 103, 19, 3, 68, 1);
 
 -- --------------------------------------------------------
 
@@ -403,7 +409,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `staff_type`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'kunaphas kongkitimanon', 'kunaphas.kon@gmail.com', '$2y$10$fwbx11nAenOapuCuHFv2uu4wRAQr0oAACQSbSIgkHdTAxPPToJHGy', '', 'okx5lQekbxa1yYO8w8sx6hZHUKC5wevNqsuL0UXHYSOnIKtTnwxdPafQ9tyt', '2015-08-12 00:12:21', '2015-08-16 08:31:59');
+(1, 'kunaphas kongkitimanon', 'kunaphas.kon@gmail.com', '$2y$10$fwbx11nAenOapuCuHFv2uu4wRAQr0oAACQSbSIgkHdTAxPPToJHGy', '', 'IFVlyeyeOH17ChjSeRLUnxjxcjoMbcDDcBMOfGqzt40yH9F3n2f3cS8vBkXX', '2015-08-12 00:12:21', '2015-12-25 02:09:49');
 
 --
 -- Indexes for dumped tables
@@ -520,12 +526,12 @@ ALTER TABLE `patients_disease_forms`
 -- AUTO_INCREMENT for table `persons`
 --
 ALTER TABLE `persons`
-  MODIFY `person_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `person_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 --
 -- AUTO_INCREMENT for table `relationship`
 --
 ALTER TABLE `relationship`
-  MODIFY `relationship_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `relationship_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 --
 -- AUTO_INCREMENT for table `relationship_type`
 --

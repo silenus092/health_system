@@ -24,22 +24,23 @@
 			var relatives_id = [65, 68];
 			var sex = "male";
 			var age = 24;
-			var first_name = "Skykick ";
+			var first_name = "Jumong";
 			var last_name = "Ranger";
-			var type_of_relationship = "ลูก";
-			var person_citizenID = "1103300053888";
+			var type_of_relationship = "Son";
+			var person_citizenID = "1103300053222";
 			var person_alive = "1";
 			var person_birth_date = "1990-10-11";
-			var items ={"first_name":"rt","last_name":"qqqq",				"sex":"male","isSick":"","person_alive":1,"type_of_relationship":"ลูก",
-"parents_id":[68],"person_birth_date":"1990-10-11",
-"person_citizenID":"1103300053888","relatives_id":[],"spouses_id":[],"sons_id":[]};
+			var isSick = ""; // sick ,unsick
+			var items ={"first_name":first_name,"last_name":last_name,				"sex":"male","isSick":isSick,"person_alive":person_alive,"type_of_relationship":type_of_relationship,
+"parents_id":parents_id,"person_birth_date":person_birth_date,"age":age,
+"person_citizenID":person_citizenID,"relatives_id":[],"spouses_id":[],"sons_id":[]};
 			
 			$.ajax({
-				url: 'http://localhost/health_system/public/add_person',
+				url: 'http://localhost/health_system/public/add_person_api',
 				contentType: "application/x-www-form-urlencoded;charset=utf-8", 
 				cache: false,
         		type: 'post',
-        		data: {inputs:items },
+        		data: {inputs: JSON.stringify(items) },
 				/*data: "sex=" + sex + "&age=" + age + "&first_name=" + first_name + "&last_name=" + last_name +
 					"&parents_id=" + JSON.stringify(parents_id) + "&spouses_id=" + JSON.stringify(spouses_id) +
 					"&sons_id=" + JSON.stringify(sons_id) + "&relatives_id=" + JSON.stringify(relatives_id) +

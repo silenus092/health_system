@@ -31,10 +31,12 @@ class ApiController extends Controller
 
 	public function show_tree($id)
 	{
+		
+	
 		try{
 			// check this guy exist or not
 			$result = array();
-			$r =DB::table('persons')->where('person_citizenID', '=', $id)->first();
+			$r =DB::table('persons')->where('person_id', '=', $id)->first();
 			if ( count($r) == 0 )
 			{
 
@@ -72,7 +74,7 @@ class ApiController extends Controller
 				$person_array['itemTitleColor']  = $pink;
 			}
 			//
-			//	เดี่ยวต้อง เช็ค ว่าเป็นผู้ป่วยรึเปล่า
+			//	เดี่ยวต้อง เช็ค ว่าเป็นผู้ป่วยรึเปล่า ยังไม่ได้!!
 			//
 			$person_array['groupTitle'] ="ผู้ป่วย";
 			$person_array['groupTitleColor'] ="orange";
@@ -90,7 +92,7 @@ class ApiController extends Controller
 			$this->find_relatives($result,$r);
 
 			// Let's fill personal information to id array list.
-			$depth = 2 ;
+			$depth = 3 ;
 			while(count($this->list) >0 && $depth > 0 ){
 
 				$size = count($this->list);
@@ -99,7 +101,7 @@ class ApiController extends Controller
 						$r = DB::table('persons')->where('person_id', '=', $this->list[$i])->first();
 
 						$person_array =array();
-						$person_array  = $this->set_personal_info($person_array , $r);
+						$person_array  = $this->set_personal_info_to_tree($person_array , $r);
 
 						// Find his/her parent
 						$parents = $this->find_parent($result,$r);
@@ -119,7 +121,7 @@ class ApiController extends Controller
 						// finish this person , remove it so we will not serach for this person again
 
 						//$this->list[$i] = null;
-
+						
 						$this->list[$i] = null;
 					}
 
@@ -169,8 +171,6 @@ class ApiController extends Controller
 				if(!$this->check_key_has_exists_value($result,'id',$person_1->person_id) && !in_array($person_1->person_id, $this->list)){
 					$this->list[]  =   $person_1->person_id;
 				}
-
-
 			}
 			return  true;
 		}else{
@@ -298,7 +298,7 @@ class ApiController extends Controller
 		}
 	}
 
-	public function set_personal_info($person_array , $r)
+	public function set_personal_info_to_tree($person_array , $r)
 	{
 		$person_array['id']  = $r->person_id;
 		$person_array['title'] = $r->person_first_name." ".$r->person_last_name;
@@ -324,49 +324,35 @@ class ApiController extends Controller
 	*/
 
 	public function add_person(){
-		//try {
-			/*if (isset(Input::get('inputs'))) {
-
-			//DB::beginTransaction();
-			$items ='{
-			"first_name":"rt","last_name":"qqqq",																			"sex":"male","isSick":"","person_alive":1,"type_of_relationship":"ลูก",
-             "parents_id":[68],"person_birth_date":"1990-10-11",
-			 "person_citizenID":"1103300053888","relatives_id":[],"spouses_id":[],"sons_id":[]
-			 }';
-			$obj = json_decode($items,true);*/
-			/*$person_sex = Input::get('sex');
-			$person_age = Input::get('age');
-			$parents = json_decode(stripslashes(Input::get('parents_id')));
-			$spouses = json_decode(stripslashes(Input::get('spouses_id')));
-			$relatives = json_decode(stripslashes(Input::get('relatives_id')));
-			$sons = json_decode(stripslashes(Input::get('sons_id')));
-			$type_of_relationship  = Input::get('type_of_relationship');
-			$Person_id = DB::table('persons')->insertGetId(['person_first_name' => Input::get('first_name'), 			    'person_last_name' => Input::get('last_name'),
-			'person_citizenID' =>Input::get('person_citizenID'),'person_alive' => Input::get('person_alive'), 
-		    'person_sex' => $person_sex , 'person_age' => $person_age ,'person_birth_date'=> 							    Input::get('person_birth_date')]);*/
+		try {
 			
-			
-			/*$person_sex =$obj->sex;
+			DB::beginTransaction();
+			$obj = json_decode(Input::get('inputs'));
+			$person_sex =$obj->sex;
 			$person_age =$obj->age;
 			$parents = $obj->parents_id;
 			$spouses =$obj->spouses_id;
 			$relatives = $obj->relatives_id;
 			$sons = $obj->sons_id;
 			$type_of_relationship  =$obj->type_of_relationship;
-			$Person_id = DB::table('persons')->insertGetId(['person_first_name' => $obj->first_name, 			    'person_last_name' => $obj->last_name,
+			$Person_id = DB::table('persons')->insertGetId(['person_first_name' => $obj->first_name, 			  'person_last_name' => $obj->last_name,
 			'person_citizenID' =>$obj->person_citizenID,'person_alive' => $obj->person_alive, 
 		    'person_sex' => $person_sex , 'person_age' => $person_age ,'person_birth_date'=> 							    $obj->person_birth_date ]);
 			
-			if($type_of_relationship  == "พ่อเเม่"){
+			if($type_of_relationship  == "Parent"){
 				$this->add_spouse($Person_id ,$spouses,	$person_sex);
 				$this->add_child($Person_id,$sons,$person_sex);
-			}else if($type_of_relationship == "สามีภรรยา"){
+			}else if($type_of_relationship == "Spouse"){
 				$this->add_spouse(	$Person_id ,$spouses,	$person_sex);
-			}else if($type_of_relationship == "พี่น้อง"){
+			}else if($type_of_relationship == "Relative"){
+				
+			    $this->add_parent($Person_id ,$parents ,$person_sex);
+				$relatives =$this->FindRelativesByParent($parents);
 				$this->add_relative($Person_id ,$relatives ,$person_sex,$person_age);
+				
+			}else if($type_of_relationship == "Son"){
 				$this->add_parent($Person_id ,$parents ,$person_sex);
-			}else if($type_of_relationship == "ลูก"){
-				$this->add_parent($Person_id ,$parents ,$person_sex);
+				$relatives =$this->FindRelativesByParent($parents);
 				$this->add_relative($Person_id ,$relatives ,$person_sex,$person_age);
 			}else{
 				DB::rollback();
@@ -381,24 +367,23 @@ class ApiController extends Controller
 			//
 			DB::commit();
 			$result['status'] = "Success";
-			$result['message'] = "";
+			$result['message'] = $Person_id;
 			return response()->json($result, 200);
-			}else{
-			$result['status'] = "Fail";
-			$result['message'] = "Inputs  are not detected";
-			return response()->json($result, 200);
-			}
+		
 		}catch (Exception $e) {
 			DB::rollback();
 			$result['status'] = "Error";
 			$result['message'] = $e->getMessage();
 			return response()->json($result, 200);
-		}*/
+		}
 	}
 	// กรณีที่ตัวเองเป็นลูก
 	public function add_parent($my_id ,$parnets ,$my_sex){
 		$role1 = 21;
 		$role2 = 21;
+		if(!count($parnets)>0 ){
+			return false;
+		}
 		if($my_sex=="male"){
 			$role1 = 19;
 		}else if($my_sex == "female"){
@@ -425,6 +410,9 @@ class ApiController extends Controller
 	public function add_child($my_id ,$children ,$my_sex){
 		$role1 = 21;
 		$role2 = 21;
+		if(!count($children)>0){
+			return false;
+		}
 		if($my_sex=="male"){
 			$role1 = 1;
 
@@ -453,6 +441,9 @@ class ApiController extends Controller
 	public function add_spouse($my_id ,$spouse_id ,$my_sex){
 		$role1 = 21;
 		$role2 = 21;
+		if($spouse_id == null ){
+			return false;
+		}
 		if($my_sex=="male"){
 			$role1 = 23;
 			$role2 = 22;
@@ -470,8 +461,10 @@ class ApiController extends Controller
 	public function add_relative($my_id ,$relatives ,$my_sex,$my_age){
 		$role1 = 21;
 		$role2 = 21;
-
-		foreach ($relatives as $relatives_id) {
+		if(count($relatives)<=0){
+			return false;
+		}else{
+				foreach ($relatives as $relatives_id) {
 			$relative = DB::table('persons')->where('person_id', '=',$relatives_id)->first();
 			if($my_age > $relative->person_age){
 				if($my_sex=="male"){
@@ -479,7 +472,6 @@ class ApiController extends Controller
 
 				}else if($my_sex == "female"){
 					$role1 = 4;
-
 				}else{
 					$role1 = 21;
 
@@ -491,7 +483,7 @@ class ApiController extends Controller
 				}else{
 					$role2 = 21;
 				}
-			}else{ // If they have the same age , fall in this case too
+			}else{ // If they have the same age , fall in this case 
 				if($my_sex=="male"){
 					$role1 = 5;
 
@@ -512,8 +504,37 @@ class ApiController extends Controller
 			}
 			$relationship = DB::table('relationship')->insert(['person_1_id' => $my_id, 'role_1_id' => $role1,
 															   'relationship_type_id' => 2 ,'person_2_id' => $relative->person_id, 'role_2_id' => $role2 ]);
+		   }
 		}
+	
 	}
+	
+	public function FindRelativesByParent($Parents){
+		 	$relatives =  array();
+			foreach ($Parents as $parent_id) {
+				$person_1_id = DB::table('relationship')
+				->where('person_2_id', '=', $parent_id)
+				->where('relationship_type_id', '=', 3)->get();
+				foreach($person_1_id as $p1 ){
+					if (!in_array($p1->person_1_id, $relatives))
+						{
+							$relatives[] = $p1->person_1_id; 
+						}
+				}
+				$person_2_id = DB::table('relationship')
+				->where('person_1_id', '=', $parent_id)
+				->where('relationship_type_id', '=', 3)->get();
+				foreach($person_2_id as $p2 ){
+					if (!in_array($p2->person_2_id, $relatives))
+						{
+							$relatives[] =$p2->person_2_id; 
+						}
+				}
+					
+			}
+		return $relatives;
+	}
+	
 	/*public function update_relationship_with_other($parnets,$sons,$relatives,$spouses){
 
 		if(count($parnets)>0){

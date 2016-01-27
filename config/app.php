@@ -151,6 +151,7 @@ return [
         'Xuma\Amaran\AmaranServiceProvider',
 		//'Barryvdh\DomPDF\ServiceProvider',
 		'Servit\Mpdf\ServiceProvider', 
+		'Barryvdh\Debugbar\ServiceProvider',
       
 	],
 
@@ -204,6 +205,7 @@ return [
         'Amaran' => 'Xuma\Amaran\Facades\Amaran',
 		//'PDF' => 'Barryvdh\DomPDF\Facade',
 		'PDF'     => 'Servit\Mpdf\Facades\Pdf', 
+		'Debugbar' => 'Barryvdh\Debugbar\Facade',
 	],
 
 ];

@@ -13,7 +13,8 @@
 		"h4cc/wkhtmltopdf-amd64": "0.12.x",
 		"h4cc/wkhtmltoimage-amd64": "0.12.x",
 		"barryvdh/laravel-snappy": "0.2.*@dev",
-		"servit/l5mpdf": "dev-master"
+		"servit/l5mpdf": "dev-master",
+		"barryvdh/laravel-debugbar": "^2.1"
 
 	},
 	"require-dev": {

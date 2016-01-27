@@ -29,7 +29,8 @@
         "App\\Providers\\EventServiceProvider",
         "App\\Providers\\RouteServiceProvider",
         "Xuma\\Amaran\\AmaranServiceProvider",
-        "Servit\\Mpdf\\ServiceProvider"
+        "Servit\\Mpdf\\ServiceProvider",
+        "Barryvdh\\Debugbar\\ServiceProvider"
     ],
     "eager": [
         "Illuminate\\Auth\\AuthServiceProvider",
@@ -49,7 +50,8 @@
         "App\\Providers\\EventServiceProvider",
         "App\\Providers\\RouteServiceProvider",
         "Xuma\\Amaran\\AmaranServiceProvider",
-        "Servit\\Mpdf\\ServiceProvider"
+        "Servit\\Mpdf\\ServiceProvider",
+        "Barryvdh\\Debugbar\\ServiceProvider"
     ],
     "deferred": {
         "command.app.name": "Illuminate\\Foundation\\Providers\\ArtisanServiceProvider",

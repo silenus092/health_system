@@ -40,6 +40,7 @@ Route::controllers([
 
 Route::get('persons_index','PersonController@index');
 Route::post('show_person','PersonController@show');
+Route::post('drop_person','PersonController@destroy');
 Route::get('show_report_by_type/{id}/{person_id}','PersonController@show_report_by_type');
 
 Route::get('duc_report','DuchenneController@index');
