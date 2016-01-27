@@ -40,8 +40,18 @@
 				contentType: "application/x-www-form-urlencoded;charset=utf-8", 
 				cache: false,
         		type: 'post',
+<<<<<<< HEAD
         		data: {inputs: JSON.stringify(items) },
+=======
+<<<<<<< HEAD
+        	    dataType: 'json',
+
+				data: "sex=" + sex + "&age=" + age + "&first_name=" + first_name + "&last_name=" + last_name +
+=======
+        		data: {inputs:items },
+>>>>>>> 79eb4c0badd8d0830d7c847de9d2a99953df31a2
 				/*data: "sex=" + sex + "&age=" + age + "&first_name=" + first_name + "&last_name=" + last_name +
+>>>>>>> 894d515b16ff17f40730df48c3ecf9a9133e1cb4
 					"&parents_id=" + JSON.stringify(parents_id) + "&spouses_id=" + JSON.stringify(spouses_id) +
 					"&sons_id=" + JSON.stringify(sons_id) + "&relatives_id=" + JSON.stringify(relatives_id) +
 					"&type_of_relationship=" + type_of_relationship + "&person_citizenID=" + person_citizenID +
