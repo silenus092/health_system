@@ -32,7 +32,7 @@ class PersonController extends Controller {
 														$p['lastname'] = $person->person_last_name;
 														$p['citizenID'] = $person->person_citizenID;*/
 												        $p['ID'] = $person->person_id;
-														$p['display'] = $person->person_first_name." ".$person->person_last_name." ".$person->person_citizenID;
+														$p['display'] = $person->person_id." ".$person->person_first_name." ".$person->person_last_name." ".$person->person_citizenID;
 														$data[] = $p;
 												}
 				return response()->json($data, 200);
@@ -71,8 +71,8 @@ class PersonController extends Controller {
 		
 		
 		$person = DB::table('persons')
-								->where('person_first_name' ,'=', $name[0])
-								->where('person_last_name' ,'=', $name[1])
+								->where('person_id' ,'=', $name[0])
+								
 								->first();
 		$result =  DB::select('SELECT disease_types.disease_type_id ,disease_type_name_th ,disease_type_name_en
 				FROM  disease_forms ,patients_disease_forms ,disease_types ,patients
@@ -127,6 +127,8 @@ class PersonController extends Controller {
 	public function destroy( )
 	{
 		try{
+			
+			 DB::statement('SET FOREIGN_KEY_CHECKS = 0');
 			DB::beginTransaction();
 			$id = Input::get('person_id');
 			// check this guy exist or not
@@ -134,18 +136,62 @@ class PersonController extends Controller {
 			$patient =DB::table('patients')->where('person_id', '=', $id)->first();
 			if ( count($patient) > 0 )
 			{
-			$patients_disease_forms = DB::table('patients_disease_forms')->where('patient_id', '=', $patient_id)->get();
+			$patients_disease_forms = DB::table('patients_disease_forms')
+				->where('patient_id', '=', $patient_id)->get();
+			if(count($patients_disease_forms) >0 ){
 				foreach($patients_disease_forms as $pdf){
 					 DB::table('disease_1')->where('questions_id', '=', $pdf->question_id)->delete();
 				}
-			$patients_disease_forms->delete();
-			$patient->delete();
+			$patients_disease_forms->delete();	
+			}
+			DB::table('patients')->where('person_id', '=', $id)->delete();
+			DB::table('doctors')->where('doctor_id', '=', $patient->doctor_id)->delete();	
+			
 			}
 			
 		    DB::table('relationship')->where('person_1_id', '=', $id)->delete();
 			DB::table('relationship')->where('person_2_id', '=', $id)->delete();
 			DB::table('persons')->where('person_id', '=', $id)->delete();
 			DB::commit();
+			DB::statement('SET FOREIGN_KEY_CHECKS = 1');
+			$result['status'] = "Success";
+			$result['message'] = "Good bye";
+			return response()->json($result, 200);
+		
+		}catch (Exception $e) {
+			DB::rollback();
+			$result['status'] = "Error";
+			$result['message'] = $e->getMessage();
+			return response()->json($result, 200);
+		}
+	}
+	
+	public function clear_relationship($person_id){
+		try{
+			
+		    DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+			DB::beginTransaction();
+			$id = $person_id;
+			// check this guy exist or not
+			$patient =DB::table('patients')->where('person_id', '=', $id)->first();
+			if ( count($patient) > 0 )
+			{
+			$patients_disease_forms = DB::table('patients_disease_forms')
+				->where('patient_id', '=', $patient_id)->get();
+			if(count($patients_disease_forms) >0 ){
+				foreach($patients_disease_forms as $pdf){
+					 DB::table('disease_1')->where('questions_id', '=', $pdf->question_id)->delete();
+				}
+			$patients_disease_forms->delete();	
+			}
+			DB::table('patients')->where('person_id', '=', $id)->delete();	
+		    DB::table('doctors')->where('doctor_id', '=', $patient->doctor_id)->delete();
+		
+			}
+		    DB::table('relationship')->where('person_1_id', '=', $id)->delete();
+			DB::table('relationship')->where('person_2_id', '=', $id)->delete();
+			DB::commit();
+			DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 			$result['status'] = "Success";
 			$result['message'] = "Good bye";
 			return response()->json($result, 200);

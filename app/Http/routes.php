@@ -29,6 +29,8 @@ Route::post('form_add', [
 ]);
 Route::get('get_tree_api/{citizen_id}', 'ApiController@show_tree');
 Route::post('add_person_api','ApiController@add_person');
+Route::post('edit_person_api','ApiController@edit_person');
+Route::get('clear_relationship_api/{person_id}', 'PersonController@clear_relationship');
 
 Route::get('get_tree/{citizen_id}', 'TreeController@show_tree');
 Route::post('add_person','TreeController@add_person');
@@ -40,7 +42,7 @@ Route::controllers([
 
 Route::get('persons_index','PersonController@index');
 Route::post('show_person','PersonController@show');
-Route::post('drop_person','PersonController@destroy');
+Route::post('drop_person','ApiController@delete_person');
 Route::get('show_report_by_type/{id}/{person_id}','PersonController@show_report_by_type');
 
 Route::get('duc_report','DuchenneController@index');

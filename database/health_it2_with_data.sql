@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 15, 2016 at 11:06 AM
+-- Generation Time: Feb 28, 2016 at 05:39 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -137,7 +137,8 @@ INSERT INTO `doctors` (`doctor_id`, `doctor_name`, `doctor_mobile_phone`, `docto
 (56, 'ใหม่ ดาวิกา', '0840919392', '027416163', 'สมิติเวช', 'mai.davi@gmail.com', NULL),
 (57, 'ใหม่ ดาวิกา', '0840919392', '027416163', 'สมิติเวช', 'mai.davi@gmail.com', NULL),
 (58, 'ใหม่ ดาวิกา', '0840919392', '027416163', 'สมิติเวช', 'mai.davi@gmail.com', NULL),
-(61, 'ใหม่ ดาวิกา', '0840919392', '027416163', 'สมิติเวช', 'mai.davi@gmail.com', NULL);
+(61, 'ใหม่ ดาวิกา', '0840919392', '027416163', 'สมิติเวช', 'mai.davi@gmail.com', NULL),
+(66, 'ไม่ทราบ', 'ไม่ทราบ', 'ไม่ทราบ', 'ไม่ทราบ', 'ไม่ทราบ', NULL);
 
 -- --------------------------------------------------------
 
@@ -191,7 +192,8 @@ INSERT INTO `patients` (`patient_id`, `doctor_id`, `registration_date`, `person_
 (55, 55, '2015-09-15', 65),
 (56, 56, '2015-09-15', 67),
 (57, 57, '2015-09-15', 69),
-(58, 58, '2015-09-15', 71);
+(58, 58, '2015-09-15', 71),
+(63, 66, '2016-02-05', 130);
 
 -- --------------------------------------------------------
 
@@ -259,14 +261,13 @@ INSERT INTO `persons` (`person_id`, `person_first_name`, `person_last_name`, `pe
 (80, 'GG', 'HH', 40, NULL, '1103300053775', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1),
 (81, 'จินตนา', 'เหลืองกระจ่าง', 85, '1930-09-16', '1103300053999', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'female', NULL, 1),
 (82, 'มากมาย', 'เหลืองกระจ่าง', 88, '1927-11-16', '1103300053998', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1),
-(95, 'Phasinee', 'Boonrod', 24, '1992-11-30', '1103300053888', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1),
-(97, 'Phasinee', 'Boonrod', 24, '1990-10-11', '1103300053888', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1),
-(98, 'Phasinee', 'Boonrod', 24, '1990-10-11', '1103300053888', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1),
 (99, 'Phasinee', 'Boonrod', 24, '1990-10-11', '1103300053888', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1),
-(100, 'Skykick ', 'Ranger', 24, '1990-10-11', '1103300053888', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1),
-(101, 'rt', 'qqqq', NULL, '1990-10-11', '1103300053888', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1),
-(102, 'rt', 'qqqq', NULL, '1990-10-11', '1103300053888', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1),
-(103, 'rt', 'qqqq', NULL, '1990-10-11', '1103300053888', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1);
+(119, 'Skykick', 'Ranger', 24, '1990-10-11', '1103300053878', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1),
+(120, 'Jumong', 'Ranger', 24, '1990-10-11', '1103300053222', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1),
+(127, 'Jeyoen', 'Kim', 24, '1990-10-11', '1103300053187', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1),
+(130, 'Jin', 'Kim', 24, '1990-10-11', '1103300053187', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1),
+(132, 'Lollipop', 'Jeyoun', 24, '1990-10-11', '1103300057456', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1),
+(133, 'Jumong', 'Ranger', 24, '1990-10-11', '1103300053222', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -299,29 +300,35 @@ INSERT INTO `relationship` (`relationship_id`, `person_1_id`, `role_1_id`, `rela
 (11, 65, 5, 2, 68, 4),
 (12, 68, 19, 3, 66, 1),
 (13, 68, 19, 3, 67, 2),
-(42, 95, 19, 3, 66, 1),
-(43, 95, 19, 3, 67, 2),
-(44, 95, 5, 2, 65, 3),
-(45, 95, 5, 2, 68, 3),
-(50, 97, 19, 3, 66, 1),
-(51, 97, 19, 3, 67, 2),
-(52, 97, 5, 2, 65, 3),
-(53, 97, 5, 2, 68, 3),
-(54, 98, 19, 3, 66, 1),
-(55, 98, 19, 3, 67, 2),
-(56, 98, 5, 2, 65, 3),
-(57, 98, 5, 2, 68, 3),
 (58, 99, 19, 3, 66, 1),
 (59, 99, 19, 3, 67, 2),
 (60, 99, 5, 2, 65, 3),
 (61, 99, 5, 2, 68, 3),
-(62, 100, 19, 3, 66, 1),
-(63, 100, 19, 3, 67, 2),
-(64, 100, 5, 2, 65, 3),
-(65, 100, 5, 2, 68, 3),
-(66, 101, 19, 3, 68, 1),
-(67, 102, 19, 3, 68, 1),
-(68, 103, 19, 3, 68, 1);
+(97, 119, 19, 3, 66, 1),
+(98, 119, 19, 3, 67, 2),
+(99, 119, 5, 2, 65, 3),
+(100, 119, 5, 2, 68, 3),
+(101, 119, 5, 2, 99, 3),
+(102, 119, 5, 2, 119, 3),
+(103, 119, 5, 2, 82, 3),
+(104, 119, 5, 2, 81, 4),
+(105, 120, 19, 3, 66, 1),
+(106, 120, 19, 3, 67, 2),
+(107, 120, 5, 2, 65, 3),
+(108, 120, 5, 2, 68, 3),
+(109, 120, 5, 2, 99, 3),
+(110, 120, 5, 2, 119, 3),
+(111, 120, 5, 2, 120, 3),
+(112, 120, 5, 2, 82, 3),
+(113, 120, 5, 2, 81, 4),
+(116, 127, 1, 3, 69, 20),
+(119, 130, 1, 3, 69, 20),
+(124, 132, 19, 3, 68, 1),
+(126, 132, 5, 2, 132, 3),
+(127, 132, 5, 2, 66, 3),
+(128, 132, 5, 2, 67, 4),
+(129, 133, 19, 3, 71, 2),
+(130, 133, 5, 2, 133, 3);
 
 -- --------------------------------------------------------
 
@@ -511,12 +518,12 @@ ALTER TABLE `disease_types`
 -- AUTO_INCREMENT for table `doctors`
 --
 ALTER TABLE `doctors`
-  MODIFY `doctor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `doctor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 --
 -- AUTO_INCREMENT for table `patients`
 --
 ALTER TABLE `patients`
-  MODIFY `patient_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `patient_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 --
 -- AUTO_INCREMENT for table `patients_disease_forms`
 --
@@ -526,12 +533,12 @@ ALTER TABLE `patients_disease_forms`
 -- AUTO_INCREMENT for table `persons`
 --
 ALTER TABLE `persons`
-  MODIFY `person_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
+  MODIFY `person_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=134;
 --
 -- AUTO_INCREMENT for table `relationship`
 --
 ALTER TABLE `relationship`
-  MODIFY `relationship_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `relationship_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
 --
 -- AUTO_INCREMENT for table `relationship_type`
 --

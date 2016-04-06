@@ -18,7 +18,7 @@
 	<script>
 		$(document).ready(function () {
 
-			var parents_id = [66, 67];
+			var parents_id = [71];
 			var sons_id = [];
 			var spouses_id = [80];
 			var relatives_id = [65, 68];
@@ -26,12 +26,11 @@
 			var age = 24;
 			var first_name = "Jumong";
 			var last_name = "Ranger";
-			var type_of_relationship = "Son";
+			var type_of_relationship = "son";
 			var person_citizenID = "1103300053222";
 			var person_alive = "1";
 			var person_birth_date = "1990-10-11";
-			var isSick = ""; // sick ,unsick
-			var items ={"first_name":first_name,"last_name":last_name,				"sex":"male","isSick":isSick,"person_alive":person_alive,"type_of_relationship":type_of_relationship,
+			var items ={"first_name":first_name,"last_name":last_name,				"sex":"male","isSick":"","person_alive":person_alive,"type_of_relationship":type_of_relationship,
 "parents_id":parents_id,"person_birth_date":person_birth_date,"age":age,
 "person_citizenID":person_citizenID,"relatives_id":[],"spouses_id":[],"sons_id":[]};
 			
@@ -40,18 +39,8 @@
 				contentType: "application/x-www-form-urlencoded;charset=utf-8", 
 				cache: false,
         		type: 'post',
-<<<<<<< HEAD
         		data: {inputs: JSON.stringify(items) },
-=======
-<<<<<<< HEAD
-        	    dataType: 'json',
-
-				data: "sex=" + sex + "&age=" + age + "&first_name=" + first_name + "&last_name=" + last_name +
-=======
-        		data: {inputs:items },
->>>>>>> 79eb4c0badd8d0830d7c847de9d2a99953df31a2
 				/*data: "sex=" + sex + "&age=" + age + "&first_name=" + first_name + "&last_name=" + last_name +
->>>>>>> 894d515b16ff17f40730df48c3ecf9a9133e1cb4
 					"&parents_id=" + JSON.stringify(parents_id) + "&spouses_id=" + JSON.stringify(spouses_id) +
 					"&sons_id=" + JSON.stringify(sons_id) + "&relatives_id=" + JSON.stringify(relatives_id) +
 					"&type_of_relationship=" + type_of_relationship + "&person_citizenID=" + person_citizenID +
