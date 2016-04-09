@@ -488,13 +488,13 @@ class ApiController extends Controller
 			$relatives = $obj->relatives_id;
 			$sons = $obj->son_id;
 			$type_of_relationship  =$obj->type_of_relationship;
-			if($obj->person_alive == "1"){
+			/*if($obj->person_alive == "1"){
 				$person_alive = "live" ;
 			}else{
 				$person_alive = "not live";
-			}
+			}*/
 			$Person_id = DB::table('persons')->insertGetId(['person_first_name' => $obj->first_name, 			  'person_last_name' => $obj->last_name,
-															'person_alive' =>$person_alive,
+															'person_alive' =>$obj->person_alive,
 															'person_sex' => $person_sex, 'person_age' =>$person_age ]);
 			if($type_of_relationship  == "parent"){
 				$this->add_child($Person_id,$sons,$person_sex);
@@ -870,21 +870,21 @@ class ApiController extends Controller
 				return response()->json($result, 200);
 			}
 			DB::beginTransaction();
-			if($obj->person_alive == "1"){
+		/*	if($obj->person_alive == "1"){
 				$person_alive = "live" ;
 			}else{
 				$person_alive = "not live";
-			}
+			}*/
 			DB::table('persons')
 				->where('person_id',$person_id)
 				->update(['person_first_name' => $obj->first_name,
 						  'person_last_name' => $obj->last_name,
-						  'person_alive' => $person_alive,
+						  'person_alive' => $obj->person_alive, // $obj->person_alive == "1" live , p not live
 						  'person_sex' =>$person_sex,
 						  'person_age' =>$person_age
 						 ]);
 			//  handling if sick or not
-			$patient =DB::table('patients')->where('person_id', '=', $id)->first();
+			$patient =DB::table('patients')->where('person_id', '=', $person_id)->first();
 			if($IsSick == "sick"){
 
 				if ( count($patient) > 0 )
@@ -902,7 +902,7 @@ class ApiController extends Controller
 			}else if($IsSick == "un_sick"){
 				if ( count($patient) > 0 )
 				{
-					DB::table('patients')->where('person_id', '=', $id)->delete();
+					DB::table('patients')->where('person_id', '=', $person_id)->delete();
 					DB::table('doctors')->where('doctor_id', '=', $patient->doctor_id)->delete();
 				}else{
 
