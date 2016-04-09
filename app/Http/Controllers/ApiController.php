@@ -79,9 +79,6 @@ class ApiController extends Controller
 			if($pink != null){
 				$person_array['itemTitleColor']  = $pink;
 			}
-			//
-			//	เดี่ยวต้อง เช็ค ว่าเป็นผู้ป่วยรึเปล่า ยังไม่ได้!!
-			//
 			if ( count(DB::table('patients')->where('person_id', '=',$r->person_id)->first()) > 0 ){
 				$person_array['groupTitle'] ="ผู้ป่วย";
 				$person_array['groupTitleColor'] ="orange";
@@ -450,7 +447,8 @@ class ApiController extends Controller
 	public function set_personal_info_to_tree($person_array , $r)
 	{
 		$person_array['id']  = $r->person_id;
-		$person_array['title'] = $r->person_first_name." ".$r->person_last_name;
+		$person_array['first_name'] = $r->person_first_name;
+		$person_array['last_name'] = $r->person_last_name;
 		$person_array['sex'] = $r->person_sex;
 		$person_array['age'] =$r->person_age;
 		$person_array['person_alive'] =$r->person_alive;
@@ -496,7 +494,7 @@ class ApiController extends Controller
 				$person_alive = "not live";
 			}
 			$Person_id = DB::table('persons')->insertGetId(['person_first_name' => $obj->first_name, 			  'person_last_name' => $obj->last_name,
-															'person_alive' =>$person_alive, 
+															'person_alive' =>$person_alive,
 															'person_sex' => $person_sex, 'person_age' =>$person_age ]);
 			if($type_of_relationship  == "parent"){
 				$this->add_child($Person_id,$sons,$person_sex);
@@ -525,7 +523,7 @@ class ApiController extends Controller
 			//
 			if($IsSick == "sick"){
 				$doctor_id = DB::table('doctors')->insertGetId(['doctor_name' => "ไม่ทราบ", 			  'doctor_mobile_phone' => "ไม่ทราบ",
-																'doctor_phone' =>"ไม่ทราบ",'hospital' => "ไม่ทราบ", 
+																'doctor_phone' =>"ไม่ทราบ",'hospital' => "ไม่ทราบ",
 																'email' => "ไม่ทราบ" ]);
 
 				DB::table('patients')->insert(['person_id' => $Person_id, 'doctor_id' => $doctor_id,
@@ -708,7 +706,7 @@ class ApiController extends Controller
 			$role1 = 21;
 			$role2 = 21;
 		}
-		foreach ($spouses as $spouse_id) {	
+		foreach ($spouses as $spouse_id) {
 			$relationship = DB::table('relationship')->insert(['person_1_id' => $my_id, 'role_1_id' => $role1,
 															   'relationship_type_id' => 4 ,'person_2_id' => $spouse_id, 'role_2_id' => $role2 ]);
 		}
@@ -741,7 +739,7 @@ class ApiController extends Controller
 						}else{
 							$role2 = 21;
 						}
-					}else{ // If they have the same age , fall in this case 
+					}else{ // If they have the same age , fall in this case
 						if($my_sex=="male"){
 							$role1 = 5;
 
@@ -778,7 +776,7 @@ class ApiController extends Controller
 			foreach($person_1_id as $p1 ){
 				if (!in_array($p1->person_1_id, $relatives))
 				{
-					$relatives[] = $p1->person_1_id; 
+					$relatives[] = $p1->person_1_id;
 				}
 			}
 			$person_2_id = DB::table('relationship')
@@ -787,7 +785,7 @@ class ApiController extends Controller
 			foreach($person_2_id as $p2 ){
 				if (!in_array($p2->person_2_id, $relatives))
 				{
-					$relatives[] =$p2->person_2_id; 
+					$relatives[] =$p2->person_2_id;
 				}
 			}
 
@@ -856,8 +854,8 @@ class ApiController extends Controller
 			$obj = json_decode(Input::get('inputs'));
 			$person_sex = $obj->sex;
 			$person_age =	$obj->age ;
-			$person_id= $obj->person_change_id;	
-			$relationship_with_person_id= $obj->person_id;	
+			$person_id= $obj->person_change_id;
+			$relationship_with_person_id= $obj->person_id;
 			$IsSick = $obj->is_sick;
 			$parents = $obj->parents_id;
 			$spouse_id =$obj->spouse_id;
@@ -879,11 +877,11 @@ class ApiController extends Controller
 			}
 			DB::table('persons')
 				->where('person_id',$person_id)
-				->update(['person_first_name' => $obj->first_name, 
+				->update(['person_first_name' => $obj->first_name,
 						  'person_last_name' => $obj->last_name,
-						  'person_alive' => $person_alive, 
-						  'person_sex' =>$person_sex, 
-						  'person_age' =>$person_age 
+						  'person_alive' => $person_alive,
+						  'person_sex' =>$person_sex,
+						  'person_age' =>$person_age
 						 ]);
 			//  handling if sick or not
 			$patient =DB::table('patients')->where('person_id', '=', $id)->first();
@@ -895,7 +893,7 @@ class ApiController extends Controller
 				}else{
 
 					$doctor_id = DB::table('doctors')->insertGetId(['doctor_name' => "ไม่ทราบ", 			  'doctor_mobile_phone' => "ไม่ทราบ",
-																	'doctor_phone' =>"ไม่ทราบ",'hospital' => "ไม่ทราบ", 
+																	'doctor_phone' =>"ไม่ทราบ",'hospital' => "ไม่ทราบ",
 																	'email' => "ไม่ทราบ" ]);
 					DB::table('patients')->insert(['person_id' => $person_id, 'doctor_id' => $doctor_id,
 												   'registration_date' => date("Y-m-d")  ]);
@@ -913,8 +911,8 @@ class ApiController extends Controller
 
 			}
 
-			//  handling if relationship change  or not
-			if($type_of_relationship  != "null"){
+			//  handling if relationship change  or not ,if not change  null represent otherwise
+			if($type_of_relationship  != null || $type_of_relationship  != ""){
 				DB::table('relationship')->where('person_1_id', '=', $person_id)->delete();
 				DB::table('relationship')->where('person_2_id', '=', $person_id)->delete();
 				$person_2 =DB::table('persons')->where('person_id', '=', $relationship_with_person_id)->first();
@@ -939,7 +937,7 @@ class ApiController extends Controller
 					$result['message'] = "please select relationship before submit.";
 					return response()->json($result, 200);
 				}*/
-				if($type_of_relationship  == "parent"){
+				 if($type_of_relationship  == "parent"){
 					$this->add_child($person_id,$sons,$person_sex);
 				}else if($type_of_relationship == "spouse"){
 					$this->add_spouse($person_id ,$spouse_id,	$person_sex);
@@ -955,8 +953,8 @@ class ApiController extends Controller
 					$this->add_relative($person_id ,$relatives ,$person_sex,$person_age);
 				}else{
 					DB::rollback();
-					$result['status'] = "No relationship found ";
-					$result['message'] = "please select relationship before submit.";
+					$result['status'] = "No relationship found: ".$type_of_relationship;
+					$result['message'] = "please select appropriate relationship before submit.";
 					return response()->json($result, 200);
 				}
 			}
@@ -990,10 +988,10 @@ class ApiController extends Controller
 						foreach($patients_disease_forms as $pdf){
 							DB::table('disease_1')->where('questions_id', '=', $pdf->question_id)->delete();
 						}
-						$patients_disease_forms->delete();	
+						$patients_disease_forms->delete();
 					}
 					DB::table('patients')->where('person_id', '=', $id)->delete();
-					DB::table('doctors')->where('doctor_id', '=', $patient->doctor_id)->delete();	
+					DB::table('doctors')->where('doctor_id', '=', $patient->doctor_id)->delete();
 				}
 				DB::table('relationship')->where('person_1_id', '=', $id)->delete();
 				DB::table('relationship')->where('person_2_id', '=', $id)->delete();
