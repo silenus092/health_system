@@ -9,7 +9,7 @@ use DB;
 use Input;
 
 class ApiController extends Controller
-{
+
 {
     /**
      * Display the specified resource.
@@ -39,7 +39,9 @@ class ApiController extends Controller
         try {
             // check this guy exist or not
             $result = array();
-            $r = DB::table('persons')->where('person_id', '=', $id)->first();
+            $r = DB::table('persons')->where('person_id', '=', $id)
+                                     ->where('deleted_flag', '=', false)
+                                     ->first();
             if (count($r) == 0) {
 
                 $result['Info']['status'] = "Complete";
@@ -118,7 +120,8 @@ class ApiController extends Controller
                 $size = count($this->list);
                 for ($i = 0; $i < $size; $i++) {
                     if ($this->list[$i] && !$this->check_key_has_exists_value($result, 'id', $this->list[$i])) {
-                        $r = DB::table('persons')->where('person_id', '=', $this->list[$i])->first();
+                        // add another personal info
+                        $r = DB::table('persons')->where('person_id', '=', $this->list[$i])->where('deleted_flag', '=', false)->first();
 
                         $person_array = array();
                         $person_array = $this->set_personal_info_to_tree($person_array, $r);
@@ -134,7 +137,7 @@ class ApiController extends Controller
                         if ($spouses != null) {
                             $person_array['spouses'][] = $spouses;
                         }
-
+                        // find their relatives
                         $this->find_relatives($result, $r);
 
                         // หาลูกตัวเอง
@@ -199,7 +202,7 @@ class ApiController extends Controller
                 if ($rp->person_2_id != $r->person_id) {
                     $role_son = DB::table('roles')->where('role_id', '=', $rp->role_2_id)
                         ->where('role_description', '=', "ลูกชาย")
-                        ->first();
+                        ->where('deleted_flag', '=', false)->first();
                     if (count($role_son) != 0) {
                         $person_son = DB::table('persons')
                             ->where('person_id', '=', $rp->person_2_id)
@@ -218,7 +221,7 @@ class ApiController extends Controller
 
 
                     $role_son = DB::table('roles')->where('role_id', '=', $rp->role_1_id)
-                        ->where('role_description', '=', "ลูกชาย")
+                        ->where('deleted_flag', '=', false)->where('role_description', '=', "ลูกชาย")
                         ->first();
                     if (count($role_son) != 0) {
                         $person_son = DB::table('persons')
@@ -238,7 +241,7 @@ class ApiController extends Controller
                 if ($rp->person_2_id != $r->person_id) {
 
                     $role_daughter = DB::table('roles')->where('role_id', '=', $rp->role_2_id)
-                        ->where('role_description', '=', "ลูกสาว")
+                        ->where('deleted_flag', '=', false)->where('role_description', '=', "ลูกสาว")
                         ->first();
                     if (count($role_daughter) != 0) {
                         $person_daughter = DB::table('persons')
@@ -258,7 +261,7 @@ class ApiController extends Controller
                 if ($rp->person_1_id != $r->person_id) {
                     $role_daughter = DB::table('roles')->where('role_id', '=', $rp->role_1_id)
                         ->where('role_description', '=', "ลูกสาว")
-                        ->first();
+                        ->where('deleted_flag', '=', false)->first();
 
                     if (count($role_daughter) != 0) {
                         $person_daughter = DB::table('persons')
@@ -296,14 +299,14 @@ class ApiController extends Controller
             foreach ($relation_relatives as $rr) {
                 $person_2 = DB::table('persons')
                     ->where('person_id', '=', $rr->person_2_id)
-                    ->first();
+                    ->where('deleted_flag', '=', false)->first();
                 if (!$this->check_key_has_exists_value($result, 'id', $person_2->person_id) && !in_array($person_2->person_id, $this->list)) {
                     $this->list[] = $person_2->person_id;
                 }
 
                 $person_1 = DB::table('persons')
-                    ->where('person_id', '=', $rr->person_1_id)
-                    ->first();
+                    ->where('person_id', '=', $rr->person_1_id)->
+                    where('deleted_flag', '=', false)->first();
                 if (!$this->check_key_has_exists_value($result, 'id', $person_1->person_id) && !in_array($person_1->person_id, $this->list)) {
                     $this->list[] = $person_1->person_id;
                 }
@@ -336,7 +339,7 @@ class ApiController extends Controller
                     if (count($role_dad) != 0) {
                         $person_dad = DB::table('persons')
                             ->where('person_id', '=', $rp->person_2_id)
-                            ->first();
+                            ->where('deleted_flag', '=', false)->first();
                         //$rp_array['title'] = $person_dad->person_first_name." ".$person_dad->person_last_name;
 
                         $this->list[] = $person_dad->person_id; // add dad to list
@@ -352,7 +355,7 @@ class ApiController extends Controller
 
                     $role_dad = DB::table('roles')->where('role_id', '=', $rp->role_1_id)
                         ->where('role_description', '=', "พ่อ")
-                        ->first();
+                        ->where('deleted_flag', '=', false)->first();
                     if (count($role_dad) != 0) {
                         $person_dad = DB::table('persons')
                             ->where('person_id', '=', $rp->person_1_id)
@@ -372,7 +375,7 @@ class ApiController extends Controller
 
                     $role_mom = DB::table('roles')->where('role_id', '=', $rp->role_2_id)
                         ->where('role_description', '=', "เเม่")
-                        ->first();
+                        ->where('deleted_flag', '=', false)->first();
                     if (count($role_mom) != 0) {
                         $person_mom = DB::table('persons')
                             ->where('person_id', '=', $rp->person_2_id)
@@ -391,7 +394,7 @@ class ApiController extends Controller
                 if ($rp->person_1_id != $r->person_id) {
                     $role_mom = DB::table('roles')->where('role_id', '=', $rp->role_1_id)
                         ->where('role_description', '=', "เเม่")
-                        ->first();
+                        ->where('deleted_flag', '=', false)->first();
 
                     if (count($role_mom) != 0) {
                         $person_mom = DB::table('persons')
@@ -429,7 +432,7 @@ class ApiController extends Controller
             //$role= DB::table('roles')->where('role_id', '=', $relation_married->role_2_id)->first();
             $person_2 = DB::table('persons')
                 ->where('person_id', '=', $relation_married->person_2_id)
-                ->first();
+                ->where('deleted_flag', '=', false)->first();
             $this->list[] = $person_2->person_id;
             return $person_2->person_id;
 
@@ -1044,7 +1047,7 @@ class ApiController extends Controller
             if ($id != "") {
 
                 DB::table('patients')
-                    ->where('person_id', 1)
+                    ->where('person_id', $id)
                     ->update(array('deleted_flag' => TRUE));
                 /* $patient = DB::table('patients')->where('person_id', '=', $id)->first();
                  if (count($patient) > 0) {
