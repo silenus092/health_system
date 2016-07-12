@@ -246,8 +246,8 @@ AND t1.row_number in ( floor((total_rows+1)/2), floor((total_rows+2)/2) ) ');
 														/*$p['firstname']  = $person->person_first_name ; // add dad to list
 														$p['lastname'] = $person->person_last_name;
 														$p['citizenID'] = $person->person_citizenID;*/
-												        $p['ID'] = $person->person_id;
-														$p['display'] = $person->person_first_name." ".$person->person_last_name." ".$person->person_citizenID;
+												         $p['ID'] = $person->person_id;
+														$p['display'] = $person->person_id." ".$person->person_first_name." ".$person->person_last_name." ".$person->person_citizenID;
 														$data[] = $p;
 												}
 				return response()->json($data, 200);

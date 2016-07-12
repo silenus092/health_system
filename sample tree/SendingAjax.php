@@ -49,11 +49,11 @@
 					$('#basicdiagram').html(msg['status'] + "<br>" + msg['message']);
 				},
 				 error: function (xhr, ajaxOptions, thrownError) { //Add these parameters to display the required response
-            console.log(xhr.status);
-            console.log(xhr.responseText);
-			 console.log(xhr);
+            	console.log(xhr.status);
+            	console.log(xhr.responseText);
+			 	console.log(xhr);
       			console.log(ajaxOptions);
-        			console.log(thrownError);
+        		console.log(thrownError);
         }
 			});
 

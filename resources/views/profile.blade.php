@@ -1,6 +1,7 @@
 @extends('app')
 
 @section('content')
+
 <style >
 	/*  bhoechie tab */
 	div.bhoechie-tab-container{
@@ -96,6 +97,40 @@
 		var panelsButton = $('.dropdown-user');
 		panels.hide();
 
+		var myupload = $(".uploader").upload({
+			name: 'file',
+			action: "{{ url('/upload_image') }}",
+			enctype: 'multipart/form-data',
+			params: {person_id: person_id},
+			method: 'post',
+			autoSubmit: true,
+			onSubmit: function() {},
+			onComplete: function(response) {
+				var obj =  $.parseJSON(response);
+			
+				if ( obj.status == "Complete" )
+					window.location.reload(true);
+				else {
+				
+				alert(obj.status);
+					$.amaran({
+						'theme'     :'colorful',
+						'content'   :{
+							bgcolor:'#f71414',
+							color:'#fff',
+							message:'Upload fail'
+						},
+						'position'  :'top right',
+						'outEffect' :'slideBottom'
+					});
+				}
+					
+			},
+			onSelect: function() {
+			}
+		});
+
+
 		//Click dropdown
 		panelsButton.click(function() {
 			//get data-for attribute
@@ -175,12 +210,12 @@
 							});
 						}
 					});
-				
-			}else {
 
-		     }
-		}
-	});
+				}else {
+
+				}
+			}
+		});
 
 	}
 </script>
@@ -193,8 +228,18 @@
 				</div>
 				<div class="panel-body">
 					<div class="row">
-						<div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="http://babyinfoforyou.com/wp-content/uploads/2014/10/avatar-300x300.png" class="img-circle img-responsive"> </div>
-
+					<!-- <img id="uploader" alt="User Pic" src="http://babyinfoforyou.com/wp-content/uploads/2014/10/avatar-300x300.png" class="img-circle img-responsive "> -->
+						<div class="col-md-3 col-lg-3" align="center">  
+						<?php
+						if ( $person->profile_img != null ) {
+						echo '<img class="img-circle img-responsive uploader" width="300px" height="350px" src="' . asset('../public/uploads/' . $person->profile_img) . '"><br />';
+						} else {
+						echo '<img class="img-circle img-responsive uploader"  alt="no_floor_image" width="300px" height="350px" src="' . asset('../public/images/no_floor_image.png') . '"><br />';
+						}
+						?>
+						
+						</div>
+						
 						<div class=" col-md-9 col-lg-9 ">
 							<table class="table table-user-information">
 								<tbody>

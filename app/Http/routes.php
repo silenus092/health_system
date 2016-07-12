@@ -31,7 +31,7 @@ Route::get('get_tree_api/{citizen_id}', 'ApiController@show_tree');
 Route::post('add_person_api','ApiController@add_person');
 Route::post('edit_person_api','ApiController@edit_person');
 Route::get('clear_relationship_api/{person_id}', 'PersonController@clear_relationship');
-
+Route::post('upload_image', 'PersonController@upload_image');
 Route::get('get_tree/{citizen_id}', 'TreeController@show_tree');
 Route::post('add_person','TreeController@add_person');
 
@@ -68,5 +68,7 @@ Route::get('underconstruct', function () {
 } );
 
 
+Route::post('save_state','ApiController@saveState');
+Route::post('undo_state','ApiController@undoState');
 
 

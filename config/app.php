@@ -152,6 +152,8 @@ return [
 		//'Barryvdh\DomPDF\ServiceProvider',
 		'Servit\Mpdf\ServiceProvider', 
 		'Barryvdh\Debugbar\ServiceProvider',
+		
+		'Intervention\Image\ImageServiceProvider',
       
 	],
 
@@ -206,6 +208,7 @@ return [
 		//'PDF' => 'Barryvdh\DomPDF\Facade',
 		'PDF'     => 'Servit\Mpdf\Facades\Pdf', 
 		'Debugbar' => 'Barryvdh\Debugbar\Facade',
+		'Image' => 'Intervention\Image\Facades\Image',
 	],
 
 ];

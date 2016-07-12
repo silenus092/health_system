@@ -43,9 +43,17 @@ class AuthController extends Controller {
      */
     public function authenticate()
     {
+
         if (Auth::attempt(['email' => $email, 'password' => $password]))
         {
-            return redirect()->intended('dashboard');
+			
+		
+		   /* $name = Auth::user()->name;
+			$staff_type = Auth::user()->staff_type;
+        	\Session::put('message', 'Welcome : '.$staff_type."<br>". $name);
+			*/
+
+            return redirect()->intended('home');
         }
     }
 

@@ -2,6 +2,7 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Intervention\Image\ImageManager;
 
 use Illuminate\Http\Request;
 use DB ;
@@ -248,6 +249,33 @@ class PersonController extends Controller {
 				    ->with('result_callback_header', "Error")
 					->with('result_callback',"Cannot find patient profile");
 		}
+	}
+	
+	public function upload_image() {
+		$destinationPath = '../uploads/';
+		$id = Input::get('person_id');
+		$file = Input::file('file');
+		$today = date("Y-m-d-H-i-s"); 
+		$w = 0 ;
+		$h =  0 ;
+		if (Input::file('file')->isValid())
+		{
+			$filename = $file->getClientOriginalName();
+		    $person = DB::table('persons')
+					  ->where('person_id' ,'=',$id)
+				      ->update(['profile_img' =>$today."-".$filename]);
+					
+			//$uploaded_image=Input::file('file')->move($destinationPath, $filename);
+			$img = \Image::make($file)->resize(300, 300)->save('../public/uploads/'.$today."-".$filename);
+			$result['status'] = "Complete";
+			return response()->json($result, 200);
+		}else{
+			$result['status'] = "Complete";
+
+			return response()->json($result, 200);
+		}
+
+		
 	}
 
 }
