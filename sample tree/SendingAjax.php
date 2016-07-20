@@ -18,7 +18,7 @@
 	<script>
 		$(document).ready(function () {
 
-			var parents_id = [71];
+			var parents_id = [66, 67];
 			var sons_id = [];
 			var spouses_id = [80];
 			var relatives_id = [65, 68];
@@ -26,7 +26,7 @@
 			var age = 24;
 			var first_name = "Jumong";
 			var last_name = "Ranger";
-			var type_of_relationship = "son";
+			var type_of_relationship = "Son";
 			var person_citizenID = "1103300053222";
 			var person_alive = "1";
 			var person_birth_date = "1990-10-11";
@@ -35,7 +35,7 @@
 "person_citizenID":person_citizenID,"relatives_id":[],"spouses_id":[],"sons_id":[]};
 			
 			$.ajax({
-				url: 'http://localhost/health_system/public/add_person_api',
+				url: 'http://cavaros.com/health_system/public/add_person_api',
 				contentType: "application/x-www-form-urlencoded;charset=utf-8", 
 				cache: false,
         		type: 'post',
@@ -49,11 +49,11 @@
 					$('#basicdiagram').html(msg['status'] + "<br>" + msg['message']);
 				},
 				 error: function (xhr, ajaxOptions, thrownError) { //Add these parameters to display the required response
-            	console.log(xhr.status);
-            	console.log(xhr.responseText);
-			 	console.log(xhr);
+            console.log(xhr.status);
+            console.log(xhr.responseText);
+			 console.log(xhr);
       			console.log(ajaxOptions);
-        		console.log(thrownError);
+        			console.log(thrownError);
         }
 			});
 

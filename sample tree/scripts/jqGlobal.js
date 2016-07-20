@@ -61,3 +61,61 @@ $.fn.bindEnter = function (fn) {
         }
     })
 }
+
+function getDataMonth() {
+    dataList = [];
+    for (var i = 1; i < 13; i++) {
+        if (i == 1) {
+            dataList.push({ key: i, value: "มกราคม" });
+        }
+        if (i == 2) {
+            dataList.push({ key: i, value: "กุมภาพันธ์" });
+        }
+        if (i == 3) {
+            dataList.push({ key: i, value: "มีนาคม" });
+        }
+        if (i == 4) {
+            dataList.push({ key: i, value: "เมษายน" });
+        }
+        if (i == 5) {
+            dataList.push({ key: i, value: "พฤษภาคม" });
+        }
+        if (i == 6) {
+            dataList.push({ key: i, value: "มิถุนายน" });
+        }
+        if (i == 7) {
+            dataList.push({ key: i, value: "กรกฎาคม" });
+        }
+        if (i == 8) {
+            dataList.push({ key: i, value: "สิงหาคม" });
+        }
+        if (i == 9) {
+            dataList.push({ key: i, value: "กันยายน" });
+        }
+        if (i == 10) {
+            dataList.push({ key: i, value: "ตุลาคม" });
+        }
+        if (i == 11) {
+            dataList.push({ key: i, value: "พฤศจิกายน" });
+        }
+        if (i == 12) {
+            dataList.push({ key: i, value: "ธันวาคม" });
+        }
+    }
+    dataList.unshift({ key: "none", value: "เดือนเกิด" })
+    return dataList;
+}
+
+$.fn.dllYearThaiToAge = function () {
+    var d = new Date();
+    var currentYear = d.getFullYear() + 543;
+    var yearSelect = $(this).val()
+    return currentYear - yearSelect;
+}
+
+$.fn.dllAgeToYearThai = function () {
+    var yearSelect = $(this).val()
+    var d = new Date();
+    var currentYear = d.getFullYear() + 543;
+    return currentYear - yearSelect;
+}

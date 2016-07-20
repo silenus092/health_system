@@ -284,6 +284,7 @@ class FormController extends Controller
 	
 	
 	public function view_form($person_id ,$type_id){
+
 		return DB::table('persons')
             ->join('patients', 'patients.person_id', '=', 'persons.person_id')
 			->join('doctors', 'doctors.doctor_id', '=', 'patients.doctor_id')	

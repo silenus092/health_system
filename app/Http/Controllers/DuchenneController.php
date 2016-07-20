@@ -57,7 +57,7 @@ AND t1.row_number in ( floor((total_rows+1)/2), floor((total_rows+2)/2) ) ');
 		//ครั้งแรกที่เริ่มพาไปตรวจเรื่องปัญหาการเดินหรือการลุกยืน อายุ 
 		$Symp3_mean = DB::select('SELECT AVG(disease_1.symptom_3) as mean FROM disease_1 where symptom_3 != 0 ');
         $Symp3_median = DB::select('SELECT avg(t1.symptom_3) as median_val FROM (
-SELECT @rownum:=@rownum+1 as row_number, d.symptom_3
+        SELECT @rownum:=@rownum+1 as row_number, d.symptom_3
   FROM disease_1 d,  (SELECT @rownum:=0) r
   WHERE symptom_3 != 0
   ORDER BY d.symptom_3

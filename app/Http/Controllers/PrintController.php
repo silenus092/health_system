@@ -34,11 +34,11 @@ class PrintController extends Controller
 				WHERE patients_disease_forms.question_id  = disease_forms.question_id
                 AND disease_types.disease_type_id = disease_forms.disease_type_id
 				AND patients_disease_forms.patient_id =  patients.patient_id
-				AND patients.person_id = '. $person_id);
+				AND patients.person_id = '. $id);
 			
 			
 				$person = DB::table('persons')
-								->where('person_id' ,'=', $person_id )
+								->where('person_id' ,'=', $id )
 								->first();
 	
 				

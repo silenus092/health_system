@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
     <script src="scripts/jquery-1.9.1.min.js"></script>
     <script src="scripts/jquery-ui-1.9.2.custom.min.js"></script>
     <script src="scripts/primitives.min.js"></script>
-    <!--<script src="scripts/jqGlobal.js"></script>-->
+    <script src="scripts/jqGlobal.js"></script>
     <!--<script src="scripts/treeControl.js"></script>-->
     <script src="scripts/jquery.blockUI.js"></script>
     <script src="scripts/view.js"></script>
@@ -18,13 +18,40 @@
 
     <script>
 
-        $(function (e) {
-  			e.preventDefault();
+        $(function () {
+
             $("#btnSave").click(function () {
                 var objPerson = new PersonDetailView;
-                objPerson.getDataInform();
+                objPerson.getDataInformAdd();
 
-                parent.treeplugin.okPersonDetail(objPerson);
+                if (validateUi(objPerson)) {
+                    parent.treeplugin.okPersonDetail(objPerson);
+                }
+
+                $("#btnSave").unbind("click")
+            });
+
+            var isAgeClick = false;
+            var isYearClick = false;
+            $("#ddlAge").change(function () {
+                isAgeClick = true;
+                if (isYearClick == false) {
+                    $("#ddlYear").val($("#ddlAge").dllAgeToYearThai().toString());
+                    $("#ddlYear").trigger("click");
+                }
+                isAgeClick = false;
+            })
+            $("#ddlYear").change(function () {
+                isYearClick = true;
+                if (isAgeClick == false) {
+                    $("#ddlAge").val($("#ddlYear").dllYearThaiToAge().toString());
+                    $("#ddlAge").trigger("click");
+                }
+                isYearClick = false;
+            });
+
+            $("input:radio[name=relationship]").click(function () {
+                checkRadioSpouse();
             });
 
             $("#btnCancel").click(function () {
@@ -44,10 +71,85 @@
             }
 
             checkRadioFirst();
+            checkRadioSpouse();
+            addDllAge();
+            addDllYear(); addDllMonth(); addDllDay();
+            showErrMsg();
 
-            $uniformed = $(".styleThese").find("input, button").not(".skipThese");
+            var dataRef = parent.treeplugin.getDataByRefId();
+            $("#divName").text('(' + dataRef.first_name + ' ' + dataRef.last_name + ')');
+
+            $uniformed = $(".styleThese").find("input,  select").not(".skipThese");
             $uniformed.uniform();
         });
+
+        function showErrMsg() {
+            if (parent.treeplugin.getErrMsg() !== "") {
+                $("#divAgeErr").text(parent.treeplugin.getErrMsg());
+                var data = parent.treeplugin.getObjData();
+                var objPerson = new PersonDetailView;
+                objPerson.setDataInform(data);
+
+                parent.treeplugin.setErrMsg("");
+                parent.treeplugin.setObjData(null);
+            }
+
+           
+        }
+
+        function validateUi(data) {
+
+            if ($("#txtFirstName").val() == "" & $("#txtLastName").val() == "") {
+                parent.treeplugin.setObjData(data);
+                parent.treeplugin.setErrMsg("โปรดระบุชื่อนามสกุล");
+                return false;
+            }
+
+            if ($("input[name=relationship]:checked").val() == "parent") {
+                var dataChild = parent.treeplugin.getDataByRefId();
+                if (dataChild.age !== null & data.age !== null) {
+                    if (parseInt(dataChild.age) >= parseInt(data.age)) {
+                        parent.treeplugin.setObjData(data);
+                        parent.treeplugin.setErrMsg("ไม่สามารถอายุน้อยกว่าหรือเท่ากับลูก");
+                        return false;
+                    }
+                }
+            }
+
+            if ($("input[name=relationship]:checked").val() == "spouse") {
+                var dataSons = parent.treeplugin.getDataSonByRefId();
+                if (dataSons !== null & data.age !== null) {
+                    for (var i = 0; i < dataSons.length; i++) {
+                        if (parseInt(dataSons[i].age) >= parseInt(data.age)) {
+                            parent.treeplugin.setObjData(data);
+                            parent.treeplugin.setErrMsg("ไม่สามารถอายุน้อยกว่าหรือเท่ากับลูก");
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            if ($("input[name=relationship]:checked").val() == "son") {
+                var parents = [];
+                var dataRef = parent.treeplugin.getDataByRefId();
+                parents.push(dataRef);
+                var dataSpouse = parent.treeplugin.getDataSpouseByRefId();
+                if (dataSpouse !== null) {
+                    parents.push(dataSpouse);
+                }
+                if (parents !== null & data.age !== null) {
+                    for (var i = 0; i < parents.length; i++) {
+                        if (parseInt(parents[i].age) <= parseInt(data.age)) {
+                            parent.treeplugin.setObjData(data);
+                            parent.treeplugin.setErrMsg("ไม่สามารถอายุมากกว่าหรือเท่ากับพ่อแม่");
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            return true;
+        }
 
         function checkRadioFirst() {
             $.each($('input:radio[name=relationship]'), function (key, value) {
@@ -57,12 +159,100 @@
                 }
             })
         }
+
+        function checkRadioSpouse() {
+            if ($("input[name=relationship]:checked").val() == "spouse") {
+                var dataRef = parent.treeplugin.getDataByRefId();
+                if (dataRef.sex == "male") {
+                    //$("input:radio[value=male]").attr('checked', false);
+                    $("input:radio[value=female]").attr('checked', true);
+                }
+                else {
+                    //$("input:radio[value=female]").attr('checked', false);
+                    $("input:radio[value=male]").attr('checked', true);
+                }
+                $uniformed = $(".styleThese").find("input[name=sex]").not(".skipThese");
+                $uniformed.uniform();
+            };
+        }
+
+        function addDllAge() {
+            dataAge = [];
+            for (var i = 0; i < 101; i++) {
+                dataAge.push({ key: i, value: i });
+            }
+            dataAge.unshift({ key: "none", value: "กี่ปี" })
+            $.each(dataAge, function (key, value) {
+                $('#ddlAge')
+                    .append($("<option></option>")
+                    .attr("value", value.key)
+                    .text(value.value));
+            });
+        }
+
+        function addDllYear() {
+            dataList = [];
+            var d = new Date();
+            var currentYear = d.getFullYear() + 543;
+            for (var i = 0; i < 101; i++) {
+                runYear = (currentYear - i).toString();
+                dataList.push({ key: runYear, value: runYear });
+            }
+            dataList.unshift({ key: "none", value: "ปีเกิด" })
+            $.each(dataList, function (key, value) {
+                $('#ddlYear')
+                    .append($("<option></option>")
+                    .attr("value", value.key)
+                    .text(value.value));
+            });
+        }
+
+        function addDllMonth() {
+            dataList = getDataMonth();
+            $.each(dataList, function (key, value) {
+                $('#ddlMonth')
+                    .append($("<option></option>")
+                    .attr("value", value.key)
+                    .text(value.value));
+            });
+        }
+
+        function addDllDay() {
+            dataList = [];
+            for (var i = 1; i < 32; i++) {
+                dataList.push({ key: i, value: i });
+            }
+            dataList.unshift({ key: "none", value: "วันที่เกิด" })
+            $.each(dataList, function (key, value) {
+                $('#ddlDay')
+                    .append($("<option></option>")
+                    .attr("value", value.key)
+                    .text(value.value));
+            });
+        }
+
     </script>
 
     <style type="text/css">
         #divPersonDetail div
         {
             margin-bottom: 2px;
+        }
+
+        .btnCancel
+        {
+            width: 100px;
+            color: red;
+            border-radius: 5px;
+            background-color: #f5f5f5;
+        }
+
+         .btnOk
+        {
+            width: 100px;
+            color: green;
+            border-radius: 5px;
+            background-color: #f5f5f5;
         }
     </style>
 
@@ -82,12 +272,33 @@
                     </tr>
                 </table>
             </div>
+
             <div>
                 <table>
                     <tr>
-                        <td>อายุ</td>
+                        <td>วันเกิด</td>
                         <td>
-                            <input id="txtAge" type="text" style="width: 80px" /></td>
+                            <select id="ddlDay"></select>
+                            <select id="ddlMonth"></select>
+                            <select id="ddlYear"></select>
+                        </td>
+
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <table>
+                    <tr>
+                        <td style="width: 43px;">อายุ</td>
+                        <td>
+                            <!--<input id="txtAge" type="text" style="width: 80px" />-->
+                            <select id="ddlAge"></select>
+                        </td>
+                        <td>
+                            <div id="divAgeErr" style="color: red">
+                            </div>
+                        </td>
+
                     </tr>
                 </table>
             </div>
@@ -99,7 +310,7 @@
 
             </div>
             <div>
-                <input id="rdUnSick" type="radio" value="unsick" name="sick" checked />
+                <input id="rdUnSick" type="radio" value="un_sick" name="sick" checked />
                 <span style="margin-right: 30px;">ไม่ป่วย</span>
                 <input id="rdSick" type="radio" value="sick" name="sick" />
                 <span>ป่วย</span>
@@ -108,7 +319,7 @@
             <div>
                 <input id="rdLive" type="radio" value="1" name="live" checked />
                 <span style="margin-right: 38px;">มีชีวิต</span>
-                <input id="rdUnLive" type="radio" value="2" name="live" />
+                <input id="rdUnLive" type="radio" value="0" name="live" />
                 <span>เสียชีวิต</span>
             </div>
             <div>
@@ -123,13 +334,21 @@
                     <span>พี่ หรือ น้อง</span>
                 </div>
             </div>
+            <div>
+                <div id="divName">
+                    
+                </div>
+            </div>
             <div style="margin-top: 12px;">
                 <table>
                     <tr>
-                        <td style="width: 355px;">
-                            <button id="btnCancel">ยกเลิก</button></td>
-                        <td>
-                            <button id="btnSave">บันทึก</button></td>
+                     
+                        <td style="width: 421px; text-align: right;">
+                            <button id="btnCancel" class="btnCancel">
+                                ยกเลิก
+                                <img src="images/cancel.png" style="height: 9px"  /></button>
+
+                            <button id="btnSave" class="btnOk">บันทึก<img src="images/ok.png" style="height: 9px;padding-left: 2px;" /></button></td>
                     </tr>
                 </table>
             </div>

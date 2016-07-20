@@ -2,14 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html;" charset="utf-8"/>
-		<!-- <link rel="stylesheet" href="http://localhost/health_system/public/scripts/css/bootstrap.min.css">
-<link rel="stylesheet" href="http://localhost/health_system/public/scripts/css/bootstrap-theme.min.css">
-<link rel="stylesheet" href="http://localhost/health_system/public/css/app.css" rel="stylesheet">
+
 <link rel="stylesheet" href="http://localhost/health_system/public/scripts/css/jquery-ui.css">
 
 <script src="http://localhost/health_system/public/scripts/scripts/jquery-1.11.2.min.js"></script>
 <script src="http://localhost/health_system/public/scripts/scripts/js/jquery-ui.min.js"></script>
-<script src="http://localhost/health_system/public/scripts/scripts/js/bootstrap.min.js"></script> -->
+<script src="http://localhost/health_system/public/scripts/scripts/js/bootstrap.min.js"></script>
 
 	</head>
 	<body>

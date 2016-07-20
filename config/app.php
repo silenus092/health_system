@@ -146,13 +146,13 @@ return [
 		'App\Providers\EventServiceProvider',
 		'App\Providers\RouteServiceProvider',
         /*
-        * Plugin ... 
+        * Plugin ...
         */
         'Xuma\Amaran\AmaranServiceProvider',
 		//'Barryvdh\DomPDF\ServiceProvider',
-		'Servit\Mpdf\ServiceProvider', 
+		'Servit\Mpdf\ServiceProvider',
 		'Barryvdh\Debugbar\ServiceProvider',
-		
+
 		'Intervention\Image\ImageServiceProvider',
       
 	],
@@ -206,7 +206,7 @@ return [
 		'Form' => 'Illuminate\Html\FormFacade',
         'Amaran' => 'Xuma\Amaran\Facades\Amaran',
 		//'PDF' => 'Barryvdh\DomPDF\Facade',
-		'PDF'     => 'Servit\Mpdf\Facades\Pdf', 
+		'PDF'     => 'Servit\Mpdf\Facades\Pdf',
 		'Debugbar' => 'Barryvdh\Debugbar\Facade',
 		'Image' => 'Intervention\Image\Facades\Image',
 	],

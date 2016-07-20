@@ -11,15 +11,19 @@
     <script src="scripts/jquery.blockUI.js"></script>
     <script src="scripts/view.js"></script>
     <script src="scripts/json_parse.js"></script>
+            <script src="scripts/jquery.uniform.min.js"></script>
 
     <link href="styles/primitives.latest.css" rel="stylesheet" />
     <link href="styles/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" />
+         <link href="styles/uniform.default.min.css" rel="stylesheet" />
+
     <script>
         var imageMen = "/imagesTest/men.png";
         var imageWomen = "/imagesTest/women.png";
         var colorSick = primitives.common.Colors.Orange;
         var colorWomen = primitives.common.Colors.Pink;
         var items = null;
+
         $(document).ready(function () {
             //var parents_id = [66, 67];
             //var sons_id = [];
@@ -54,19 +58,21 @@
             //});
 
             $.ajax({
-                url: 'http://localhost/health_system/public/get_tree_api/69',
+                url: 'http://www.cavaros.com/health_system/public/get_tree_api/71',
                 dataType: 'json',
                 type: 'GET',
                 success: function (data, textStatus, jQxhr) {
 
                     $("#basicdiagram").treeControl({
+                        url: 'http://www.cavaros.com/health_system/public',
+                        mainId: 71,
                         data: data.person,
                         onCancelPersonDetail: function () {
                             $.unblockUI();
                         },
                         onOkPersonDetail: function (obj) {
-                            $.unblockUI();
                             $("#basicdiagram").reCreate(obj);
+                            $.unblockUI();
                         }
                     });
                 },
@@ -75,6 +81,9 @@
                 },
             });
 
+            $uniformed = $("#btnReturn").not(".skipThese");
+            $uniformed.uniform();
+            $("#uniform-btnReturn").css("position", "fixed");
 
             /*items = [
                            {
@@ -167,10 +176,22 @@
            $("#basicdiagram").treeControl({ data: items });*/
         });
   </script>
+
+    
+    <style type="text/css">
+        html, body
+        {
+            height: 100%;
+        }
+    </style>
 </head>
 
-<body>
-    <div id="basicdiagram" style="width: auto; height: 680px; border-style: dotted; border-width: 1px;" />
+<body ">
+     <input id="btnReturn" type="button" value="return" style="position: fixed;" />
+    <div id="basicdiagram" style="width: auto;  height:100vh; border-style: dotted; border-width: 1px;" >
+      
+
+    </div>
 </body>
 
 </html>

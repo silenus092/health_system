@@ -68,7 +68,11 @@ Route::get('underconstruct', function () {
 } );
 
 
-Route::post('save_state','ApiController@saveState');
-Route::post('undo_state','ApiController@undoState');
+Route::get('check_undo_state','ApiController@checkUndoState');
+Route::get('undo_state','ApiController@undoState');
 
 
+Route::get('get_images/{filename}', function ($filename)
+{
+    return Image::make('uploads/' . $filename)->response();
+});

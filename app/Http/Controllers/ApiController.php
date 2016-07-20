@@ -19,6 +19,7 @@ class ApiController extends Controller
      * @return Response
      */
     private $list = array();
+
     private $this_db;
     /**
      * Initializer.
@@ -34,8 +35,6 @@ class ApiController extends Controller
 
     public function show_tree($id)
     {
-
-
         try {
             // check this guy exist or not
             $result = array();
@@ -43,7 +42,6 @@ class ApiController extends Controller
                                      ->where('deleted_flag', '=', false)
                                      ->first();
             if (count($r) == 0) {
-
                 $result['Info']['status'] = "Complete";
                 $result['Info']['message'] = "No Person Found";
 
@@ -51,75 +49,33 @@ class ApiController extends Controller
             }
             $result['Info']['status'] = "Complete";
             $result['Info']['message'] = "Found";
-            // Fuck , this array  for persons
-            $person_array = array();
 
-            // Init for patient only
-            $person_array['id'] = $r->person_id;
-            $person_array['first_name'] = $r->person_first_name;
-            $person_array['last_name'] = $r->person_last_name;
-            $person_array['sex'] = $r->person_sex;
-            $person_array['age'] = $r->person_age;
-            $person_array['person_alive'] = $r->person_alive;
-            $person_array['title'] = $r->person_first_name . " " . $r->person_last_name;
-            $person_array['description'] = "Sex: " . $r->person_sex . " Age: " . $r->person_age;
-            $date_temp = explode("-", $r->person_birth_date);
-
-            $person_array['year'] = (int)$date_temp[0];
-            $person_array['month'] = (int)$date_temp[1];
-            $person_array['day'] = (int)$date_temp[2];
-            /* $result['description']['sex']  = $r->person_sex;
-            $result['description']['birth_date']  = $r->person_birth_date;
-            $result['description']['age']  = $r->person_age;
-            $result['description']['citizen_id']  = $r->person_citizenID;
-            $result['description']['house_num']  = $r->person_house_num;
-            $result['description']['mooh_num']  = $r->person_mooh_num;
-            $result['description']['soi']  = $r->person_soi;
-            $result['description']['road']  = $r->person_road;
-            $result['description']['tumbon']  = $r->person_tumbon;
-            $result['description']['amphur']  = $r->person_amphur;
-            $result['description']['province']  = $r->person_province;
-            $result['description']['post_code']  = $r->person_post_code;
-            $result['description']['phone']  = $r->person_phone;
-            $result['description']['mobile_phone']  = $r->person_mobile_phone;*/
-            //$person_array['image']  = null ;
-            $pink = $this->check_female($r->person_sex);
-            if ($pink != null) {
-                $person_array['itemTitleColor'] = $pink;
-            }
-            if (count(DB::table('patients')->where('person_id', '=', $r->person_id)->first()) > 0) {
-                $person_array['groupTitle'] = "ผู้ป่วย";
-                $person_array['groupTitleColor'] = "orange";
-                $person_array['is_sick'] = "sick";
-            } else {
-                $person_array['groupTitle'] = "ปกติ";
-                $person_array['groupTitleColor'] = null;
-                $person_array['is_sick'] = "un_sick";
+            if( \Session::has('focused_id')){
+                \Session::set('focused_id', $id);
+            }else{
+                \Session::put('focused_id', $id);
             }
 
 
-            $parents = $this->find_parent($result, $r);
-            if ($parents != null) {
-                $person_array['parents'] = $parents;
-            }
-            $spouses = $this->find_spouse($result, $r);
-            if ($spouses != null) {
-                $person_array['spouses'][] = $spouses;
-            }
-            $result['person'][] = $person_array;
-            // หาพี่น้องตัวเองด้วย
-            $this->find_relatives($result, $r);
-
-            // หาลูกตัวเอง
-            $this->find_children($r);
-
+            $this->list[]  = $r->person_id;
             // Let's fill personal information to id array list.
-            $depth = 10;
-            while (count($this->list) > 0 && $depth > 0) {
+            $result = $this->adjustArrayForTree($result ,10);
+            return response()->json($result, 200);
+        } catch (Exception $e) {
+            $result['status'] = "Error";
+            $result['message'] = $e;
+            return response()->json($result, 200);
+        }
+    }
+
+    public function adjustArrayForTree($result = null, $local_depth = null){
+        if($local_depth !=null && $result != null){
+            $depth = $local_depth;
+           do {
 
                 $size = count($this->list);
                 for ($i = 0; $i < $size; $i++) {
-                    if ($this->list[$i] && !$this->check_key_has_exists_value($result, 'id', $this->list[$i])) {
+                    if ($this->list[$i] && (!$this->check_key_has_exists_value($result, 'id', $this->list[$i]))) {
                         // add another personal info
                         $r = DB::table('persons')->where('person_id', '=', $this->list[$i])->where('deleted_flag', '=', false)->first();
 
@@ -155,13 +111,48 @@ class ApiController extends Controller
                 }
 
                 $depth--;
+            } while (count($this->list) > 0 && $depth > 0);
+
+            return $result;
+        }else{ // use for deletion
+            $id = array_shift($this->list);
+            $r = DB::table('persons')->where('person_id', '=', $id)->where('deleted_flag', '=', false)->first();
+            DB::table('persons')
+                ->where('person_id', $id)
+                ->update(array('deleted_flag' => TRUE));
+            // หาลูกตัวเองd
+            $this->find_children($r);
+            // Find his/her parent
+            $this->find_spouse($result, $r);
+
+            while (count($this->list) > 0) {
+
+                $id = array_shift($this->list);
+                        // add another personal info
+                        $r = DB::table('persons')->where('person_id', '=', $id)->where('deleted_flag', '=', false)->first();
+
+                        if(count($r) > 0){
+                            // Find his/her parent
+                            $this->find_parent($result, $r);
+                            // Find his/her spouse
+                            $this->find_spouse($result, $r);
+
+                            // find their relatives
+                            $this->find_relatives($result, $r);
+
+                            // หาลูกตัวเอง
+                            $this->find_children($r);
+
+
+                            DB::table('persons')
+                                ->where('person_id', $id)
+                                ->update(array('deleted_flag' => TRUE));
+                        }
+
             }
-            return response()->json($result, 200);
-        } catch (Exception $e) {
-            $result['status'] = "Error";
-            $result['message'] = $e;
-            return response()->json($result, 200);
+            return 1;
         }
+
     }
 
     public function check_female($sex)
@@ -202,10 +193,11 @@ class ApiController extends Controller
                 if ($rp->person_2_id != $r->person_id) {
                     $role_son = DB::table('roles')->where('role_id', '=', $rp->role_2_id)
                         ->where('role_description', '=', "ลูกชาย")
-                        ->where('deleted_flag', '=', false)->first();
+                        ->first();
                     if (count($role_son) != 0) {
                         $person_son = DB::table('persons')
                             ->where('person_id', '=', $rp->person_2_id)
+                            ->where('deleted_flag', '=', false)
                             ->first();
                         //$rp_array['title'] = $person_dad->person_first_name." ".$person_dad->person_last_name;
 
@@ -221,11 +213,12 @@ class ApiController extends Controller
 
 
                     $role_son = DB::table('roles')->where('role_id', '=', $rp->role_1_id)
-                        ->where('deleted_flag', '=', false)->where('role_description', '=', "ลูกชาย")
+                        ->where('role_description', '=', "ลูกชาย")
                         ->first();
                     if (count($role_son) != 0) {
                         $person_son = DB::table('persons')
                             ->where('person_id', '=', $rp->person_1_id)
+                            ->where('deleted_flag', '=', false)
                             ->first();
                         //$rp_array['title'] = $person_dad->person_first_name." ".$person_dad->person_last_name;
 
@@ -241,11 +234,12 @@ class ApiController extends Controller
                 if ($rp->person_2_id != $r->person_id) {
 
                     $role_daughter = DB::table('roles')->where('role_id', '=', $rp->role_2_id)
-                        ->where('deleted_flag', '=', false)->where('role_description', '=', "ลูกสาว")
+                        ->where('role_description', '=', "ลูกสาว")
                         ->first();
                     if (count($role_daughter) != 0) {
                         $person_daughter = DB::table('persons')
                             ->where('person_id', '=', $rp->person_2_id)
+                            ->where('deleted_flag', '=', false)
                             ->first();
                         //$rp_array['title'] = $person_mom->person_first_name." ".$person_mom->person_last_name;
 
@@ -261,11 +255,12 @@ class ApiController extends Controller
                 if ($rp->person_1_id != $r->person_id) {
                     $role_daughter = DB::table('roles')->where('role_id', '=', $rp->role_1_id)
                         ->where('role_description', '=', "ลูกสาว")
-                        ->where('deleted_flag', '=', false)->first();
+                        ->first();
 
                     if (count($role_daughter) != 0) {
                         $person_daughter = DB::table('persons')
                             ->where('person_id', '=', $rp->person_1_id)
+                            ->where('deleted_flag', '=', false)
                             ->first();
                         //$rp_array['title'] = $person_mom->person_first_name." ".$person_mom->person_last_name;
 
@@ -287,7 +282,7 @@ class ApiController extends Controller
     }
 
 
-    public function find_relatives($result, $r)
+    public function find_relatives($result =null, $r)
     {
         $relation_relatives = DB::table('relationship')
             ->where('person_1_id', '=', $r->person_id)
@@ -300,14 +295,14 @@ class ApiController extends Controller
                 $person_2 = DB::table('persons')
                     ->where('person_id', '=', $rr->person_2_id)
                     ->where('deleted_flag', '=', false)->first();
-                if (!$this->check_key_has_exists_value($result, 'id', $person_2->person_id) && !in_array($person_2->person_id, $this->list)) {
+                if ($result !=null && !$this->check_key_has_exists_value($result, 'id', $person_2->person_id) && !in_array($person_2->person_id, $this->list)) {
                     $this->list[] = $person_2->person_id;
                 }
 
                 $person_1 = DB::table('persons')
                     ->where('person_id', '=', $rr->person_1_id)->
                     where('deleted_flag', '=', false)->first();
-                if (!$this->check_key_has_exists_value($result, 'id', $person_1->person_id) && !in_array($person_1->person_id, $this->list)) {
+                if ($result !=null && !$this->check_key_has_exists_value($result, 'id', $person_1->person_id) && !in_array($person_1->person_id, $this->list)) {
                     $this->list[] = $person_1->person_id;
                 }
             }
@@ -330,23 +325,24 @@ class ApiController extends Controller
 
             //$rp_array =array();
             // find  dad
-            foreach ($relation_parent as $rp) {
+                    foreach ($relation_parent as $rp) {
 
-                if ($rp->person_2_id != $r->person_id) {
-                    $role_dad = DB::table('roles')->where('role_id', '=', $rp->role_2_id)
-                        ->where('role_description', '=', "พ่อ")
-                        ->first();
-                    if (count($role_dad) != 0) {
-                        $person_dad = DB::table('persons')
-                            ->where('person_id', '=', $rp->person_2_id)
-                            ->where('deleted_flag', '=', false)->first();
-                        //$rp_array['title'] = $person_dad->person_first_name." ".$person_dad->person_last_name;
+                        if ($rp->person_2_id != $r->person_id) {
+                            $role_dad = DB::table('roles')
+                                ->where('role_id', '=', $rp->role_2_id)
+                                ->where('role_description', '=', "พ่อ")
+                                ->first();
+                            if (count($role_dad) != 0) {
+                                $person_dad = DB::table('persons')
+                                    ->where('person_id', '=', $rp->person_2_id)
+                                    ->where('deleted_flag', '=', false)->first();
+                                //$rp_array['title'] = $person_dad->person_first_name." ".$person_dad->person_last_name;
 
-                        $this->list[] = $person_dad->person_id; // add dad to list
+                                $this->list[] = $person_dad->person_id; // add dad to list
 
-                        $relation_parent_array[] = $person_dad->person_id;
-                        //$rp_array['role']=$role_dad->role_description;
-                    }
+                                $relation_parent_array[] = $person_dad->person_id;
+                                //$rp_array['role']=$role_dad->role_description;
+                            }
                 }
 
 
@@ -355,10 +351,11 @@ class ApiController extends Controller
 
                     $role_dad = DB::table('roles')->where('role_id', '=', $rp->role_1_id)
                         ->where('role_description', '=', "พ่อ")
-                        ->where('deleted_flag', '=', false)->first();
+                        ->first();
                     if (count($role_dad) != 0) {
                         $person_dad = DB::table('persons')
                             ->where('person_id', '=', $rp->person_1_id)
+                            ->where('deleted_flag', '=', false)
                             ->first();
                         //$rp_array['title'] = $person_dad->person_first_name." ".$person_dad->person_last_name;
 
@@ -375,10 +372,11 @@ class ApiController extends Controller
 
                     $role_mom = DB::table('roles')->where('role_id', '=', $rp->role_2_id)
                         ->where('role_description', '=', "เเม่")
-                        ->where('deleted_flag', '=', false)->first();
+                        ->first();
                     if (count($role_mom) != 0) {
                         $person_mom = DB::table('persons')
                             ->where('person_id', '=', $rp->person_2_id)
+                            ->where('deleted_flag', '=', false)
                             ->first();
                         //$rp_array['title'] = $person_mom->person_first_name." ".$person_mom->person_last_name;
 
@@ -394,11 +392,12 @@ class ApiController extends Controller
                 if ($rp->person_1_id != $r->person_id) {
                     $role_mom = DB::table('roles')->where('role_id', '=', $rp->role_1_id)
                         ->where('role_description', '=', "เเม่")
-                        ->where('deleted_flag', '=', false)->first();
+                        ->first();
 
                     if (count($role_mom) != 0) {
                         $person_mom = DB::table('persons')
                             ->where('person_id', '=', $rp->person_1_id)
+                            ->where('deleted_flag', '=', false)
                             ->first();
                         //$rp_array['title'] = $person_mom->person_first_name." ".$person_mom->person_last_name;
 
@@ -465,7 +464,14 @@ class ApiController extends Controller
         $person_array['age'] = $r->person_age;
         $person_array['person_alive'] = $r->person_alive;
         $person_array['title'] = $r->person_first_name . " " . $r->person_last_name;
-        $person_array['description'] = "Sex: " . $r->person_sex . " Age: " . $r->person_age;
+        $person_array['description'] = "เพศ: " . $this->convertSex_Language($r->person_sex) . " อายุ: " . $r->person_age;
+        $person_array['templateName'] = "contactTemplate";
+        if($r->profile_img !=null){
+            $person_array['image'] = url().'/get_images/'.$r->profile_img;
+        }else{
+            $person_array['image'] = null;
+        }
+
         $date_temp = explode("-", $r->person_birth_date);
 
         $person_array['year'] = (int)$date_temp[0];
@@ -1043,13 +1049,18 @@ class ApiController extends Controller
             DB::beginTransaction();
             $Temp = json_decode(Input::get('inputs'));
             $id = $Temp->person_id;
+            \Session::put('last_deleted_id', $id);
             // check this guy exist or not
             if ($id != "") {
 
-                DB::table('patients')
+               /* DB::table('persons')
                     ->where('person_id', $id)
-                    ->update(array('deleted_flag' => TRUE));
-                /* $patient = DB::table('patients')->where('person_id', '=', $id)->first();
+                    ->update(array('deleted_flag' => TRUE));*/
+                $this->list[] =$id;
+                $this->adjustArrayForTree();
+
+                /* old style
+                $patient = DB::table('patients')->where('person_id', '=', $id)->first();
                  if (count($patient) > 0) {
                      $patients_disease_forms = DB::table('patients_disease_forms')
                          ->where('patient_id', '=', $patient->patient_id)->get();
@@ -1101,13 +1112,77 @@ class ApiController extends Controller
             $age--;
         return $age;
     }
+    public function convertSex_Language($sex){
 
-    public function saveState(){
-        DB::commit();
+        if($sex == "male"){
+            return "ชาย";
+        }else if($sex == "female"){
+            return "หญิง";
+        }else {
+            return "ระบุไม่ได้";
+        }
+
+    }
+    public function checkUndoState(){
+        $id = \Session::get('last_deleted_id');
+
+        // check this guy exist or not
+        if ($id != "") {
+            $result['status'] = "True";
+            $result['message'] = "Can undo";
+            return response()->json($result, 200);
+        }else{
+            $result['status'] = "False";
+            $result['message'] = "Nothing to undo";
+            return response()->json($result, 200);
+        }
     }
 
     public function  undoState(){
-        DB::rollback();
+        try {
+            DB::beginTransaction();
+            //$Temp = json_decode(Input::get('inputs'));
+            $id = \Session::get('last_deleted_id');
+
+            // check this guy exist or not
+            if ($id != "") {
+
+                DB::table('persons')
+                    ->where('person_id', $id)
+                    ->update(array('deleted_flag' => false));
+                /* $patient = DB::table('patients')->where('person_id', '=', $id)->first();
+                 if (count($patient) > 0) {
+                     $patients_disease_forms = DB::table('patients_disease_forms')
+                         ->where('patient_id', '=', $patient->patient_id)->get();
+                     if (count($patients_disease_forms) > 0) {
+                         foreach ($patients_disease_forms as $pdf) {
+                             DB::table('disease_1')->where('questions_id', '=', $pdf->question_id)->delete();
+                         }
+                         $patients_disease_forms->delete();
+                     }
+                     DB::table('patients')->where('person_id', '=', $id)->delete();
+                     DB::table('doctors')->where('doctor_id', '=', $patient->doctor_id)->delete();
+                 }
+                 DB::table('relationship')->where('person_1_id', '=', $id)->delete();
+                 DB::table('relationship')->where('person_2_id', '=', $id)->delete();
+                 DB::table('persons')->where('person_id', '=', $id)->delete();*/
+                DB::commit();
+                \Session::set('last_deleted_id', '');
+                $result['status'] = "Success";
+                $result['message'] = "Undo delete id:" . $id;
+                return response()->json($result, 200);
+            } else {
+                $result['status'] = "Nothing to undo";
+                $result['message'] = "ID is null " . $id;
+                return response()->json($result, 200);
+            }
+        } catch (Exception $e) {
+            DB::rollback();
+            $result['status'] = "Error";
+            $result['message'] = $e->getMessage();
+            return response()->json($result, 200);
+        }
+
     }
 }
 

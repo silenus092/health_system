@@ -138,7 +138,7 @@ class PersonController extends Controller {
 			if ( count($patient) > 0 )
 			{
 			$patients_disease_forms = DB::table('patients_disease_forms')
-				->where('patient_id', '=', $patient_id)->get();
+				->where('patient_id', '=', $id)->get();
 			if(count($patients_disease_forms) >0 ){
 				foreach($patients_disease_forms as $pdf){
 					 DB::table('disease_1')->where('questions_id', '=', $pdf->question_id)->delete();
@@ -178,7 +178,7 @@ class PersonController extends Controller {
 			if ( count($patient) > 0 )
 			{
 			$patients_disease_forms = DB::table('patients_disease_forms')
-				->where('patient_id', '=', $patient_id)->get();
+				->where('patient_id', '=', $id)->get();
 			if(count($patients_disease_forms) >0 ){
 				foreach($patients_disease_forms as $pdf){
 					 DB::table('disease_1')->where('questions_id', '=', $pdf->question_id)->delete();
@@ -260,13 +260,17 @@ class PersonController extends Controller {
 		$h =  0 ;
 		if (Input::file('file')->isValid())
 		{
+            $person = DB::table('persons')
+                ->where('person_id' ,'=',$id)->first();
 			$filename = $file->getClientOriginalName();
-		    $person = DB::table('persons')
+
+            if(file_exists( public_path() . '/uploads/' .$person->profile_img)) {
+                \File::Delete(public_path() . '/uploads/' .$person->profile_img);
+            }
+            DB::table('persons')
 					  ->where('person_id' ,'=',$id)
-				      ->update(['profile_img' =>$today."-".$filename]);
-					
-			//$uploaded_image=Input::file('file')->move($destinationPath, $filename);
-			$img = \Image::make($file)->resize(300, 300)->save('../public/uploads/'.$today."-".$filename);
+				      ->update(['profile_img' =>$today."-".$id."-".$filename]);
+            $img = \Image::make($file)->resize(300, 300)->save('../public/uploads/'.$today."-".$id."-".$filename);
 			$result['status'] = "Complete";
 			return response()->json($result, 200);
 		}else{

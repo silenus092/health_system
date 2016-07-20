@@ -3,11 +3,18 @@
 /// <reference path="view.js" />
 var treeplugin;
 
+// เรียงลำดับแบบอายุไม่รู้ทำได้เปล่า
+// ขยับ layout หน่อย
+
 (function ($) {
     var myTreeControl = null; // เก็บ plugin
     var myTreeStatus;
     var idRef;
+    var objData = null;
+    var errMsg = "";
     var settings = {
+        url: "localhost",
+        mainId: 0,
         data: {},
         onCancelPersonDetail: function () {
             alert('onCancelPersonDetail');
@@ -27,7 +34,7 @@ var treeplugin;
             buttons.push(new primitives.orgdiagram.ButtonConfig("add", "ui-icon-plus", "Add"));
             buttons.push(new primitives.orgdiagram.ButtonConfig("edit", "ui-icon-pencil", "Edit"));
             buttons.push(new primitives.orgdiagram.ButtonConfig("delete", "ui-icon-close", "Delete"));
-            buttons.push(new primitives.orgdiagram.ButtonConfig("properties", " ui-icon-info", "Info"));
+            //buttons.push(new primitives.orgdiagram.ButtonConfig("properties", " ui-icon-info", "Info"));
             var treeOptions = new primitives.orgdiagram.Config();
 
             treeOptions.items = settings.data;
@@ -38,7 +45,12 @@ var treeplugin;
             treeOptions.linesWidth = 2;
             treeOptions.linesColor = primitives.common.Colors.Black;
             treeOptions.normalItemsInterval = 20;
-            treeOptions.lineLevelShift = 30;
+            treeOptions.lineLevelShift = 40;
+
+            treeOptions.templates = [getContactTemplate()];
+            treeOptions.onItemRender = onTemplateRender;
+            options.defaultTemplateName = "contactTemplate";
+
             treeOptions.onButtonClick = function (e, data) {
                 //$(myTreeControl).data("id", data.context.id);
                 idRef = data.context.id;
@@ -47,7 +59,7 @@ var treeplugin;
                     myTreeStatus = enStatusUI.add;
                     $.blockUI({
 
-                        message: '<iframe src="~/../PersonDetailPage.html" height="220px" width="470px" scrolling="yes" frameborder="0" id="progressIframe" />',
+                        message: '<iframe src="~/../PersonDetailPage.html" height="280px" width="470px" scrolling="yes" frameborder="0" id="progressIframe" />',
                         css: {
                             width: '500px' // ความกว้างขอบ iframe
                         },
@@ -59,7 +71,33 @@ var treeplugin;
                 }
 
                 if (data.name == "delete") {
-                    alert("delete");
+                    myTreeStatus = enStatusUI.delete;
+                    $.blockUI({
+
+                        message: '<iframe src="~/../PersonDeletePage.html" height="220px" width="470px" scrolling="yes" frameborder="0" id="progressIframe" />',
+                        css: {
+                            width: '500px' // ความกว้างขอบ iframe
+                        },
+                        overlayCSS: { backgroundColor: '#F2F5F8' },
+                        onBlock: function () {
+                            $(".blockPage").center();
+                        }
+                    });
+                }
+
+                if (data.name == "edit") {
+                    myTreeStatus = enStatusUI.edit;
+                    $.blockUI({
+
+                        message: '<iframe src="~/../PersonEditPage.html" height="270px" width="470px" scrolling="yes" frameborder="0" id="progressIframe" />',
+                        css: {
+                            width: '500px' // ความกว้างขอบ iframe
+                        },
+                        overlayCSS: { backgroundColor: '#F2F5F8' },
+                        onBlock: function () {
+                            $(".blockPage").center();
+                        }
+                    });
                 }
 
             };
@@ -68,34 +106,97 @@ var treeplugin;
         })
     };
 
+    function getContactTemplate() {
+        var result = new primitives.orgdiagram.TemplateConfig();
+        result.name = "contactTemplate";
+
+        result.itemSize = new primitives.common.Size(200, 120);
+        result.minimizedItemSize = new primitives.common.Size(3, 3);
+        result.highlightPadding = new primitives.common.Thickness(2, 2, 2, 2);
+
+
+        var itemTemplate = jQuery(
+          '<div class="bp-item bp-corner-all bt-item-frame">'
+            + '<div name="titleBackground" class="bp-item bp-corner-all bp-title-frame" style="top: 2px; left: 2px; width: 216px; height: 20px; overflow: hidden;">'
+                + '<div name="title" class="bp-item bp-title" style="top: 3px; left: 6px; width: 208px; height: 18px; overflow: hidden;">'
+                + '</div>'
+            + '</div>'
+            + '<div class="bp-item bp-photo-frame" style="top: 26px; left: 2px; width: 50px; height: 60px; overflow: hidden;">'
+                + '<img name="photo" style="height:60px; width:50px;" />'
+            + '</div>'
+            + '<div name="description" class="bp-item" style="top: 26px; left: 56px; width: 138px; height: 62px; font-size: 12px; overflow: hidden;"></div>'
+            + '<div class="bp-item" style="top: 89px;left: 2px; width: 193px; height: 27px; overflow: hidden;text-align: right;">'
+                 + '<img name="photoDead" style="height:30px; width:32px;" src="images/rip.png"/>'
+            + '</div>'
+        + '</div>'
+        ).css({
+            width: result.itemSize.width + "px",
+            height: result.itemSize.height + "px"
+        }).addClass("bp-item bp-corner-all bt-item-frame");
+        result.itemTemplate = itemTemplate.wrap('<div>').parent().html();
+
+        return result;
+    }
+
+    function onTemplateRender(event, data) {
+        switch (data.renderingMode) {
+            case primitives.common.RenderingMode.Create:
+                /* Initialize widgets here */
+                break;
+            case primitives.common.RenderingMode.Update:
+                /* Update widgets here */
+                break;
+        }
+
+        var itemConfig = data.context;
+
+        if (data.templateName == "contactTemplate") {
+            if (itemConfig.image == null) {
+                if (itemConfig.sex == "male") {
+                    data.element.find("[name=photo]").attr({ "src": "images/men.png", "alt": itemConfig.title });
+                }
+                else
+                {
+                    data.element.find("[name=photo]").attr({ "src": "images/women.png", "alt": itemConfig.title });
+                }
+            }
+            else
+            {
+                data.element.find("[name=photo]").attr({ "src": itemConfig.image, "alt": itemConfig.title });
+            }
+            //data.element.find("[name=photo]").attr({ "src": itemConfig.image, "alt": itemConfig.title });
+            data.element.find("[name=titleBackground]").css({ "background": itemConfig.itemTitleColor });
+
+            //data.element.find("[name=label]").text(itemConfig.percent * 100.0 + '%');
+
+            var fields = ["title", "description"];
+            for (var index = 0; index < fields.length; index++) {
+                var field = fields[index];
+
+                var element = data.element.find("[name=" + field + "]");
+                if (element.text() != itemConfig[field]) {
+                    element.text(itemConfig[field]);
+                }
+
+                if (itemConfig.person_alive == "1") {
+                    data.element.find("[name=photoDead]").css("visibility", "hidden");
+                }
+                else
+                {
+                    data.element.find("[name=photoDead]").css("visibility", "visible");
+                }
+            }
+        }
+    }
+
     $.fn.reCreate = function (obj) {
         // เอา obj มาทำส่งให้ server ก่อน
         if (myTreeStatus == enStatusUI.add) {
+
+            obj.person_select_id = idRef;
             if (obj.type_of_relationship == "son") {
 
                 var obj = prepareSonForAdd(obj);
-
-                // ส่งไป save
-                var input = JSON.stringify(obj);
-                $.ajax({
-                    url: 'http://www.cavaros.com/health_system/public/add_person_api',
-                    contentType: "application/x-www-form-urlencoded;charset=utf-8",
-                    cache: false,
-                    type: 'post',
-                    dataType: 'json',
-                    data: { inputs: JSON.stringify(obj) },
-                    success: function (msg) {
-                        //$('#basicdiagram').html(msg['status'] + "<br>" + msg['message']);
-
-                        // ถ้า save ผ่านสร้าง
-                        settings.data = msg.person;
-                        reRender(settings.data);
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) { //Add these parameters to display the required response
-                        alert(xhr.status);
-                        alert(xhr.responseText);
-                    }
-                });
 
                 // ถ้า save ผ่านสร้าง test
                 //obj.id = settings.data.length + 1; //test
@@ -107,89 +208,139 @@ var treeplugin;
                 //$(myTreeControl).famDiagram("update", /*Refresh: use fast refresh to update chart*/ primitives.orgdiagram.UpdateMode.Refresh);
             }
             if (obj.type_of_relationship == "spouse") {
-                //todo เคสมีแฟนแล้ว คิดว่าไม่ควรทำได้
 
                 var obj = prepareSpouseForAdd(obj);
-                // ส่งไป save
-                var input = JSON.stringify(obj);
-                $.ajax({
-                    url: 'http://www.cavaros.com/health_system/public/add_person_api',
-                    contentType: "application/x-www-form-urlencoded;charset=utf-8",
-                    cache: false,
-                    type: 'post',
-                    dataType: 'json',
-                    data: { inputs: JSON.stringify(obj) },
-                    success: function (msg) {
-                        //$('#basicdiagram').html(msg['status'] + "<br>" + msg['message']);
-
-                        // ถ้า save ผ่านสร้าง
-                        settings.data = msg.person;
-                        reRender(settings.data);
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) { //Add these parameters to display the required response
-                        alert(xhr.status);
-                        alert(xhr.responseText);
-                    }
-                });
             }
             if (obj.type_of_relationship == "relative") {
 
                 var obj = prepareRelativeForAdd(obj);
-                // ส่งไป save
-                var input = JSON.stringify(obj);
-                $.ajax({
-                    url: 'http://www.cavaros.com/health_system/public/add_person_api',
-                    contentType: "application/x-www-form-urlencoded;charset=utf-8",
-                    cache: false,
-                    type: 'post',
-                    dataType: 'json',
-                    data: { inputs: JSON.stringify(obj) },
-                    success: function (msg) {
-                        //$('#basicdiagram').html(msg['status'] + "<br>" + msg['message']);
-
-                        // ถ้า save ผ่านสร้าง
-                        settings.data = msg.person;
-                        reRender(settings.data);
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) { //Add these parameters to display the required response
-                        alert(xhr.status);
-                        alert(xhr.responseText);
-                    }
-                });
             }
             if (obj.type_of_relationship == "parent") {
 
                 var obj = prepareParentForAdd(obj);
-                // ส่งไป save
-                var input = JSON.stringify(obj);
-                $.ajax({
-                    url: 'http://www.cavaros.com/health_system/public/add_person_api',
-                    contentType: "application/x-www-form-urlencoded;charset=utf-8",
-                    cache: false,
-                    type: 'post',
-                    dataType: 'json',
-                    data: { inputs: JSON.stringify(obj) },
-                    success: function (msg) {
-                        //$('#basicdiagram').html(msg['status'] + "<br>" + msg['message']);
-
-                        // ถ้า save ผ่านสร้าง
-                        settings.data = msg.person;
-                        reRender(settings.data);
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) { //Add these parameters to display the required response
-                        alert(xhr.status);
-                        alert(xhr.responseText);
-                    }
-                });
             }
+
+            // ส่งไป save
+            $.ajax({
+                url: settings.url + '/add_person_api',
+                contentType: "application/x-www-form-urlencoded;charset=utf-8",
+                cache: false,
+                type: 'post',
+                dataType: 'json',
+                data: { inputs: JSON.stringify(obj) },
+                success: function (msg) {
+                    //$('#basicdiagram').html(msg['status'] + "<br>" + msg['message']);
+
+                    // ถ้า save ผ่านสร้าง
+                    if (msg['status'].toUpperCase() == 'success'.toUpperCase()) {
+                        reRender();
+                    }
+                    else {
+                        alertSaveErr();
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) { //Add these parameters to display the required response
+                    alertServiceErr(xhr);
+                    //alert(xhr.status);
+                    //alert(xhr.responseText);
+                }
+            });
+        }
+        if (myTreeStatus == enStatusUI.delete) {
+            // ส่งไป save
+            //var input = JSON.stringify({ person_id: "" + idRef + "" });
+            var input = JSON.stringify({ person_id: idRef });
+            $.ajax({
+                url: settings.url + '/drop_person',
+                contentType: "application/x-www-form-urlencoded;charset=utf-8",
+                cache: false,
+                type: 'post',
+                dataType: 'json',
+                data: { inputs: input },
+                success: function (msg) {
+                    //$('#basicdiagram').html(msg['status'] + "<br>" + msg['message']);
+
+                    // ถ้า save ผ่านสร้าง
+                    if (msg['status'].toUpperCase() == 'success'.toUpperCase()) {
+                        reRender();
+                    }
+                    else {
+                        alertSaveErr();
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) { //Add these parameters to display the required response
+                    alertServiceErr(xhr);
+                }
+            });
+        }
+        if (myTreeStatus == enStatusUI.edit) {
+
+            obj.person_change_id = idRef;
+            if (obj.type_of_relationship == "son") {
+
+                var obj = prepareSonForEdit(obj);
+            }
+            if (obj.type_of_relationship == "spouse") {
+
+                var obj = prepareSpouseForEdit(obj);
+            }
+            if (obj.type_of_relationship == "relative") {
+
+                var obj = prepareRelativeForEdit(obj);
+            }
+            if (obj.type_of_relationship == "parent") {
+
+                var obj = prepareParentForEdit(obj);
+            }
+
+            // ส่งไป save
+            $.ajax({
+                url: settings.url + '/edit_person_api',
+                contentType: "application/x-www-form-urlencoded;charset=utf-8",
+                cache: false,
+                type: 'post',
+                dataType: 'json',
+                data: { inputs: JSON.stringify(obj) },
+                success: function (msg) {
+                    // ถ้า save ผ่านสร้าง
+                    if (msg['status'].toUpperCase() == 'success'.toUpperCase()) {
+                        reRender();
+                    }
+                    else {
+                        alertSaveErr();
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) { //Add these parameters to display the required response
+                    alertServiceErr(xhr);
+                }
+            });
         }
     }
 
-    function reRender(data) {
-        $(myTreeControl).famDiagram({
-            items: data
+    function alertSaveErr() {
+        alert("ไม่สามารถบันทึกได้");
+    }
+
+    function alertServiceErr(xhr) {
+        alert("พบปัญหาตอนบันทึก" + " Status: " + xhr.status + " responseText: " + xhr.responseText);
+    }
+
+    function reRender() {
+        $.ajax({
+            url: settings.url + '/get_tree_api/' + settings.mainId,
+            dataType: 'json',
+            type: 'GET',
+            success: function (data, textStatus, jQxhr) {
+                settings.data = data.person;
+                $(myTreeControl).famDiagram({
+                    items: data.person
+                });
+                $(myTreeControl).famDiagram("update", /*Refresh: use fast refresh to update chart*/ primitives.orgdiagram.UpdateMode.Refresh);
+            },
+            error: function (data, textStatus, jQxhr) {
+                alertServiceErr(xhr);
+            },
         });
-        $(myTreeControl).famDiagram("update", /*Refresh: use fast refresh to update chart*/ primitives.orgdiagram.UpdateMode.Refresh);
     }
 
     $.fn.cancelPersonDetail = function () {
@@ -198,17 +349,6 @@ var treeplugin;
 
     $.fn.okPersonDetail = function (obj) {
         settings.onOkPersonDetail(obj);
-    }
-
-    function prepareSonForAdd(obj) {
-        var idParner = findSpouseId(idRef);
-        if (idParner == null) {
-            obj.parents_id = [idRef];
-        }
-        else {
-            obj.parents_id = [idRef, idParner];
-        }
-        return obj;
     }
 
     function findSpouseId(id) {
@@ -223,7 +363,7 @@ var treeplugin;
                 return null;
             }
         });
-        idSpouse = obj[0] == null ? null : obj[0].spouses;
+        idSpouse = obj[0] == null ? null : obj[0].spouses[0];
 
         //เป็น spouses ของใคร
         if (idSpouse == null) {
@@ -244,15 +384,6 @@ var treeplugin;
         }
 
         return idSpouse;
-    }
-
-    function prepareSpouseForAdd(obj) {
-        // ใส่ id ของ node ที่เลือกให้ spouse_id
-        obj.spouse_id = idRef;
-
-        // หาว่ามีลูกมั้ยถ้ามีใส่ id ลงไปใน son_id
-        obj.son_id = findSonId(idRef);
-        return obj;
     }
 
     function findSonId(id) {
@@ -278,12 +409,6 @@ var treeplugin;
         }
     }
 
-    function prepareRelativeForAdd(obj) {
-        var idParent = findParentId(idRef);
-        obj.parents_id = idParent;
-        return obj;
-    }
-
     function findParentId(id) {
         var my = findById(id);
         if (my.parents == undefined) {
@@ -303,16 +428,76 @@ var treeplugin;
         return obj[0];
     }
 
-    function prepareParentForAdd(obj) {
-        var idson = findSonId(idRef);
-        obj.son_id = idson;
+    function prepareSonForAdd(obj) {
+        var idParner = findSpouseId(obj.person_select_id);
+        if (idParner == null) {
+            obj.parents_id = [obj.person_select_id];
+        }
+        else {
+            obj.parents_id = [obj.person_select_id, idParner];
+        }
         return obj;
     }
 
-    $.fn.isExceptParentAdd = function (obj) {
+    function prepareSpouseForAdd(obj) {
+        // ใส่ id ของ node ที่เลือกให้ spouse_id
+        obj.spouse_id = [obj.person_select_id];
+
+        // หาว่ามีลูกมั้ยถ้ามีใส่ id ลงไปใน son_id
+        obj.son_id = findSonId(obj.person_select_id);
+        return obj;
+    }
+
+    function prepareRelativeForAdd(obj) {
+        var idParent = findParentId(obj.person_select_id);
+        obj.parents_id = idParent;
+        return obj;
+    }
+
+    function prepareParentForAdd(obj) {
+        obj.son_id = [obj.person_select_id];
+        return obj;
+    }
+
+    function prepareSonForEdit(obj) {
+        var idParner = findSpouseId(obj.person_select_id);
+        if (idParner == null) {
+            obj.parents_id = [obj.person_select_id];
+        }
+        else {
+            obj.parents_id = [obj.person_select_id, idParner];
+        }
+        return obj;
+    }
+
+    function prepareSpouseForEdit(obj) {
+        // ใส่ id ของ node ที่เลือกให้ spouse_id
+        obj.spouse_id = [obj.person_select_id];
+
+        // หาว่ามีลูกมั้ยถ้ามีใส่ id ลงไปใน son_id
+        obj.son_id = findSonId(obj.person_select_id);
+        return obj;
+    }
+
+    function prepareRelativeForEdit(obj) {
+        var idParent = findParentId(obj.person_select_id);
+        obj.parents_id = idParent;
+        return obj;
+    }
+
+    function prepareParentForEdit(obj) {
+        obj.son_id = [obj.person_select_id];
+        return obj;
+    }
+
+    $.fn.isExceptParentAdd = function (idTarget) {
+        //todo หน้าจะกันกลุ่มแฟนด้วยที่ไม่มีโหนดหัว
+        if (idTarget == null) {
+            idTarget = idRef;
+        }
         var isExcept = false;
         if (myTreeStatus == enStatusUI.add) {
-            var ids = findParentId(idRef);
+            var ids = findParentId(idTarget);
             if (ids !== null) {
                 isExcept = true;
             }
@@ -321,11 +506,14 @@ var treeplugin;
         }
     }
 
-    $.fn.isExceptSpouseAdd = function (obj) {
+    $.fn.isExceptSpouseAdd = function (idTarget) {
+        if (idTarget == null) {
+            idTarget = idRef;
+        }
         var isExcept = false;
         if (myTreeStatus == enStatusUI.add) {
-            var ids = findSpouseId(idRef);
-            if (ids !== null) {
+            var id = findSpouseId(idTarget);
+            if (id !== null) {
                 isExcept = true;
             }
 
@@ -333,76 +521,182 @@ var treeplugin;
         }
     }
 
-    $.fn.isExceptRelativeAdd = function (obj) {
+    $.fn.isExceptRelativeAdd = function (idTarget) {
+        if (idTarget == null) {
+            idTarget = idRef;
+        }
         var isExcept = false;
         if (myTreeStatus == enStatusUI.add) {
-            var ids = findParentId(idRef);
+            var ids = findParentId(idTarget);
             if (ids == null) {
                 isExcept = true;
             }
+            return isExcept;
+        }
+    }
+
+    $.fn.isExceptParentEdit = function (idTarget) {
+        //todo หน้าจะกันกลุ่มแฟนด้วยที่ไม่มีโหนดหัว
+        if (idTarget == null) {
+            idTarget = idRef;
+        }
+        var isExcept = false;
+        if (myTreeStatus == enStatusUI.edit) {
+            var ids = findParentId(idTarget);
+            if (ids !== null) {
+                isExcept = true;
+            }
 
             return isExcept;
         }
     }
 
-    //function createSpouses(obj) {
-    //    // ไม่ใช้
-    //    var partner = {
-    //        id: obj.id
-    //            , itemTitleColor: (obj.sex == "female" ? primitives.common.Colors.Pink : null)
-    //            , title: obj.first_name + " " + obj.last_name
-    //            , description: ""
-    //            , image: null
-    //            , spouses: [idRef]
-    //    }
-    //    return partner;
-    //}
+    $.fn.isExceptSpouseEdit = function (idTarget) {
+        if (idTarget == null) {
+            idTarget = idRef;
+        }
+        var isExcept = false;
+        if (myTreeStatus == enStatusUI.edit) {
+            var id = findSpouseId(idTarget);
+            if (id !== null) {
+                isExcept = true;
+            }
 
-    //function createRelatives(obj) {
-    //    // ไม่ใช้
-    //    var objMe = findById(idRef);
+            return isExcept;
+        }
+    }
 
-    //    var relatives = {
-    //        id: obj.id
-    //            , itemTitleColor: (obj.sex == "female" ? primitives.common.Colors.Pink : null)
-    //            , title: obj.first_name + " " + obj.last_name
-    //            , description: ""
-    //            , image: null
-    //            , parents: objMe.parents
-    //    }
-    //    return relatives;
-    //}
+    $.fn.isExceptRelativeEdit = function (idTarget) {
+        if (idTarget == null) {
+            idTarget = idRef;
+        }
+        var isExcept = false;
+        if (myTreeStatus == enStatusUI.edit) {
+            var ids = findParentId(idTarget);
+            if (ids == null) {
+                isExcept = true;
+            }
+            return isExcept;
+        }
+    }
 
-    //function createParent(obj) {
-    //    // todo ไม่ได้กันเรื่องมีพ่อมีแม่อยู่แล้วหรือยัง
-    //    // สร้างพ่อแม่, update id ที่ส่งเข้ามาให้มี parent
-    //    var parent = {
-    //        id: obj.id
-    //            , itemTitleColor: (obj.sex == "female" ? primitives.common.Colors.Pink : null)
-    //            , title: obj.first_name + " " + obj.last_name
-    //            , description: ""
-    //            , image: null
-    //    }
-    //    updatePropertyByid(idRef, "parents", [parent.id])
-    //    return parent;
-    //}
+    $.fn.getData = function () {
+        return settings.data;
+    }
 
-    //function updatePropertyByid(id, proName, parent_id) {
-    //    for (var i = 0; i < settings.data.length; i++) {
-    //        if (settings.data[i]["id"] === id) {
-    //            settings.data[i][proName] = parent_id;
-    //        }
-    //    }
-    //}
+    $.fn.getDataById = function (Id) {
+        return findById(Id);
+    }
+
+    $.fn.getDataByRefId = function () {
+        return findById(idRef);
+    }
+
+    $.fn.getDataSonByRefId = function () {
+        var obj = settings.data.filter(function (o) {
+            if (o.parents != undefined) {
+                for (var i = 0; i < o.parents.length; i++) {
+                    if (o.parents[i] === idRef) {
+                        return o;
+                    }
+                }
+            }
+
+        });
+        if (obj[0] == null) {
+            return null;
+        }
+        else {
+            var sons = [];
+            for (var i = 0; i < obj.length; i++) {
+                sons.push(obj[i]);
+            }
+            return sons;
+        }
+    }
+
+    $.fn.getDataSonById = function (id) {
+        var obj = settings.data.filter(function (o) {
+            if (o.parents != undefined) {
+                for (var i = 0; i < o.parents.length; i++) {
+                    if (o.parents[i] === id) {
+                        return o;
+                    }
+                }
+            }
+
+        });
+        if (obj[0] == null) {
+            return null;
+        }
+        else {
+            var sons = [];
+            for (var i = 0; i < obj.length; i++) {
+                sons.push(obj[i]);
+            }
+            return sons;
+        }
+    }
+
+    $.fn.getDataSpouseByRefId = function () {
+        return findSpouseId(idRef);
+    }
+
+    $.fn.getDataParentById = function (id) {
+        var my = findById(id);
+        if (my.parents == undefined) {
+            return null;
+        }
+        else {
+            var parents=[];
+            for (var i = 0; i < my.parents.length; i++) {
+                parents.push(findById(my.parents[i]));
+            }
+            return parents;
+        }
+    }
+
+    $.fn.getDataParentByRefId = function () {
+        var my = findById(idRef);
+        if (my.parents == undefined) {
+            return null;
+        }
+        else {
+            var parents = [];
+            for (var i = 0; i < my.parents.length; i++) {
+                parents.push(findById(my.parents[i]));
+            }
+            return parents;
+        }
+    }
+
+    $.fn.getErrMsg = function () {
+        return errMsg;
+    }
+
+    $.fn.setErrMsg = function (textErr) {
+        return errMsg = textErr;
+    }
+
+    $.fn.getObjData = function () {
+        return objData;
+    }
+
+    $.fn.setObjData = function (obj) {
+        objData = obj;
+    }
+
 
     //#region enum
     var enStatusUI = {
         add: { status: 1, text: "เพิ่ม" },
         edit: { status: 2, text: "แก้ไข" },
+        delete: { status: 2, text: "ลบ" },
         getEnStatusUIByVal: function (val) {
             switch (parseInt(val)) {
                 case 1: return this.add;
                 case 2: return this.edit;
+                case 3: return this.delete;
             }
         }
     };
