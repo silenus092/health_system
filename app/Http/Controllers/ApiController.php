@@ -58,8 +58,10 @@ class ApiController extends Controller
 
 
             $this->list[]  = $r->person_id;
+
             // Let's fill personal information to id array list.
             $result = $this->adjustArrayForTree($result ,10);
+            $result = $this->sortTree($result);
             return response()->json($result, 200);
         } catch (Exception $e) {
             $result['status'] = "Error";
@@ -70,8 +72,8 @@ class ApiController extends Controller
 
     public function adjustArrayForTree($result = null, $local_depth = null){
         if($local_depth !=null && $result != null){
-            $depth = $local_depth;
-           do {
+
+            while (count($this->list) > 0 && $local_depth > 0) {
 
                 $size = count($this->list);
                 for ($i = 0; $i < $size; $i++) {
@@ -110,8 +112,8 @@ class ApiController extends Controller
 
                 }
 
-                $depth--;
-            } while (count($this->list) > 0 && $depth > 0);
+                $local_depth--;
+            }
 
             return $result;
         }else{ // use for deletion
@@ -138,7 +140,7 @@ class ApiController extends Controller
                             $this->find_spouse($result, $r);
 
                             // find their relatives
-                            $this->find_relatives($result, $r);
+                            $this->find_relatves($result, $r);
 
                             // หาลูกตัวเอง
                             $this->find_children($r);
@@ -229,7 +231,8 @@ class ApiController extends Controller
                     }
                 }
 
-                // find mom
+                // f
+                //ind mom
 
                 if ($rp->person_2_id != $r->person_id) {
 
@@ -457,7 +460,9 @@ class ApiController extends Controller
 
     public function set_personal_info_to_tree($person_array, $r)
     {
+
         $person_array['id'] = $r->person_id;
+        $person_array['id_key'] = "";
         $person_array['first_name'] = $r->person_first_name;
         $person_array['last_name'] = $r->person_last_name;
         $person_array['sex'] = $r->person_sex;
@@ -575,7 +580,7 @@ class ApiController extends Controller
 
             }
             DB::commit();
-
+            \Session::set('last_deleted_id', '');
             // check this guy exist or not
             /*	$result = array();
             $this->list =  array();
@@ -1030,7 +1035,7 @@ class ApiController extends Controller
             }
 
             DB::commit();
-
+            \Session::set('last_deleted_id', '');
             $result['status'] = "Success";
             $result['message'] = "Update new Infomation complete";
             return response()->json($result, 200);
@@ -1053,11 +1058,11 @@ class ApiController extends Controller
             // check this guy exist or not
             if ($id != "") {
 
-               /* DB::table('persons')
+                DB::table('persons')
                     ->where('person_id', $id)
-                    ->update(array('deleted_flag' => TRUE));*/
-                $this->list[] =$id;
-                $this->adjustArrayForTree();
+                    ->update(array('deleted_flag' => TRUE));
+               // $this->list[] =$id;
+               // $this->adjustArrayForTree();
 
                 /* old style
                 $patient = DB::table('patients')->where('person_id', '=', $id)->first();
@@ -1183,6 +1188,47 @@ class ApiController extends Controller
             return response()->json($result, 200);
         }
 
+    }
+
+    public function sortTree($array_tree){
+        $array_tree_local = $array_tree;
+        $array_size = sizeof($array_tree_local['person']);
+        foreach ($array_tree_local['person'] as $item){
+            $relative_array = array();
+
+            //searching through
+            for($i = 0 ; $i < $array_size  ; $i++){
+                // Found same parent
+                if($item['parents'] === $array_tree_local[$i]->parents ){
+                    $relative_array[]=$item;
+                }
+            }
+
+            //Sort by age for relative in same family
+            for($j = 0 ; $j < sizeof($relative_array) ; $j++ ){
+                usort($relative_array, function($a, $b) { //Sort the array using a user defined function
+                    return $a->age > $b->age ? -1 : 1; //Compare the scores
+                });
+            }
+
+            //reassign value to temp_id
+            for($k = 1 ; $k <= sizeof($relative_array) ; $k++ ){
+                if(sizeof($relative_array) == $k  ){
+                    $relative_array[$k]->id = "a1";
+                }else{
+                    $relative_array[$k-1]->id = "a".($k+1);
+                }
+            }
+
+            //assign back to original
+            for($i = 0 ; $i < $array_size  ; $i++){
+                // Found same parent
+                if( $relative_array[$k-1]->parents === $array_tree_local[$i].parents ){
+                    $array_tree_local[$i]->id  =  $relative_array[$k-1]->id;
+                }
+            }
+        }
+        return $array_tree_local;
     }
 }
 

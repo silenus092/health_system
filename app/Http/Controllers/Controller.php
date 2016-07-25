@@ -86,12 +86,18 @@ abstract class Controller extends BaseController {
 	}
 
 	function check_key_has_exists_value($array, $key, $val) {
-	    if($array['person']!= null){
+        if (array_key_exists("person",$array))
+        {
             foreach ($array['person'] as $item){
                 if ( $item[$key] == $val)
                     return true;
             }
         }
+        else
+        {
+            return false;
+        }
+
 
 		return false;
 	}
