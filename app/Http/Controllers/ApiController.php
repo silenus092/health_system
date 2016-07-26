@@ -1193,41 +1193,50 @@ class ApiController extends Controller
     public function sortTree($array_tree){
         $array_tree_local = $array_tree;
         $array_size = sizeof($array_tree_local['person']);
+        //var_dump($array_tree_local);
+        //echo  $array_tree_local['person'][0]['id'];
         foreach ($array_tree_local['person'] as $item){
-            $relative_array = array();
+            if($item['parents']!= null){
+                $relative_array = array();
 
-            //searching through
-            for($i = 0 ; $i < $array_size  ; $i++){
-                // Found same parent
-                if($item['parents'] === $array_tree_local[$i]->parents ){
-                    $relative_array[]=$item;
+                //searching through
+                for($i = 0 ; $i < $array_size  ; $i++){
+                    // Found same parent
+                    if($item->parents === $array_tree_local[$i]['parents']  ){
+                        $relative_array[]=$item;
+                    }
                 }
-            }
+                var_dump($relative_array);
 
-            //Sort by age for relative in same family
-            for($j = 0 ; $j < sizeof($relative_array) ; $j++ ){
-                usort($relative_array, function($a, $b) { //Sort the array using a user defined function
-                    return $a->age > $b->age ? -1 : 1; //Compare the scores
-                });
-            }
+                //Sort by age for relative in same family (Ascending order)
 
-            //reassign value to temp_id
-            for($k = 1 ; $k <= sizeof($relative_array) ; $k++ ){
-                if(sizeof($relative_array) == $k  ){
-                    $relative_array[$k]->id = "a1";
-                }else{
-                    $relative_array[$k-1]->id = "a".($k+1);
+                for($j = 0 ; $j < sizeof($relative_array) ; $j++ ){
+                    usort($relative_array, function($a, $b) { //Sort the array using a user defined function
+                        return $a->age > $b->age ? -1 : 1; //Compare the scores
+                    });
                 }
+
+                /*
+                //reassign value to temp_id
+                for($k = 0 ; $k <= sizeof($relative_array) ; $k++ ){
+                    if(sizeof($relative_array) == $k  ){
+                        $relative_array[$k][0]= "a1";
+                    }else{
+                        $relative_array[$k+1][0] = "a".($k+1);
+                    }
+                }
+
+                //assign back to original
+                for($i = 0 ; $i < $array_size  ; $i++){
+                    // Found same parent
+                    if( $relative_array[$k-1]->parents === $array_tree_local[$i].parents ){
+                        $array_tree_local[$i]->id  =  $relative_array[$k-1]->id;
+                    }
+                }*/
             }
 
-            //assign back to original
-            for($i = 0 ; $i < $array_size  ; $i++){
-                // Found same parent
-                if( $relative_array[$k-1]->parents === $array_tree_local[$i].parents ){
-                    $array_tree_local[$i]->id  =  $relative_array[$k-1]->id;
-                }
-            }
         }
+
         return $array_tree_local;
     }
 }
