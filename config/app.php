@@ -151,7 +151,7 @@ return [
         'Xuma\Amaran\AmaranServiceProvider',
 		//'Barryvdh\DomPDF\ServiceProvider',
 		'Servit\Mpdf\ServiceProvider',
-		'Barryvdh\Debugbar\ServiceProvider',
+		//Barryvdh\Debugbar\ServiceProvider::class,
 
 		'Intervention\Image\ImageServiceProvider',
       
@@ -207,7 +207,7 @@ return [
         'Amaran' => 'Xuma\Amaran\Facades\Amaran',
 		//'PDF' => 'Barryvdh\DomPDF\Facade',
 		'PDF'     => 'Servit\Mpdf\Facades\Pdf',
-		'Debugbar' => 'Barryvdh\Debugbar\Facade',
+		//'Debugbar' => 'Barryvdh\Debugbar\Facade',
 		'Image' => 'Intervention\Image\Facades\Image',
 	],
 

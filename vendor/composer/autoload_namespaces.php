@@ -20,7 +20,6 @@ return array(
     'Symfony\\Component\\Console\\' => array($vendorDir . '/symfony/console'),
     'Servit\\Mpdf' => array($vendorDir . '/servit/l5mpdf/src'),
     'Psy\\' => array($vendorDir . '/psy/psysh/src'),
-    'Psr\\Log\\' => array($vendorDir . '/psr/log'),
     'Prophecy\\' => array($vendorDir . '/phpspec/prophecy/src'),
     'PhpSpec' => array($vendorDir . '/phpspec/phpspec/src'),
     'Knp\\Snappy' => array($vendorDir . '/knplabs/knp-snappy/src'),

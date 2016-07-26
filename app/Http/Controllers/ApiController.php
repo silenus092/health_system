@@ -461,8 +461,8 @@ class ApiController extends Controller
     public function set_personal_info_to_tree($person_array, $r)
     {
 
-        $person_array['id'] = $r->person_id;
-        $person_array['id_key'] = "";
+        $person_array['id'] =$r->person_id;
+        $person_array['id_key'] = $r->person_id;
         $person_array['first_name'] = $r->person_first_name;
         $person_array['last_name'] = $r->person_last_name;
         $person_array['sex'] = $r->person_sex;
@@ -1193,48 +1193,61 @@ class ApiController extends Controller
     public function sortTree($array_tree){
         $array_tree_local = $array_tree;
         $array_size = sizeof($array_tree_local['person']);
-        //var_dump($array_tree_local);
+        //var_dump($array_tree_local['person'][2]['parents']);
         //echo  $array_tree_local['person'][0]['id'];
         foreach ($array_tree_local['person'] as $item){
             if($item['parents']!= null){
                 $relative_array = array();
 
                 //searching through
+
                 for($i = 0 ; $i < $array_size  ; $i++){
                     // Found same parent
-                    if($item->parents === $array_tree_local[$i]['parents']  ){
-                        $relative_array[]=$item;
+
+                    if($array_tree_local['person'][$i]['parents'] !=null && count(array_diff($item['parents'], $array_tree_local['person'][$i]['parents'])) == 0 ){
+                        $relative_array[]= $array_tree_local['person'][$i];
                     }
                 }
-                var_dump($relative_array);
+
 
                 //Sort by age for relative in same family (Ascending order)
 
-                for($j = 0 ; $j < sizeof($relative_array) ; $j++ ){
-                    usort($relative_array, function($a, $b) { //Sort the array using a user defined function
-                        return $a->age > $b->age ? -1 : 1; //Compare the scores
-                    });
+                $age = array();
+                foreach ($relative_array as $key => $row)
+                {
+                    $age[$key] = $row['age'];
                 }
+                array_multisort($age, SORT_DESC, $relative_array);
 
-                /*
+
                 //reassign value to temp_id
-                for($k = 0 ; $k <= sizeof($relative_array) ; $k++ ){
-                    if(sizeof($relative_array) == $k  ){
-                        $relative_array[$k][0]= "a1";
+                for($k = 0 ; $k < sizeof($relative_array) ; $k++ ){
+                    if(sizeof($relative_array)-1 == $k  ){
+                        $relative_array[$k]['id']= "a1";
                     }else{
-                        $relative_array[$k+1][0] = "a".($k+1);
+                        $relative_array[$k]['id'] = "a".($k+2);
                     }
                 }
 
                 //assign back to original
-                for($i = 0 ; $i < $array_size  ; $i++){
+
+                for($i = 0 ; $i < sizeof($relative_array)  ; $i++){
                     // Found same parent
-                    if( $relative_array[$k-1]->parents === $array_tree_local[$i].parents ){
-                        $array_tree_local[$i]->id  =  $relative_array[$k-1]->id;
+                    for($j=0 ; $j < sizeof($array_tree_local['person'])  ; $j++){
+                        if ($array_tree_local['person'][$j]['id_key'] == $relative_array[$i]['id_key'] )
+                        {
+                            $array_tree_local['person'][$j]['id'] = $relative_array[$i]['id'];
+
+                        }
                     }
-                }*/
+
+
+                }
+
             }
 
+            echo  "-------------------------------------------------\n";
+            var_dump($array_tree_local);
         }
 
         return $array_tree_local;

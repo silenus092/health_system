@@ -30,7 +30,6 @@
         "App\\Providers\\RouteServiceProvider",
         "Xuma\\Amaran\\AmaranServiceProvider",
         "Servit\\Mpdf\\ServiceProvider",
-        "Barryvdh\\Debugbar\\ServiceProvider",
         "Intervention\\Image\\ImageServiceProvider"
     ],
     "eager": [
@@ -52,7 +51,6 @@
         "App\\Providers\\RouteServiceProvider",
         "Xuma\\Amaran\\AmaranServiceProvider",
         "Servit\\Mpdf\\ServiceProvider",
-        "Barryvdh\\Debugbar\\ServiceProvider",
         "Intervention\\Image\\ImageServiceProvider"
     ],
     "deferred": {
