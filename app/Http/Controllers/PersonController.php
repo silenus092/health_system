@@ -1,12 +1,8 @@
 <?php namespace App\Http\Controllers;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use Intervention\Image\ImageManager;
-
-use Illuminate\Http\Request;
-use DB ;
+use DB;
 use Input;
+
 class PersonController extends Controller {
 
 	/**
@@ -61,43 +57,6 @@ class PersonController extends Controller {
 	}
 
 	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show()
-	{
-		$name = explode ( " " , Input::get('search_patient-query'));
-		
-		
-		$person = DB::table('persons')
-								->where('person_id' ,'=', $name[0])
-								
-								->first();
-		$result =  DB::select('SELECT disease_types.disease_type_id ,disease_type_name_th ,disease_type_name_en
-				FROM  disease_forms ,patients_disease_forms ,disease_types ,patients
-				WHERE patients_disease_forms.question_id  = disease_forms.question_id
-                AND disease_types.disease_type_id = disease_forms.disease_type_id
-				AND patients_disease_forms.patient_id =  patients.patient_id
-				AND patients.person_id = '. $person->person_id);
-		
-		/*$result = DB::table('disease_forms')
-			->join('patients_disease_forms', 'patients_disease_forms.question_id', '=', 'disease_forms.question_id')
-            ->join('disease_types', 'disease_types.disease_type_id', '=', 'disease_forms.disease_type_id')
-			->where('patients_disease_forms.patient_id', '=' , $person->person_id)
-            ->select('disease_forms.question_id','disease_types.disease_type_name_th', 'disease_types.disease_type_name_en')
-            ->get();*/
-		
-		return view('profile')
-					->with('person' ,$person)
-					->with('results',$result)
-					->with('result_callback_header', null)
-					->with('result_callback',null);
-	
-	}
-
-	/**
 	 * Show the form for editing the specified resource.
 	 *
 	 * @param  int  $id
@@ -128,12 +87,12 @@ class PersonController extends Controller {
 	public function destroy( )
 	{
 		try{
-			
+
 			 DB::statement('SET FOREIGN_KEY_CHECKS = 0');
 			DB::beginTransaction();
 			$id = Input::get('person_id');
 			// check this guy exist or not
-			
+
 			$patient =DB::table('patients')->where('person_id', '=', $id)->first();
 			if ( count($patient) > 0 )
 			{
@@ -143,13 +102,13 @@ class PersonController extends Controller {
 				foreach($patients_disease_forms as $pdf){
 					 DB::table('disease_1')->where('questions_id', '=', $pdf->question_id)->delete();
 				}
-			$patients_disease_forms->delete();	
+                $patients_disease_forms->delete();
 			}
 			DB::table('patients')->where('person_id', '=', $id)->delete();
-			DB::table('doctors')->where('doctor_id', '=', $patient->doctor_id)->delete();	
-			
+                DB::table('doctors')->where('doctor_id', '=', $patient->doctor_id)->delete();
+
 			}
-			
+
 		    DB::table('relationship')->where('person_1_id', '=', $id)->delete();
 			DB::table('relationship')->where('person_2_id', '=', $id)->delete();
 			DB::table('persons')->where('person_id', '=', $id)->delete();
@@ -158,7 +117,7 @@ class PersonController extends Controller {
 			$result['status'] = "Success";
 			$result['message'] = "Good bye";
 			return response()->json($result, 200);
-		
+
 		}catch (Exception $e) {
 			DB::rollback();
 			$result['status'] = "Error";
@@ -166,10 +125,10 @@ class PersonController extends Controller {
 			return response()->json($result, 200);
 		}
 	}
-	
+
 	public function clear_relationship($person_id){
 		try{
-			
+
 		    DB::statement('SET FOREIGN_KEY_CHECKS = 0');
 			DB::beginTransaction();
 			$id = $person_id;
@@ -183,12 +142,12 @@ class PersonController extends Controller {
 				foreach($patients_disease_forms as $pdf){
 					 DB::table('disease_1')->where('questions_id', '=', $pdf->question_id)->delete();
 				}
-			$patients_disease_forms->delete();	
+                $patients_disease_forms->delete();
 			}
-			DB::table('patients')->where('person_id', '=', $id)->delete();	
+                DB::table('patients')->where('person_id', '=', $id)->delete();
 		    DB::table('doctors')->where('doctor_id', '=', $patient->doctor_id)->delete();
-		
-			}
+
+            }
 		    DB::table('relationship')->where('person_1_id', '=', $id)->delete();
 			DB::table('relationship')->where('person_2_id', '=', $id)->delete();
 			DB::commit();
@@ -196,8 +155,8 @@ class PersonController extends Controller {
 			$result['status'] = "Success";
 			$result['message'] = "Good bye";
 			return response()->json($result, 200);
-		
-		}catch (Exception $e) {
+
+        } catch (Exception $e) {
 			DB::rollback();
 			$result['status'] = "Error";
 			$result['message'] = $e->getMessage();
@@ -206,16 +165,20 @@ class PersonController extends Controller {
 	}
 	
 	public function show_report_by_type($report_id = null , $person_id = null){
-		
-		
-		if($report_id !=null && $person_id!= null){ // Fuck Duchenne
-				$result =  DB::select('SELECT disease_types.disease_type_id ,disease_type_name_th 								,disease_type_name_en
+
+        $result = DB::select('SELECT disease_types.disease_type_id ,disease_type_name_th 								,disease_type_name_en
 				FROM  disease_forms ,patients_disease_forms ,disease_types ,patients
 				WHERE patients_disease_forms.question_id  = disease_forms.question_id
                 AND disease_types.disease_type_id = disease_forms.disease_type_id
 				AND patients_disease_forms.patient_id =  patients.patient_id
 				AND patients.person_id = '. $person_id);
-			
+        $person = DB::table('persons')
+            ->where('person_id', '=', $person_id)
+            ->first();
+
+        if ($report_id != null && $person_id != null) { // Fuck Duchenne
+
+
 				$result_callback =  DB::select('SELECT disease_1.*
 				FROM  disease_forms ,patients_disease_forms ,disease_1 ,patients
 				WHERE patients_disease_forms.question_id  = disease_forms.question_id
@@ -223,16 +186,13 @@ class PersonController extends Controller {
 				AND disease_forms.disease_type_id = '.$report_id.'
 				AND patients_disease_forms.patient_id =  patients.patient_id
 				AND patients.person_id = '. $person_id);
-			
-				$person = DB::table('persons')
-								->where('person_id' ,'=', $person_id )
-								->first();
-	
-				 $result_callback_header = DB::table('disease_types')
+
+
+            $result_callback_header = DB::table('disease_types')
 								->where('disease_type_id' ,'=', $report_id)
 								->first();
-				
-				if(count($result_callback)>0 && count($person)){
+
+            if (count($result_callback) > 0 && count($person)) {
 					 return view('profile')
 					->with('person' ,$person)
 					->with('results',$result)
@@ -250,6 +210,42 @@ class PersonController extends Controller {
 					->with('result_callback',"Cannot find patient profile");
 		}
 	}
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function show()
+    {
+        $name = explode(" ", Input::get('search_patient-query'));
+
+
+        $person = DB::table('persons')
+            ->where('person_id', '=', $name[0])
+            ->first();
+        $result = DB::select('SELECT disease_types.disease_type_id ,disease_type_name_th ,disease_type_name_en
+				FROM  disease_forms ,patients_disease_forms ,disease_types ,patients
+				WHERE patients_disease_forms.question_id  = disease_forms.question_id
+                AND disease_types.disease_type_id = disease_forms.disease_type_id
+				AND patients_disease_forms.patient_id =  patients.patient_id
+				AND patients.person_id = ' . $person->person_id);
+
+        /*$result = DB::table('disease_forms')
+            ->join('patients_disease_forms', 'patients_disease_forms.question_id', '=', 'disease_forms.question_id')
+            ->join('disease_types', 'disease_types.disease_type_id', '=', 'disease_forms.disease_type_id')
+            ->where('patients_disease_forms.patient_id', '=' , $person->person_id)
+            ->select('disease_forms.question_id','disease_types.disease_type_name_th', 'disease_types.disease_type_name_en')
+            ->get();*/
+
+        return view('profile')
+            ->with('person', $person)
+            ->with('results', $result)
+            ->with('result_callback_header', null)
+            ->with('result_callback', null);
+
+    }
 	
 	public function upload_image() {
 		$destinationPath = '../uploads/';
@@ -270,7 +266,7 @@ class PersonController extends Controller {
             DB::table('persons')
 					  ->where('person_id' ,'=',$id)
 				      ->update(['profile_img' =>$today."-".$id."-".$filename]);
-            $img = \Image::make($file)->resize(300, 300)->save('../public/uploads/'.$today."-".$id."-".$filename);
+            $img = \Image::make($file)->fit(300, 300)->save('../public/uploads/' . $today . "-" . $id . "-" . $filename);
 			$result['status'] = "Complete";
 			return response()->json($result, 200);
 		}else{
