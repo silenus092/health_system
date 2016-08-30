@@ -102,7 +102,9 @@ function getDataMonth() {
             dataList.push({key: i, value: "ธันวาคม"});
         }
     }
-    dataList.unshift({key: "none", value: "เดือนเกิด"});;;
+    dataList.unshift({key: "none", value: "เดือนเกิด"});
+    ;
+    ;
     return dataList;
 }
 

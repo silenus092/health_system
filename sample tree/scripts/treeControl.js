@@ -273,7 +273,9 @@ var treeplugin;
             });
         }
 
-    };;;
+    };
+    ;
+    ;
 
     function reRender() {
         $.ajax({
@@ -428,11 +430,15 @@ var treeplugin;
 
     $.fn.cancelPersonDetail = function () {
         settings.onCancelPersonDetail();
-    };;;
+    };
+    ;
+    ;
 
     $.fn.okPersonDetail = function (obj) {
         settings.onOkPersonDetail(obj);
-    };;;
+    };
+    ;
+    ;
 
     function findSpouseId(id) {
         // return Null,id
@@ -639,7 +645,9 @@ var treeplugin;
 
             return isExcept;
         }
-    };;;
+    };
+    ;
+    ;
 
     $.fn.isExceptSpouseAdd = function (idTarget) {
         if (idTarget == null) {
@@ -654,7 +662,9 @@ var treeplugin;
 
             return isExcept;
         }
-    };;;
+    };
+    ;
+    ;
 
     $.fn.isExceptRelativeAdd = function (idTarget) {
         if (idTarget == null) {
@@ -668,7 +678,9 @@ var treeplugin;
             }
             return isExcept;
         }
-    };;;
+    };
+    ;
+    ;
 
     $.fn.isExceptParentEdit = function (idTarget) {
         //todo หน้าจะกันกลุ่มแฟนด้วยที่ไม่มีโหนดหัว
@@ -684,7 +696,9 @@ var treeplugin;
 
             return isExcept;
         }
-    };;;
+    };
+    ;
+    ;
 
     $.fn.isExceptSpouseEdit = function (idTarget) {
         if (idTarget == null) {
@@ -699,7 +713,9 @@ var treeplugin;
 
             return isExcept;
         }
-    };;;
+    };
+    ;
+    ;
 
     $.fn.isExceptRelativeEdit = function (idTarget) {
         if (idTarget == null) {
@@ -713,19 +729,27 @@ var treeplugin;
             }
             return isExcept;
         }
-    };;;
+    };
+    ;
+    ;
 
     $.fn.getData = function () {
         return settings.data;
-    };;;
+    };
+    ;
+    ;
 
     $.fn.getDataById = function (Id) {
         return findById(Id);
-    };;;
+    };
+    ;
+    ;
 
     $.fn.getDataByRefId = function () {
         return findById(idRef);
-    };;;
+    };
+    ;
+    ;
 
     $.fn.getDataSonByRefId = function () {
         var obj = settings.data.filter(function (o) {
@@ -748,7 +772,9 @@ var treeplugin;
             }
             return sons;
         }
-    };;;
+    };
+    ;
+    ;
 
     $.fn.getDataSonById = function (id) {
         var obj = settings.data.filter(function (o) {
@@ -771,11 +797,15 @@ var treeplugin;
             }
             return sons;
         }
-    };;;
+    };
+    ;
+    ;
 
     $.fn.getDataSpouseByRefId = function () {
         return findSpouseId(idRef);
-    };;;
+    };
+    ;
+    ;
 
     $.fn.getDataParentById = function (id) {
         var my = findById(id);
@@ -789,7 +819,9 @@ var treeplugin;
             }
             return parents;
         }
-    };;;
+    };
+    ;
+    ;
 
     $.fn.getDataParentByRefId = function () {
         var my = findById(idRef);
@@ -803,23 +835,33 @@ var treeplugin;
             }
             return parents;
         }
-    };;;
+    };
+    ;
+    ;
 
     $.fn.getErrMsg = function () {
         return errMsg;
-    };;;
+    };
+    ;
+    ;
 
     $.fn.setErrMsg = function (textErr) {
         return errMsg = textErr;
-    };;;
+    };
+    ;
+    ;
 
     $.fn.getObjData = function () {
         return objData;
-    };;;
+    };
+    ;
+    ;
 
     $.fn.setObjData = function (obj) {
         objData = obj;
-    };;;
+    };
+    ;
+    ;
 
 
     //#region enum
