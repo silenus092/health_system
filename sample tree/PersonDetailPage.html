@@ -40,7 +40,7 @@
                     $("#ddlYear").trigger("click");
                 }
                 isAgeClick = false;
-            })
+            });;;
             $("#ddlYear").change(function () {
                 isYearClick = true;
                 if (isAgeClick == false) {
@@ -173,7 +173,7 @@
                 }
                 $uniformed = $(".styleThese").find("input[name=sex]").not(".skipThese");
                 $uniformed.uniform();
-            };
+            }
         }
 
         function addDllAge() {
@@ -181,7 +181,7 @@
             for (var i = 0; i < 101; i++) {
                 dataAge.push({ key: i, value: i });
             }
-            dataAge.unshift({ key: "none", value: "กี่ปี" })
+            dataAge.unshift({key: "none", value: "กี่ปี"});;;
             $.each(dataAge, function (key, value) {
                 $('#ddlAge')
                     .append($("<option></option>")
@@ -198,7 +198,7 @@
                 runYear = (currentYear - i).toString();
                 dataList.push({ key: runYear, value: runYear });
             }
-            dataList.unshift({ key: "none", value: "ปีเกิด" })
+            dataList.unshift({key: "none", value: "ปีเกิด"});;;
             $.each(dataList, function (key, value) {
                 $('#ddlYear')
                     .append($("<option></option>")
@@ -222,7 +222,7 @@
             for (var i = 1; i < 32; i++) {
                 dataList.push({ key: i, value: i });
             }
-            dataList.unshift({ key: "none", value: "วันที่เกิด" })
+            dataList.unshift({key: "none", value: "วันที่เกิด"});;;
             $.each(dataList, function (key, value) {
                 $('#ddlDay')
                     .append($("<option></option>")
@@ -323,7 +323,6 @@
                 <span>เสียชีวิต</span>
             </div>
             <div>
-                <div>
                     <input id="rdParent" type="radio" value="parent" name="relationship" />
                     <span style="margin-right: 5px;">พ่อ หรือ แม่</span>
                     <input id="rdSpouse" type="radio" value="spouse" name="relationship" />
@@ -332,7 +331,6 @@
                     <span style="margin-right: 5px;">ลูก</span>
                     <input id="rdRelative" type="radio" value="relative" name="relationship" />
                     <span>พี่ หรือ น้อง</span>
-                </div>
             </div>
             <div>
                 <div id="divName">

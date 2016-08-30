@@ -11,7 +11,7 @@
     <script src="scripts/jquery.blockUI.js"></script>
     <script src="scripts/view.js"></script>
     <script src="scripts/json_parse.js"></script>
-            <script src="scripts/jquery.uniform.min.js"></script>
+    <script src="scripts/jquery.uniform.min.js"></script>
 
     <link href="styles/primitives.latest.css" rel="stylesheet" />
     <link href="styles/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" />
@@ -58,14 +58,14 @@
             //});
 
             $.ajax({
-                url: 'http://www.cavaros.com/health_system/public/get_tree_api/71',
+                url: 'http://www.cavaros.com/health_system/public/get_tree_api/66',
                 dataType: 'json',
                 type: 'GET',
                 success: function (data, textStatus, jQxhr) {
 
                     $("#basicdiagram").treeControl({
                         url: 'http://www.cavaros.com/health_system/public',
-                        mainId: 71,
+                        mainId: "66",
                         data: data.person,
                         onCancelPersonDetail: function () {
                             $.unblockUI();
@@ -73,17 +73,21 @@
                         onOkPersonDetail: function (obj) {
                             $("#basicdiagram").reCreate(obj);
                             $.unblockUI();
+                        },
+                        onReturnPage: function () {
+                            alert("ย้อนกลับ");
                         }
                     });
+
+                    $uniformed = $("#btnReturn,#btnUndoDelete").not(".skipThese");
+                    $uniformed.uniform();
+                    $("#uniform-btnReturn").css("position", "fixed");
                 },
                 error: function (data, textStatus, jQxhr) {
 
                 },
             });
 
-            $uniformed = $("#btnReturn").not(".skipThese");
-            $uniformed.uniform();
-            $("#uniform-btnReturn").css("position", "fixed");
 
             /*items = [
                            {
@@ -187,7 +191,14 @@
 </head>
 
 <body ">
-     <input id="btnReturn" type="button" value="return" style="position: fixed;" />
+
+<!--  <div style="position:fixed; ">
+      <div>
+          <input id="btnReturn" type="button" value="ย้อนกลับ" style="width:120px; position:relative;" /></div>
+      <div style="position:relative; left:150px">
+          <input id="btnUndoDelete" type="button" value="ยกเลิกการลบ" style="width:120px; position:relative;"/>
+      </div>
+  </div>-->
     <div id="basicdiagram" style="width: auto;  height:100vh; border-style: dotted; border-width: 1px;" >
       
 

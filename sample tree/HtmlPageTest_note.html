@@ -58,13 +58,13 @@
             //});
 
             $.ajax({
-                url: 'http://localhost/health_system/public/get_tree_api/71',
+                url: 'http://www.cavaros.com/health_system/public/get_tree_api/71',
                 dataType: 'json',
                 type: 'GET',
                 success: function (data, textStatus, jQxhr) {
 
                     $("#basicdiagram").treeControl({
-                        url: 'http://localhost/health_system/public',
+                        url: 'http://www.cavaros.com/health_system/public',
                         mainId: 65,
                         data: data.person,
                         onCancelPersonDetail: function () {
@@ -86,7 +86,7 @@
             $("#uniform-btnReturn").css("position", "fixed");
 		     		$("#btnSave").click(function() {
     			$.ajax({
-                		url: 'http://localhost/health_system/public/save_state',
+                    url: 'http://www.cavaros.com/health_system/public/save_state',
                 		type: 'POST',
                 		success: function (data, textStatus, jQxhr) {
 				alert("Save Sucessfully!!");
@@ -100,7 +100,7 @@
 
 		$("#btnUndo").click(function() {
     			$.ajax({
-                		url: 'http://localhost/health_system/public/undo_state',
+                    url: 'http://www.cavaros.com/health_system/public/undo_state',
                 		type: 'GET',
                 		success: function (data, textStatus, jQxhr) {
                             alert(data.status+" "+data.message);

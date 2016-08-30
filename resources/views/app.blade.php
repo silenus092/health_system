@@ -29,6 +29,7 @@
 
 	<script src="{{ URL::asset('/scripts/jquery-1.11.2.min.js') }}"></script>
     <script src="{{ URL::asset('/scripts/js/jquery-ui.min.js') }}"></script>
+
 	<script src="{{ URL::asset('/scripts/js/bootstrap.min.js') }}"></script>
 	<script src="{{ URL::asset('/scripts/js/bootstrap-datetimepicker.min.js') }}"></script>
 	<script src="{{ URL::asset('/scripts/custom-loading.js') }}"></script>
@@ -38,12 +39,20 @@
 	<script src="{{ URL::asset('/scripts/js/highcharts.js') }}"></script>
 	<script src="{{ URL::asset('/scripts/js/jquery.bootgrid.min.js') }}"></script>
 	<script src="{{ URL::asset('/scripts/js/primitives.min.js') }}"></script>
-    <script src="{{ URL::asset('/scripts/js/treeControl.js') }}"></script>
+	<script src="{{ URL::asset('/scripts/js/jqGlobal.js') }}"></script>
     <script src="{{ URL::asset('/scripts/ocupload.js') }}"></script>
+	<script src="{{ URL::asset('/scripts/js/view.js') }}"></script>
+	<script src="{{ URL::asset('/scripts/js/json_parse.js') }}"></script>
+	<script src="{{ URL::asset('/scripts/js/jquery.uniform.min.js') }}"></script>
+	<script src="{{ URL::asset('/scripts/js/treeControl.js') }}"></script>
+<!-- <script src="{{ URL::asset('scripts/js/jquery.blockUI.js') }}"></script> -->
+
+
+
 	@include('amaran::javascript')
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-	<!--[if lt IE 9]>A
+	<!--[if lt IE 9]>
 	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
 	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->

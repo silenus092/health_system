@@ -82,21 +82,30 @@
 		font-family: 'Oswald', sans-serif;
 		font-size: 30px;
 		font-weight: bold;
-		color: #ffff;
+
 		line-height: 15px;
 		padding-top: 5px;
 		letter-spacing: -0.8px;
 	}
 
+    #myPleaseWait {
+        z-index: 1500;
+    }
 
+    #myModalEDIT {
+        z-index: 1500;
+    }
 </style>
 <script type="text/javascript" CHARSET="UTF-8">
-	var person_id = <?php echo $person->person_id; ?> ;
+    var person_id = "<?php echo $person->person_id; ?>";
+
 	$(document).ready(function() {
+
 		var panels = $('.user-infos');
 		var panelsButton = $('.dropdown-user');
 		panels.hide();
 
+        $('#myModalEDIT').modal('show');
 		var myupload = $(".uploader").upload({
 			name: 'file',
 			action: "{{ url('/upload_image') }}",
@@ -104,10 +113,12 @@
 			params: {person_id: person_id},
 			method: 'post',
 			autoSubmit: true,
-			onSubmit: function() {},
+            onSubmit: function () {
+                $('#myPleaseWait').modal('show');
+            },
 			onComplete: function(response) {
 				var obj =  $.parseJSON(response);
-			
+                $('#myPleaseWait').modal('hide');
 				if ( obj.status == "Complete" )
 					window.location.reload(true);
 				else {
@@ -276,7 +287,9 @@
 						<a data-original-title="View as tree diagram" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary" href="{{route('lists.items.create', ['id' => $person->person_id ])}}"><i class="glyphicon glyphicon-tree-conifer"></i></a>
 						<span class="pull-right">
 							<a href="{{ url('/underconstruct') }}" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
-							<a data-original-title="Remove this user" data-toggle="tooltip" type="button" onclick="remove_person({{ $person->person_id}},'{{ $person->person_first_name." ".$person->person_last_name}}')" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
+							<a data-original-title="Remove this user" data-toggle="tooltip" type="button"
+                               onclick="remove_person('{{ $person->person_id}}','{{ $person->person_first_name." ".$person->person_last_name}}')"
+                               class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
 						</span>
 					</div>
 				</div>
@@ -351,5 +364,86 @@
 }				
 		?>
 	</div>
+
+</div>
+
+
+<!--Loading Modal Start here-->
+<div class="modal fade " id="myPleaseWait" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span class="glyphicon glyphicon-time">
+                    </span>Please Wait
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info
+                    progress-bar-striped active"
+                         style="width: 100%">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal ends Here -->
+
+<!-- Edit Modal -->
+<div class="modal fade" id="myModalEDIT" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    Edit form
+                </h4>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+
+                <form role="form">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email address</label>
+                        <input type="email" class="form-control"
+                               id="exampleInputEmail1" placeholder="Enter email"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input type="password" class="form-control"
+                               id="exampleInputPassword1" placeholder="Password"/>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"/> Check me out
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+
+
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="btn btn-primary">
+                    Save changes
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
