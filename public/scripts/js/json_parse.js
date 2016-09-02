@@ -339,9 +339,9 @@ var json_parse = (function () {
                         } else {
                             delete value[k];
                         }
+                        }
                     }
                 }
-            }
             return reviver.call(holder, key, value);
         }({'': result}, ''))
             : result;

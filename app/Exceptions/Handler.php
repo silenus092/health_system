@@ -39,7 +39,9 @@ class Handler extends ExceptionHandler {
 		if ($this->isHttpException($e))
 		{
 			return $this->renderHttpException($e);
-		}
+        } else if ($e instanceof MethodNotAllowedHttpException) {
+            return \Redirect::to('/');
+        }
 		else
 		{
 			return parent::render($request, $e);

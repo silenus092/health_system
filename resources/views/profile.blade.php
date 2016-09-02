@@ -1,8 +1,12 @@
 @extends('app')
 
 @section('content')
-
-<style >
+    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css"
+          rel="stylesheet"/>
+    <link href="{{ URL::asset('/scripts/css/xeditable/address.css') }}" rel="stylesheet">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+    <script src="{{ URL::asset('/scripts/js/xeditable/address.js') }}"></script>
+    <style>
 	/*  bhoechie tab */
 	div.bhoechie-tab-container{
 
@@ -49,7 +53,7 @@
 	div.bhoechie-tab-menu div.list-group>a.active .glyphicon,
 	div.bhoechie-tab-menu div.list-group>a.active .fa{
 		background-color: #5A55A3;
-		background-image: #5A55A3;
+
 		color: #ffffff;
 	}
 	div.bhoechie-tab-menu div.list-group>a.active:after{
@@ -105,7 +109,68 @@
 		var panelsButton = $('.dropdown-user');
 		panels.hide();
 
-        $('#myModalEDIT').modal('show');
+        $('#myModalEDIT').modal('hide');
+        $.fn.editable.defaults.mode = 'popup';
+
+        $('#age').editable({
+            type: 'text',
+            pk: person_id,
+            url: '{{URL::to("/")}}/update_age',
+            title: 'Enter age',
+            disabled: 'true'
+        });
+        $('#sex').editable({
+            type: 'select',
+            pk: person_id,
+            url: '{{URL::to("/")}}/update_Gender',
+            title: 'Select gender',
+            source: [
+                {value: 'male', text: 'male'},
+                {value: 'female', text: 'female'},
+
+            ],
+            disabled: 'true'
+        });
+        $('#citizenID').editable({
+            type: 'text',
+            pk: person_id,
+            url: '{{URL::to("/")}}/update_CitizenID',
+            title: 'Enter Citizen ID',
+            disabled: 'true'
+        });
+
+        $('#mobile_phone').editable({
+            type: 'text',
+            pk: person_id,
+            url: '{{URL::to("/")}}/update_Mobile',
+            title: 'Enter mobile phone',
+            disabled: 'true'
+        });
+        $('#landline').editable({
+            type: 'text',
+            pk: person_id,
+            url: '{{URL::to("/")}}/update_Landline',
+            title: 'Enter landline',
+            disabled: 'true'
+        });
+        $('#address_field').editable({
+            send: 'always',
+            pk: person_id,
+            url: '{{URL::to("/")}}/update_address',
+            title: 'Enter city, street and building #',
+            value: {
+                house_number: '{{ $person->person_house_num }}',
+                street: '{{ $person->person_road  }}',
+                soi: "{{ $person->person_soi }}",
+                mooh: '{{ $person->person_mooh_num}}',
+                tumbon: "{{$person->person_tumbon}}",
+                amphur: "{{$person->person_amphur}}",
+                province: "{{$person->person_province}}",
+                post_code: "{{$person->person_post_code}}"
+            },
+            disabled: 'true'
+        });
+
 		var myupload = $(".uploader").upload({
 			name: 'file',
 			action: "{{ url('/upload_image') }}",
@@ -117,9 +182,19 @@
                 $('#myPleaseWait').modal('show');
             },
 			onComplete: function(response) {
-				var obj =  $.parseJSON(response);
+
+                var index = response.indexOf("}");
+                var result;
+                if (index < 0) {
+                    result = response;
+                } else {
+                    result = response.substr(0, index + 1);
+                }
+
+                var obj = $.parseJSON(result);
+
                 $('#myPleaseWait').modal('hide');
-				if ( obj.status == "Complete" )
+                if (obj['status'] == "Complete")
 					window.location.reload(true);
 				else {
 				
@@ -177,7 +252,16 @@
 			}
 		});
 
+        $('#myModalEDIT_button').click(function (e) {
+            e.preventDefault();
 
+            $('#age').editable('toggleDisabled');
+            $('#sex').editable('toggleDisabled');
+            $('#citizenID').editable('toggleDisabled');
+            $('#mobile_phone').editable('toggleDisabled');
+            $('#landline').editable('toggleDisabled');
+            $('#address_field').editable('toggleDisabled');
+        })
 	});
 	function remove_person(id,name){
 		BootstrapDialog.confirm({
@@ -240,7 +324,8 @@
 				<div class="panel-body">
 					<div class="row">
 					<!-- <img id="uploader" alt="User Pic" src="http://babyinfoforyou.com/wp-content/uploads/2014/10/avatar-300x300.png" class="img-circle img-responsive "> -->
-						<div class="col-md-3 col-lg-3" align="center">  
+                        <div class="col-md-3 col-lg-3" align="center">
+                            Click to upload <br>
 						<?php
 						if ( $person->profile_img != null ) {
 						echo '<img class="img-circle img-responsive uploader" width="300px" height="350px" src="' . asset('../public/uploads/' . $person->profile_img) . '"><br />';
@@ -256,27 +341,34 @@
 								<tbody>
 									<tr>
 										<td>Age:</td>
-										<td>{{ $person->person_age}}</td>
+                                        <td><a href="#" id="age">{{ $person->person_age}}</a></td>
 									</tr>
 									<tr>
 										<td>Citizen ID:</td>
-										<td>{{ $person->person_citizenID}}</td>
+                                        <td><a href="#" id="citizenID">{{ $person->person_citizenID}}</a></td>
 									</tr>
 									<tr>
 										<td>Gender:</td>
-										<td>{{ $person->person_sex}}</td>
+                                        <td><a href="#" id="sex">{{ $person->person_sex}}</a></td>
 									</tr>
+
 									<tr>
+                                        <td>Phone Number</td>
+                                        <td><a href="#" id="mobile_phone">{{ $person->person_mobile_phone }} </a>
+                                            (Mobile)<br><br><a href="#" id="landline">{{$person->person_phone }}</a>
+                                            (Landline)
+                                        </td>
+                                    </tr>
+                                    <tr>
 
 										<td>Home Address:</td>
-										<td>{{ $person->person_house_num." ".$person->person_soi." ".$person->person_road}}<br>
-											{{ $person->person_mooh_num." ".$person->person_tumbon." ".$person->person_amphur}}<br>
-											{{ $person->person_province." ".$person->person_post_code}}
+                                        <td><a href="#" id="address_field"
+                                               data-type="address"> {{ $person->person_house_num." ".$person->person_soi." ".$person->person_road}}
+                                                <br>
+                                                {{ $person->person_mooh_num." ".$person->person_tumbon." ".$person->person_amphur}}
+                                                <br>
+                                                {{ $person->person_province." ".$person->person_post_code}}</a>
 										</td>
-									</tr>
-									<tr>
-										<td>Phone Number</td>
-										<td><?php echo $person->person_mobile_phone; ?> (Mobile)<br><br><?php echo $person->person_phone; ?> (Landline)</td>
 									</tr>
 								</tbody>
 							</table>
@@ -286,7 +378,9 @@
 					<div class="panel-footer">
 						<a data-original-title="View as tree diagram" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary" href="{{route('lists.items.create', ['id' => $person->person_id ])}}"><i class="glyphicon glyphicon-tree-conifer"></i></a>
 						<span class="pull-right">
-							<a href="{{ url('/underconstruct') }}" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
+							<button id="myModalEDIT_button" data-original-title="Edit this user" data-toggle="tooltip"
+                                    type="button" class="btn btn-sm btn-warning"><i
+                                        class="glyphicon glyphicon-edit"></i></button>
 							<a data-original-title="Remove this user" data-toggle="tooltip" type="button"
                                onclick="remove_person('{{ $person->person_id}}','{{ $person->person_first_name." ".$person->person_last_name}}')"
                                class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>

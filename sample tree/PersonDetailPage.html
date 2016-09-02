@@ -40,7 +40,7 @@
                     $("#ddlYear").trigger("click");
                 }
                 isAgeClick = false;
-            });;;
+            });
             $("#ddlYear").change(function () {
                 isYearClick = true;
                 if (isAgeClick == false) {
@@ -182,8 +182,6 @@
                 dataAge.push({ key: i, value: i });
             }
             dataAge.unshift({key: "none", value: "กี่ปี"});
-            ;
-            ;
             $.each(dataAge, function (key, value) {
                 $('#ddlAge')
                     .append($("<option></option>")
@@ -201,8 +199,6 @@
                 dataList.push({ key: runYear, value: runYear });
             }
             dataList.unshift({key: "none", value: "ปีเกิด"});
-            ;
-            ;
             $.each(dataList, function (key, value) {
                 $('#ddlYear')
                     .append($("<option></option>")
@@ -227,8 +223,6 @@
                 dataList.push({ key: i, value: i });
             }
             dataList.unshift({key: "none", value: "วันที่เกิด"});
-            ;
-            ;
             $.each(dataList, function (key, value) {
                 $('#ddlDay')
                     .append($("<option></option>")

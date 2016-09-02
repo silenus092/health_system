@@ -5,7 +5,7 @@
 
 	//var imageMen = "/imagesTest/men.png";
 	//var imageWomen = "/imagesTest/women.png";
-	var func_url = <?php echo $citi_id; ?>;
+	var person_id = <?php echo $citi_id; ?>;
 	var colorSick = primitives.common.Colors.Orange;
 	var colorWomen = primitives.common.Colors.Pink;
 	var items = null;
@@ -19,15 +19,32 @@
 		});
 		$.ajax({
 			//url: 'http://www.cavaros.com/health_system/public/get_tree/'+func_url,
-			url: '<?=URL::to('/')?>/get_tree/'+func_url,
+			url: '<?=URL::to('/')?>/get_tree/' + person_id,
 			dataType: 'json',
 			type: 'GET',
 
 			success: function(data, textStatus, jQxhr) {
 
 				$("#basicdiagram").treeControl({
-					data: data.person
+					url: 'http://www.cavaros.com/health_system/public',
+					mainId: person_id,
+					mainReId: person_id,
+					data: data.person,
+					onCancelPersonDetail: function () {
+						$.unblockUI();
+					},
+					onOkPersonDetail: function (obj) {
+						$("#basicdiagram").reCreate(obj);
+						$.unblockUI();
+					},
+					onReturnPage: function () {
+						alert("ย้อนกลับ");
+					}
 				});
+
+				$uniformed = $("#btnReturn,#btnUndoDelete").not(".skipThese");
+				$uniformed.uniform();
+				$("#uniform-btnReturn").css("position", "fixed");
 			},
 			error: function(data, textStatus, jQxhr) {
 
@@ -57,7 +74,10 @@
 
 <body>
 	<h3> Family Tree </h3>
-	<div id="basicdiagram" style="width: auto; height: 680px; border-style: dotted; border-width: 1px;" />
+	<div id="basicdiagram" style="width: auto;  height:100vh; border-style: dotted; border-width: 1px;">
+
+
+	</div>
 </body>
 
 @endsection

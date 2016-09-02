@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a2da7795-edd8-4b71-bc94-bec7884a4696" name="Default" comment="- Fix major Bug in API &#10;- Add uploading dialog while upload image &#10;- Edit profile still underconstruct">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/Http/Controllers/TreeController.backup.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/scripts/js/jquery-ui-1.9.2.custom.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/intervention/image" afterPath="$PROJECT_DIR$/vendor/intervention/image" />
+    <list default="true" id="a2da7795-edd8-4b71-bc94-bec7884a4696" name="Default" comment="- Fix bug">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/scripts/css/xeditable/address.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/scripts/js/xeditable/address.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/maximebf/debugbar" afterPath="$PROJECT_DIR$/vendor/maximebf/debugbar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/servit/l5mpdf" afterPath="$PROJECT_DIR$/vendor/servit/l5mpdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/ApiController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/ApiController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/TreeController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/TreeController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Exceptions/Handler.php" afterPath="$PROJECT_DIR$/app/Exceptions/Handler.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/PersonController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/PersonController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/routes.php" afterPath="$PROJECT_DIR$/app/Http/routes.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Persons.php" afterPath="$PROJECT_DIR$/app/Persons.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/js/jqGlobal.js" afterPath="$PROJECT_DIR$/public/scripts/js/jqGlobal.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/js/json_parse.js" afterPath="$PROJECT_DIR$/public/scripts/js/json_parse.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/js/treeControl.js" afterPath="$PROJECT_DIR$/public/scripts/js/treeControl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/js/view.js" afterPath="$PROJECT_DIR$/public/scripts/js/view.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/app.blade.php" afterPath="$PROJECT_DIR$/resources/views/app.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/form_view.blade.php" afterPath="$PROJECT_DIR$/resources/views/form_view.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/profile.blade.php" afterPath="$PROJECT_DIR$/resources/views/profile.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/tree.blade.php" afterPath="$PROJECT_DIR$/resources/views/tree.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sample tree/HtmlPageTest1.html" afterPath="$PROJECT_DIR$/sample tree/HtmlPageTest1.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sample tree/HtmlPageTest_note.html" afterPath="$PROJECT_DIR$/sample tree/HtmlPageTest_note.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sample tree/PersonDeletePage.html" afterPath="$PROJECT_DIR$/sample tree/PersonDeletePage.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sample tree/PersonDetailPage.html" afterPath="$PROJECT_DIR$/sample tree/PersonDetailPage.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sample tree/scripts/treeControl.js" afterPath="$PROJECT_DIR$/sample tree/scripts/treeControl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sample tree/styles/uniform.default.min.css" afterPath="$PROJECT_DIR$/sample tree/styles/uniform.default.min.css" />
     </list>
     <ignored path="health_system.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -50,55 +51,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="HtmlPageTest1.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sample tree/HtmlPageTest1.html">
+      <file leaf-file-name="profile.blade.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/profile.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="33" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="33" />
+            <state relative-caret-position="255">
+              <caret line="256" column="0" selection-start-line="256" selection-start-column="0" selection-end-line="256" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="treeControl.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/sample tree/scripts/treeControl.js">
+      <file leaf-file-name="form_view.blade.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/resources/views/form_view.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="23" column="35" selection-start-line="23" selection-start-column="35" selection-end-line="23" selection-end-column="35" />
-              <folding>
-                <marker date="1470750575000" expanded="true" signature="11757:11823" ph="..." />
-                <marker date="1470750575000" expanded="true" signature="11896:11962" ph="..." />
-                <marker date="1470750575000" expanded="true" signature="12074:12140" ph="..." />
-                <marker date="1470750575000" expanded="true" signature="12188:12212" ph="..." />
-                <marker date="1470750575000" expanded="true" signature="12303:12388" ph="..." />
-                <marker date="1470750575000" expanded="true" signature="12441:12525" ph="..." />
-                <marker date="1470750575000" expanded="true" signature="12578:12602" ph="..." />
-                <marker date="1470750575000" expanded="true" signature="12711:12757" ph="..." />
-                <marker date="1470750575000" expanded="true" signature="12793:12817" ph="..." />
-                <marker date="1470750575000" expanded="true" signature="15148:15176" ph="..." />
-                <marker date="1470750575000" expanded="true" signature="15269:15300" ph="..." />
-                <marker date="1470750575000" expanded="true" signature="15355:15385" ph="..." />
-                <marker date="1470750575000" expanded="true" signature="15467:15498" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="app.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/app.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="782">
-              <caret line="46" column="74" selection-start-line="46" selection-start-column="74" selection-end-line="46" selection-end-column="74" />
+            <state relative-caret-position="256">
+              <caret line="69" column="14" selection-start-line="69" selection-start-column="14" selection-end-line="69" selection-end-column="14" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="jquery-ui.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/scripts/css/jquery-ui.css">
+      <file leaf-file-name="tree.blade.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/tree.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2839">
-              <caret line="167" column="23" selection-start-line="167" selection-start-column="23" selection-end-line="167" selection-end-column="23" />
+            <state relative-caret-position="214">
+              <caret line="30" column="30" selection-start-line="30" selection-start-column="30" selection-end-line="30" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -107,12 +84,52 @@
       <file leaf-file-name="PersonController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/PersonController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="19" column="16" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="16" />
+            <state relative-caret-position="404">
+              <caret line="275" column="48" selection-start-line="275" selection-start-column="45" selection-end-line="275" selection-end-column="48" />
               <folding>
-                <marker date="1470583838557" expanded="true" signature="4610:5022" ph="SELECT disea... disease_forms" />
-                <marker date="1470583838557" expanded="true" signature="5262:5644" ph="SELECT disea... disease_forms" />
-                <marker date="1470583838557" expanded="true" signature="6676:7080" ph="SELECT disea... disease_forms" />
+                <marker date="1472785251152" expanded="true" signature="4627:5039" ph="SELECT disea... disease_forms" />
+                <marker date="1472785251152" expanded="true" signature="5279:5661" ph="SELECT disea... disease_forms" />
+                <marker date="1472785251152" expanded="true" signature="6693:7097" ph="SELECT disea... disease_forms" />
+                <marker date="1472785251152" expanded="true" signature="7872:8844" ph="..." />
+                <marker date="1472785251152" expanded="true" signature="8066:8745" ph="{...}" />
+                <marker date="1472785251152" expanded="true" signature="8750:8837" ph="..." />
+                <marker date="1472785251152" expanded="true" signature="9769:10412" ph="..." />
+                <marker date="1472785251152" expanded="true" signature="9784:10202" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="app.blade.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/app.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="374">
+              <caret line="50" column="49" selection-start-line="50" selection-start-column="41" selection-end-line="50" selection-end-column="49" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="routes.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="26" column="16" selection-start-line="26" selection-start-column="16" selection-end-line="26" selection-end-column="16" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="treeControl.js" pinned="true" current-in-tab="false">
+        <entry file="remoteDeploymentFS://&lt;0db0fd02-a89c-4a34-93ec-da426062a996&gt;/public/scripts/js/treeControl.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="264">
+              <caret line="298" column="31" selection-start-line="298" selection-start-column="31" selection-end-line="298" selection-end-column="31" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+                <marker date="0" expanded="true" signature="223:27772" ph="{...}" />
+                <marker date="0" expanded="true" signature="10820:11483" ph="{...}" />
+                <marker date="0" expanded="true" signature="10837:11443" ph="{&quot;dataType&quot;: 'json'...}" />
               </folding>
             </state>
           </provider>
@@ -141,19 +158,32 @@
         <option value="$PROJECT_DIR$/composer.json" />
         <option value="&lt;0db0fd02-a89c-4a34-93ec-da426062a996&gt;/app/Http/Controllers/ApiController.php" />
         <option value="$PROJECT_DIR$/config/app.php" />
-        <option value="$PROJECT_DIR$/app/Http/routes.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Controller.php" />
-        <option value="$PROJECT_DIR$/sample tree/scripts/treeControl.js" />
         <option value="&lt;0db0fd02-a89c-4a34-93ec-da426062a996&gt;/sample tree/HtmlPageTest_note.html" />
         <option value="&lt;0db0fd02-a89c-4a34-93ec-da426062a996&gt;/sample tree/HtmlPageTest1.html" />
-        <option value="$PROJECT_DIR$/resources/views/profile.blade.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/PersonController.php" />
         <option value="$PROJECT_DIR$/sample tree/HtmlPageTest_note.html" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/ApiController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/TreeController.php" />
+        <option value="$PROJECT_DIR$/sample tree/scripts/treeControl.js" />
         <option value="$PROJECT_DIR$/sample tree/HtmlPageTest1.html" />
-        <option value="$PROJECT_DIR$/public/scripts/js/treeControl.js" />
+        <option value="$PROJECT_DIR$/public/scripts/resources/PersonDetailPage.blade.php" />
+        <option value="$PROJECT_DIR$/public/scripts/resources/PersonDeletePage.blade.php" />
+        <option value="$PROJECT_DIR$/public/scripts/resources/PersonEditPage.blade.php" />
+        <option value="$PROJECT_DIR$/public/scripts/resources/PersonDeletePage.html" />
+        <option value="$PROJECT_DIR$/public/scripts/resources/PersonEditPage.html" />
+        <option value="$PROJECT_DIR$/public/scripts/resources/PersonDetailPage.html" />
+        <option value="$PROJECT_DIR$/app/Persons.php" />
         <option value="$PROJECT_DIR$/resources/views/app.blade.php" />
+        <option value="$PROJECT_DIR$/app/Http/routes.php" />
+        <option value="$PROJECT_DIR$/app/Exceptions/Handler.php" />
+        <option value="$PROJECT_DIR$/public/scripts/js/xeditable/address.js" />
+        <option value="$PROJECT_DIR$/public/scripts/js/treeControl.js" />
+        <option value="$PROJECT_DIR$/resources/views/tree.blade.php" />
+        <option value="&lt;0db0fd02-a89c-4a34-93ec-da426062a996&gt;/public/scripts/resources/scripts/treeControl.js" />
+        <option value="&lt;0db0fd02-a89c-4a34-93ec-da426062a996&gt;/public/scripts/js/treeControl.js" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/PersonController.php" />
+        <option value="$PROJECT_DIR$/resources/views/profile.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/form_view.blade.php" />
       </list>
     </option>
   </component>
@@ -180,9 +210,10 @@
   <component name="PhpWebServerValidation" path_to_validation_script="C:\xampp\htdocs\health_system" selected_validation_type="LOCAL" web_path_to_validation_script="http://localhost/health_system/public/index" />
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="-7" />
-    <option name="width" value="1370" />
-    <option name="height" value="745" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1382" />
+    <option name="height" value="754" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -209,9 +240,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scratches" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -240,7 +270,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
+              <option name="myItemId" value="sample tree" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -254,7 +284,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
+              <option name="myItemId" value="sample tree" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -272,20 +302,81 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
+              <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="scripts" />
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="health_system" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="health_system" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="health_system" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="health_system" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="health_system" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="health_system" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Http" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="health_system" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="health_system" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Exceptions" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -306,6 +397,10 @@
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\health_system\public\scripts\css\xeditable" />
+      <recent name="C:\xampp\htdocs\health_system\public\scripts\js\xeditable" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\health_system\public\scripts\js" />
       <recent name="C:\xampp\htdocs\health_system\app\Http\Controllers" />
@@ -800,7 +895,10 @@
       <workItem from="1472384341675" duration="4083000" />
       <workItem from="1472403096796" duration="1685000" />
       <workItem from="1472433315806" duration="5523000" />
-      <workItem from="1472532767143" duration="752000" />
+      <workItem from="1472532767143" duration="18773000" />
+      <workItem from="1472603870502" duration="12499000" />
+      <workItem from="1472647886890" duration="13921000" />
+      <workItem from="1472691249794" duration="20440000" />
     </task>
     <task id="LOCAL-00001" summary="- Fix major Bug in API &#10;- Add uploading dialog while upload image &#10;- Edit profile still underconstruct">
       <created>1470583857406</created>
@@ -809,29 +907,44 @@
       <option name="project" value="LOCAL" />
       <updated>1470583857406</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="- Merged to release version">
+      <created>1472533657780</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1472533657780</updated>
+    </task>
+    <task id="LOCAL-00003" summary="- Merged to release version">
+      <created>1472533689154</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1472533689154</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="149084000" />
+    <option name="totallyTimeSpent" value="213965000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="0" width="1370" height="745" extended-state="0" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23349437" sideWeight="0.5060698" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22705314" sideWeight="0.50907713" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22705314" sideWeight="0.49092284" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32850242" sideWeight="0.4939302" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.4939302" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32850242" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18244275" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20272315" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2167939" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21482602" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31543118" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -844,8 +957,7 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33497536" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2369281" sideWeight="0.4939302" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32850242" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -894,7 +1006,9 @@
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
     <MESSAGE value="--" />
     <MESSAGE value="- Fix major Bug in API &#10;- Add uploading dialog while upload image &#10;- Edit profile still underconstruct" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Fix major Bug in API &#10;- Add uploading dialog while upload image &#10;- Edit profile still underconstruct" />
+    <MESSAGE value="- Merged to release version" />
+    <MESSAGE value="- Fix bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Fix bug" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -910,141 +1024,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ApiController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/session.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="31" column="22" selection-start-line="31" selection-start-column="22" selection-end-line="31" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ApiController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ApiController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ApiController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1139">
-          <caret line="67" column="4" selection-start-line="67" selection-start-column="4" selection-end-line="67" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ApiController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1139">
-          <caret line="67" column="4" selection-start-line="67" selection-start-column="4" selection-end-line="67" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Patient.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="uml://DATABASE/0c7718ce-ba27-4fc8-bb63-77272aad296b">
-      <provider selected="true" editor-type-id="UmlEditorProvider">
-        <state>
-          <ID>DATABASE</ID>
-          <OriginalElement>0c7718ce-ba27-4fc8-bb63-77272aad296b</OriginalElement>
-          <nodes>
-            <node x="" y="">0c7718ce-ba27-4fc8-bb63-77272aad296b.TABLE:health_it2.disease_types</node>
-            <node x="" y="">0c7718ce-ba27-4fc8-bb63-77272aad296b.TABLE:health_it2.patients_disease_forms</node>
-            <node x="" y="">0c7718ce-ba27-4fc8-bb63-77272aad296b.TABLE:health_it2.users</node>
-            <node x="" y="">0c7718ce-ba27-4fc8-bb63-77272aad296b.TABLE:health_it2.password_resets</node>
-            <node x="" y="">0c7718ce-ba27-4fc8-bb63-77272aad296b.TABLE:health_it2.disease_1</node>
-            <node x="" y="">0c7718ce-ba27-4fc8-bb63-77272aad296b.TABLE:health_it2.relationship_type</node>
-            <node x="" y="">0c7718ce-ba27-4fc8-bb63-77272aad296b.TABLE:health_it2.patients</node>
-            <node x="" y="">0c7718ce-ba27-4fc8-bb63-77272aad296b.TABLE:health_it2.migrations</node>
-            <node x="" y="">0c7718ce-ba27-4fc8-bb63-77272aad296b.TABLE:health_it2.persons</node>
-            <node x="" y="">0c7718ce-ba27-4fc8-bb63-77272aad296b.TABLE:health_it2.relationship</node>
-            <node x="" y="">0c7718ce-ba27-4fc8-bb63-77272aad296b.TABLE:health_it2.disease_forms</node>
-            <node x="" y="">0c7718ce-ba27-4fc8-bb63-77272aad296b.TABLE:health_it2.roles</node>
-            <node x="" y="">0c7718ce-ba27-4fc8-bb63-77272aad296b.TABLE:health_it2.doctors</node>
-          </nodes>
-          <notes />
-          <edges />
-          <settings layout="Hierarchic Group" zoom="0.5000000000000001" x="786.0" y="852.0" />
-          <SelectedNodes />
-          <Categories>
-            <Category>Columns</Category>
-            <Category>Key columns</Category>
-          </Categories>
-          <SCOPE>All</SCOPE>
-        </state>
-      </provider>
-    </entry>
-    <entry file="dbDummy://dbtable:/19aba77a/0c7718ce-ba27-4fc8-bb63-77272aad296b/health_it2.persons">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/0c7718ce-ba27-4fc8-bb63-77272aad296b/console.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sample tree/scripts/json_parse.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3417">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Middleware/RedirectIfAuthenticated.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-204">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Middleware/VerifyCsrfToken.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="15" column="4" selection-start-line="15" selection-start-column="4" selection-end-line="16" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Middleware/CORS.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1171,38 +1150,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/profile.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="390" column="39" selection-start-line="390" selection-start-column="28" selection-end-line="390" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sample tree/HtmlPageTest_note.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="884">
           <caret line="52" column="19" selection-start-line="52" selection-start-column="19" selection-end-line="52" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/tree.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="2" column="8" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/form_view.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="178" column="23" selection-start-line="178" selection-start-column="23" selection-end-line="178" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="35" column="25" selection-start-line="35" selection-start-column="25" selection-end-line="35" selection-end-column="25" />
         </state>
       </provider>
     </entry>
@@ -1224,6 +1175,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-918">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1234,17 +1186,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/TreeController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2190">
-          <caret line="1319" column="39" selection-start-line="1319" selection-start-column="39" selection-end-line="1319" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/scripts/js/jquery-ui-1.9.2.custom.min.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1255,83 +1201,207 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/PersonController.php">
+    <entry file="file://$PROJECT_DIR$/public/scripts/css/jquery-ui.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="19" column="16" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="16" />
-          <folding>
-            <marker date="1470583838557" expanded="true" signature="4610:5022" ph="SELECT disea... disease_forms" />
-            <marker date="1470583838557" expanded="true" signature="5262:5644" ph="SELECT disea... disease_forms" />
-            <marker date="1470583838557" expanded="true" signature="6676:7080" ph="SELECT disea... disease_forms" />
-          </folding>
+        <state relative-caret-position="17">
+          <caret line="167" column="23" selection-start-line="167" selection-start-column="23" selection-end-line="167" selection-end-column="23" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/scripts/css/jquery-ui.css">
+    <entry file="file://$PROJECT_DIR$/resources/views/welcome.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2839">
-          <caret line="167" column="23" selection-start-line="167" selection-start-column="23" selection-end-line="167" selection-end-column="23" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/scripts/js/json_parse.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4737">
+          <caret line="42" column="23" selection-start-line="42" selection-start-column="21" selection-end-line="42" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/scripts/js/jqGlobal.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="18" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/scripts/js/jquery.blockUI.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1003">
+          <caret line="59" column="33" selection-start-line="59" selection-start-column="33" selection-end-line="59" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/scripts/resources/PersonDeletePage.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="53" selection-start-line="14" selection-start-column="53" selection-end-line="14" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sample tree/PersonEditPage.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="16" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/scripts/resources/PersonEditPage.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="67" selection-start-line="16" selection-start-column="67" selection-end-line="16" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sample tree/PersonDetailPage.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="0" selection-start-line="4" selection-start-column="3" selection-end-line="17" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/scripts/resources/PersonDetailPage.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sample tree/PersonDeletePage.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="16" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sample tree/scripts/treeControl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="137">
+          <caret line="59" column="43" selection-start-line="59" selection-start-column="32" selection-end-line="59" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/scripts/js/view.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-85">
+          <caret line="25" column="12" selection-start-line="25" selection-start-column="12" selection-end-line="25" selection-end-column="12" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sample tree/HtmlPageTest1.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="33" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="33" />
+        <state relative-caret-position="113">
+          <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Persons.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="31" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Exceptions/Handler.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="42" column="9" selection-start-line="42" selection-start-column="9" selection-end-line="42" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/scripts/js/xeditable/address.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-204">
+          <caret line="54" column="55" selection-start-line="54" selection-start-column="55" selection-end-line="54" selection-end-column="55" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/scripts/js/treeControl.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="59" column="60" selection-start-line="59" selection-start-column="60" selection-end-line="59" selection-end-column="60" />
+        <state relative-caret-position="-1224">
+          <caret line="17" column="20" selection-start-line="17" selection-start-column="20" selection-end-line="17" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/TreeController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1003">
+          <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/scripts/css/xeditable/address.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/tree.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="214">
+          <caret line="30" column="30" selection-start-line="30" selection-start-column="30" selection-end-line="30" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/PersonController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="404">
+          <caret line="275" column="48" selection-start-line="275" selection-start-column="45" selection-end-line="275" selection-end-column="48" />
           <folding>
-            <marker date="1470750575000" expanded="true" signature="11757:11823" ph="..." />
-            <marker date="1470750575000" expanded="true" signature="11896:11962" ph="..." />
-            <marker date="1470750575000" expanded="true" signature="12074:12140" ph="..." />
-            <marker date="1470750575000" expanded="true" signature="12188:12212" ph="..." />
-            <marker date="1470750575000" expanded="true" signature="12303:12388" ph="..." />
-            <marker date="1470750575000" expanded="true" signature="12441:12525" ph="..." />
-            <marker date="1470750575000" expanded="true" signature="12578:12602" ph="..." />
-            <marker date="1470750575000" expanded="true" signature="12711:12757" ph="..." />
-            <marker date="1470750575000" expanded="true" signature="12793:12817" ph="..." />
-            <marker date="1470750575000" expanded="true" signature="15148:15176" ph="..." />
-            <marker date="1470750575000" expanded="true" signature="15269:15300" ph="..." />
-            <marker date="1470750575000" expanded="true" signature="15355:15385" ph="..." />
-            <marker date="1470750575000" expanded="true" signature="15467:15498" ph="..." />
+            <marker date="1472785251152" expanded="true" signature="4627:5039" ph="SELECT disea... disease_forms" />
+            <marker date="1472785251152" expanded="true" signature="5279:5661" ph="SELECT disea... disease_forms" />
+            <marker date="1472785251152" expanded="true" signature="6693:7097" ph="SELECT disea... disease_forms" />
+            <marker date="1472785251152" expanded="true" signature="7872:8844" ph="..." />
+            <marker date="1472785251152" expanded="true" signature="8066:8745" ph="{...}" />
+            <marker date="1472785251152" expanded="true" signature="8750:8837" ph="..." />
+            <marker date="1472785251152" expanded="true" signature="9769:10412" ph="..." />
+            <marker date="1472785251152" expanded="true" signature="9784:10202" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/app.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="782">
-          <caret line="46" column="74" selection-start-line="46" selection-start-column="74" selection-end-line="46" selection-end-column="74" />
+        <state relative-caret-position="374">
+          <caret line="50" column="49" selection-start-line="50" selection-start-column="41" selection-end-line="50" selection-end-column="49" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sample tree/scripts/treeControl.js">
+    <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="23" column="35" selection-start-line="23" selection-start-column="35" selection-end-line="23" selection-end-column="35" />
-          <folding>
-            <marker date="1470750575000" expanded="true" signature="11757:11823" ph="..." />
-            <marker date="1470750575000" expanded="true" signature="11896:11962" ph="..." />
-            <marker date="1470750575000" expanded="true" signature="12074:12140" ph="..." />
-            <marker date="1470750575000" expanded="true" signature="12188:12212" ph="..." />
-            <marker date="1470750575000" expanded="true" signature="12303:12388" ph="..." />
-            <marker date="1470750575000" expanded="true" signature="12441:12525" ph="..." />
-            <marker date="1470750575000" expanded="true" signature="12578:12602" ph="..." />
-            <marker date="1470750575000" expanded="true" signature="12711:12757" ph="..." />
-            <marker date="1470750575000" expanded="true" signature="12793:12817" ph="..." />
-            <marker date="1470750575000" expanded="true" signature="15148:15176" ph="..." />
-            <marker date="1470750575000" expanded="true" signature="15269:15300" ph="..." />
-            <marker date="1470750575000" expanded="true" signature="15355:15385" ph="..." />
-            <marker date="1470750575000" expanded="true" signature="15467:15498" ph="..." />
-          </folding>
+        <state relative-caret-position="255">
+          <caret line="26" column="16" selection-start-line="26" selection-start-column="16" selection-end-line="26" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/profile.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="256" column="0" selection-start-line="256" selection-start-column="0" selection-end-line="256" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/form_view.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="69" column="14" selection-start-line="69" selection-start-column="14" selection-end-line="69" selection-end-column="14" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1412,6 +1482,6 @@
     </states>
   </component>
   <component name="webServersAuthStorage">
-    <data>AAAAsEVYnxHtz+2Eut+LV/njKrI2q/6HR6ISr6aPa87blCM1MqHe5wKKJuuwWd5GE/681wj/v21NHpidOj6L8Socs9D9XojJb7mv477+XgTlNKtkrvfKWAqo9ewQ2/tjSixX6YE4EuKH4+hr/CBuNXhxLLE/8IRciWxVbZQ9IZp/zj8oJ4y0WXiAGtnfB+o+BRk6gyxob5qER7DxAJNKOVVjPLg39Y0lqVO34aGLu8WctkVYCUVcBt1DGvv6xnEr8x0vBw==</data>
+    <data>AAAAsC14QE0smKmhBLm6Szd8iJjy2r5pZk4qocctlNlQhWfRA74DZQG5UzWfvPaUiw7Zq2ivJK8Z8rdU+msBcgRrNbEsVWBmaHXJ1ci10c71NxkI1JEa/RRWamm9BKQnoOdcoHgVAboAPJ0Jlx4lGEtuut1q4kDxcb5BscyVoe2Qs88X8qKvHq4ZI4xWQ/F/RzLJXXS71Ya9d41wCcveKSj7m3Qwev7NJM6CJvxWKg5aK1JPTGJEwybs9SJLKyfFOsrz6Q==</data>
   </component>
 </project>

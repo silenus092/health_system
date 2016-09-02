@@ -61,11 +61,18 @@
 		});
 
 		$('#datetimepicker1').datetimepicker({
+			onSelect: function (value, ui) {
+				var today = new Date(),
+						dob = new Date(value),
+						age = new Date(today - dob).getFullYear() - 1970;
+				alert(age);
+				$('#age').text(age);
+			},
 			format: "yyyy-mm-dd",
 			showMeridian: true,
 			minView: 2,
 			autoclose: true,
-			todayBtn: true
+			todayBtn: true,
 		});
 		$('#datetimepicker2').datetimepicker({
 			format: "yyyy-mm-dd",
@@ -141,7 +148,7 @@
 			var data_id = "&vpb_item_ids="+  JSON.stringify(vpb_items_id);
 			var data_role = "&vpb_item_roles="+  JSON.stringify(vpb_items_roles);
 			var serializedReturn = $('#main_form').serialize()+data_name+data_age+data_id+data_role;
-			alert( serializedReturn);
+			//alert( serializedReturn);
 			var url = $(this).attr("data-link");
 			$.ajax({
 				url: "{{ url('/form_add') }}",
@@ -153,8 +160,12 @@
 						BootstrapDialog.show({
 							type: BootstrapDialog.TYPE_SUCCESS,
 							title: data.status,
-							message: data.message + "\n" +data.details
+							message: data.message + "\n" + data.details,
+							onhidden: function (dialogRef) {
+								window.location = "<?=URL::to('/')?>";
+							}
 						});
+						//here double curly bracket
 					}else{
 						BootstrapDialog.show({
 							type: BootstrapDialog.TYPE_DANGER,
@@ -215,7 +226,7 @@
 					<div class="form-group">
 						<label class="col-md-4 control-label">อายุ</label>
 						<div class='col-md-6' >
-							<input type="text" class="form-control" name="age" value="">
+							<input type="text" class="form-control" id="age" name="age" value="" disabled>
 						</div>
 					</div>
 					<div class="form-group">

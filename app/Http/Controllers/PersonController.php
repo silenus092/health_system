@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use App\Persons;
 use DB;
 use Input;
 
@@ -267,15 +268,166 @@ class PersonController extends Controller {
 					  ->where('person_id' ,'=',$id)
 				      ->update(['profile_img' =>$today."-".$id."-".$filename]);
             $img = \Image::make($file)->fit(300, 300)->save('../public/uploads/' . $today . "-" . $id . "-" . $filename);
-			$result['status'] = "Complete";
+            $result["status"] = "Complete";
 			return response()->json($result, 200);
 		}else{
-			$result['status'] = "Complete";
+            $result["status"] = "Error";
 
 			return response()->json($result, 200);
 		}
 
 		
 	}
+
+    /**
+     * @description
+     * This method is used for update age
+     *
+     * @param
+     *
+     * @POST pk , value
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     */
+    public function update_age()
+    {
+
+        try {
+            $personId = Input::get('pk');
+            $newValue = Input::get('value');
+            $personData = Persons::wherepersonId($personId)->first();
+            $personData->person_age = $newValue;
+            if ($personData->save())
+                return response()->json(array('status' => "Complete"));
+            else
+                return response()->json(array('status' => 'Error'));
+        } catch (Exception $e) {
+            DB::rollback();
+            $result['status'] = "Error";
+            $result['message'] = $e->getMessage();
+            return response()->json($result, 200);
+        }
+    }
+
+    public function update_CitizenID()
+    {
+
+        try {
+            $personId = Input::get('pk');
+
+            $newValue = Input::get('value');
+
+            $personData = Persons::wherepersonId($personId)->first();
+            $personData->person_citizenID = $newValue;
+            if ($personData->save())
+                return response()->json(array('status' => "Complete"));
+            else
+                return response()->json(array('status' => 'Error'));
+        } catch (Exception $e) {
+            DB::rollback();
+            $result['status'] = "Error";
+            $result['message'] = $e->getMessage();
+            return response()->json($result, 200);
+        }
+    }
+
+
+    public function update_Gender()
+    {
+
+        try {
+            $personId = Input::get('pk');
+
+            $newValue = Input::get('value');
+
+            $personData = Persons::wherepersonId($personId)->first();
+            $personData->person_sex = $newValue;
+            if ($personData->save())
+                return response()->json(array('status' => "Complete"));
+            else
+                return response()->json(array('status' => 'Error'));
+        } catch (Exception $e) {
+            DB::rollback();
+            $result['status'] = "Error";
+            $result['message'] = $e->getMessage();
+            return response()->json($result, 200);
+        }
+    }
+
+
+    public function update_Landline()
+    {
+
+        try {
+            $personId = Input::get('pk');
+
+            $newValue = Input::get('value');
+
+            $personData = Persons::wherepersonId($personId)->first();
+            $personData->person_phone = $newValue;
+            if ($personData->save())
+                return response()->json(array('status' => "Complete"));
+            else
+                return response()->json(array('status' => 'Error'));
+        } catch (Exception $e) {
+            DB::rollback();
+            $result['status'] = "Error";
+            $result['message'] = $e->getMessage();
+            return response()->json($result, 200);
+        }
+    }
+
+
+    public function update_Mobile()
+    {
+
+        try {
+            $personId = Input::get('pk');
+
+            $newValue = Input::get('value');
+
+            $personData = Persons::wherepersonId($personId)->first();
+            $personData->person_mobile_phone = $newValue;
+            if ($personData->save())
+                return response()->json(array('status' => "Complete"));
+            else
+                return response()->json(array('status' => 'Error'));
+        } catch (Exception $e) {
+            DB::rollback();
+            $result['status'] = "Error";
+            $result['message'] = $e->getMessage();
+            return response()->json($result, 200);
+        }
+    }
+
+    public function update_Address()
+    {
+
+        try {
+            $personId = Input::get('pk');
+            $newValue = Input::get('value');
+
+            $personData = Persons::wherepersonId($personId)->first();
+            $personData->person_road = $newValue['street'];
+            $personData->person_soi = $newValue['soi'];
+            $personData->person_mooh_num = $newValue['mooh'];
+            $personData->person_house_num = $newValue['house_number'];
+            $personData->person_tumbon = $newValue['tumbon'];
+            $personData->person_amphur = $newValue['amphur'];
+            $personData->person_province = $newValue['province'];
+            $personData->person_post_code = $newValue['post_code'];
+
+            if ($personData->save())
+                return response()->json(array('status' => "Complete "));
+            else
+                return response()->json(array('status' => 'Error'));
+        } catch (Exception $e) {
+            DB::rollback();
+            $result['status'] = "Error";
+            $result['message'] = $e->getMessage();
+            return response()->json($result, 200);
+        }
+    }
 
 }

@@ -1,4 +1,5 @@
-﻿//#region class
+﻿
+//#region class
 function PersonDetailView() {
     this.first_name = "";
     this.last_name = "";
@@ -100,6 +101,7 @@ PersonDetailView.prototype.setDataInform = function (myVal) {
     $("input[value=" + myVal.person_alive + "]").attr('checked', true);
     $.uniform.update();
 };
+
 
 
 //#region enum

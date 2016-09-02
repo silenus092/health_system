@@ -50,6 +50,15 @@ var treeplugin;
         }
     };
 
+    function findByIdKey(idKey) {
+        var obj = settings.data.filter(function (o) {
+            if (o.id_key === idKey) {
+                return o;
+            }
+        });
+        return obj[0];
+    }
+
     $.fn.treeControl = function (options) {
         myTreeControl = this;
         treeplugin = this;
@@ -57,7 +66,7 @@ var treeplugin;
 
         return this.each(function () {
             // todo เทส
-            settings.mainReId = findByIdKey(settings.mainId).id; 
+            //settings.mainReId = findByIdKey(settings.mainId);
 
             var buttons = [];
             buttons.push(new primitives.orgdiagram.ButtonConfig("add", "ui-icon-plus", "เพิ่ม"));
@@ -88,7 +97,7 @@ var treeplugin;
                     myTreeStatus = enStatusUI.add;
                     $.blockUI({
 
-                        message: '<iframe src="~/../PersonDetailPage.html" height="280px" width="470px" scrolling="yes" frameborder="0" id="progressIframe" />',
+                        message: '<iframe src="http://www.cavaros.com/health_system/public/scripts/resources/PersonDetailPage.html" height="280px" width="470px" scrolling="yes" frameborder="0" id="progressIframe" />',
                         css: {
                             width: '500px' // ความกว้างขอบ iframe
                         },
@@ -103,7 +112,7 @@ var treeplugin;
                     myTreeStatus = enStatusUI.delete;
                     $.blockUI({
 
-                        message: '<iframe src="~/../PersonDeletePage.html" height="220px" width="500px" scrolling="yes" frameborder="0" id="progressIframe" />',
+                        message: '<iframe src="http://www.cavaros.com/health_system/public/scripts/resources/PersonDeletePage.html" height="220px" width="500px" scrolling="yes" frameborder="0" id="progressIframe" />',
                         css: {
                             width: '500px' // ความกว้างขอบ iframe
                         },
@@ -118,7 +127,7 @@ var treeplugin;
                     myTreeStatus = enStatusUI.edit;
                     $.blockUI({
 
-                        message: '<iframe src="~/../PersonEditPage.html" height="270px" width="470px" scrolling="yes" frameborder="0" id="progressIframe" />',
+                        message: '<iframe src="http://www.cavaros.com/health_system/public/scripts/resources/PersonEditPage.html" height="270px" width="470px" scrolling="yes" frameborder="0" id="progressIframe" />',
                         css: {
                             width: '500px' // ความกว้างขอบ iframe
                         },
@@ -274,8 +283,6 @@ var treeplugin;
         }
 
     };
-    ;
-    ;
 
     function reRender() {
         $.ajax({
@@ -323,10 +330,10 @@ var treeplugin;
             + '</div>'
             + '<div name="description" class="bp-item" style="top: 26px; left: 56px; width: 138px; height: 62px; font-size: 12px; overflow: hidden;"></div>'
             + '<div class="bp-item" style="top: 89px;left: 2px; width: 193px; height: 27px; overflow: hidden;text-align: right;">'
-            + '<img name="photoDead" style="height:30px; width:32px;" src="images/rip.png"/>'
+            + '<img name="photoDead" style="height:30px; width:32px;" src="http://www.cavaros.com/health_system/public/images/rip.png" />'
             + '</div>'
             + '<div name="divMainId" class="bp-item" style="top: 2px;left: 169px;width: 32px;height: 30px;">'
-            + '<img style="height:25px; width:26px;" src="images/star.png"/>'
+            + '<img style="height:25px; width:26px;" src="http://www.cavaros.com/health_system/public/images/star.png"/>'
             + '</div>'
             + '</div>'
         ).css({
@@ -353,10 +360,16 @@ var treeplugin;
         if (data.templateName == "contactTemplate") {
             if (itemConfig.image == null) {
                 if (itemConfig.sex == "male") {
-                    data.element.find("[name=photo]").attr({"src": "images/men.png", "alt": itemConfig.title});
+                    data.element.find("[name=photo]").attr({
+                        "src": "http://www.cavaros.com/health_system/public/images/men.png",
+                        "alt": itemConfig.title
+                    });
                 }
                 else {
-                    data.element.find("[name=photo]").attr({"src": "images/women.png", "alt": itemConfig.title});
+                    data.element.find("[name=photo]").attr({
+                        "src": "http://www.cavaros.com/health_system/public/images/women.png",
+                        "alt": itemConfig.title
+                    });
                 }
             }
             else {
@@ -387,7 +400,7 @@ var treeplugin;
     }
 
     function createMenuBtn() {
-        var menu = $('<div style="position:fixed;z-index:1000;">'
+        var menu = $('<div style="position:fixed;z-index:1000;top: 115px;">'
             + '<div>'
             + '<input id="btnReturn" type="button" value="ย้อนกลับ" style="width:120px; position:relative;" /></div>'
             + '<div id="divUndoDelelte" style="position:relative; left:150px;">'
@@ -402,7 +415,7 @@ var treeplugin;
 
     function callCheckUndoDelete() {
         $.ajax({
-            url: settings.url + '/check_undo_state',
+            url: "http://www.cavaros.com/health_system/public/check_undo_state",
             contentType: "application/x-www-form-urlencoded;charset=utf-8",
             cache: false,
             type: 'get',
@@ -431,14 +444,10 @@ var treeplugin;
     $.fn.cancelPersonDetail = function () {
         settings.onCancelPersonDetail();
     };
-    ;
-    ;
 
     $.fn.okPersonDetail = function (obj) {
         settings.onOkPersonDetail(obj);
     };
-    ;
-    ;
 
     function findSpouseId(id) {
         // return Null,id
@@ -511,14 +520,7 @@ var treeplugin;
         }
     }
 
-    function findByIdKey(idKey) {
-        var obj = settings.data.filter(function (o) {
-            if (o.id_key === idKey) {
-                return o;
-            }
-        });
-        return obj[0];
-    }
+
 
     function findById(id) {
         var obj = settings.data.filter(function (o) {
@@ -646,8 +648,6 @@ var treeplugin;
             return isExcept;
         }
     };
-    ;
-    ;
 
     $.fn.isExceptSpouseAdd = function (idTarget) {
         if (idTarget == null) {
@@ -663,8 +663,6 @@ var treeplugin;
             return isExcept;
         }
     };
-    ;
-    ;
 
     $.fn.isExceptRelativeAdd = function (idTarget) {
         if (idTarget == null) {
@@ -679,8 +677,6 @@ var treeplugin;
             return isExcept;
         }
     };
-    ;
-    ;
 
     $.fn.isExceptParentEdit = function (idTarget) {
         //todo หน้าจะกันกลุ่มแฟนด้วยที่ไม่มีโหนดหัว
@@ -697,8 +693,6 @@ var treeplugin;
             return isExcept;
         }
     };
-    ;
-    ;
 
     $.fn.isExceptSpouseEdit = function (idTarget) {
         if (idTarget == null) {
@@ -714,8 +708,6 @@ var treeplugin;
             return isExcept;
         }
     };
-    ;
-    ;
 
     $.fn.isExceptRelativeEdit = function (idTarget) {
         if (idTarget == null) {
@@ -730,26 +722,18 @@ var treeplugin;
             return isExcept;
         }
     };
-    ;
-    ;
 
     $.fn.getData = function () {
         return settings.data;
     };
-    ;
-    ;
 
     $.fn.getDataById = function (Id) {
         return findById(Id);
     };
-    ;
-    ;
 
     $.fn.getDataByRefId = function () {
         return findById(idRef);
     };
-    ;
-    ;
 
     $.fn.getDataSonByRefId = function () {
         var obj = settings.data.filter(function (o) {
@@ -773,8 +757,6 @@ var treeplugin;
             return sons;
         }
     };
-    ;
-    ;
 
     $.fn.getDataSonById = function (id) {
         var obj = settings.data.filter(function (o) {
@@ -798,14 +780,10 @@ var treeplugin;
             return sons;
         }
     };
-    ;
-    ;
 
     $.fn.getDataSpouseByRefId = function () {
         return findSpouseId(idRef);
     };
-    ;
-    ;
 
     $.fn.getDataParentById = function (id) {
         var my = findById(id);
@@ -820,8 +798,6 @@ var treeplugin;
             return parents;
         }
     };
-    ;
-    ;
 
     $.fn.getDataParentByRefId = function () {
         var my = findById(idRef);
@@ -836,32 +812,22 @@ var treeplugin;
             return parents;
         }
     };
-    ;
-    ;
 
     $.fn.getErrMsg = function () {
         return errMsg;
     };
-    ;
-    ;
 
     $.fn.setErrMsg = function (textErr) {
         return errMsg = textErr;
     };
-    ;
-    ;
 
     $.fn.getObjData = function () {
         return objData;
     };
-    ;
-    ;
 
     $.fn.setObjData = function (obj) {
         objData = obj;
     };
-    ;
-    ;
 
 
     //#region enum

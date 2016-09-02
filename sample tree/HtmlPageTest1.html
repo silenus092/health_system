@@ -58,13 +58,13 @@
             //});
 
             $.ajax({
-                url: 'http://www.cavaros.com/health_system/public/get_tree_api/66',
+                url: 'http://localhost/health_system/public/get_tree_api/66',
                 dataType: 'json',
                 type: 'GET',
                 success: function (data, textStatus, jQxhr) {
 
                     $("#basicdiagram").treeControl({
-                        url: 'http://www.cavaros.com/health_system/public',
+                        url: 'http://localhost/health_system/public',
                         mainId: "66",
                         data: data.person,
                         onCancelPersonDetail: function () {
@@ -190,7 +190,7 @@
     </style>
 </head>
 
-<body ">
+<body>
 
 <!--  <div style="position:fixed; ">
       <div>

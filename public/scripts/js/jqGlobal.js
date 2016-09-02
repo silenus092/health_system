@@ -4,7 +4,7 @@ $.fn.center = function () {
     this.css("top", ($(window).height() - this.height()) / 2 + $(window).scrollTop() + "px");
     this.css("left", ($(window).width() - this.width()) / 2 + $(window).scrollLeft() + "px");
     return this;
-};;;
+};
 // แปลงข้อความเป็น ทศนิยม ถ้าเป็นช่องว่างแปลงเป็น 0
 $.fn.parseTxtToFloat = function () {
     if (this.is("input")) {
@@ -29,7 +29,7 @@ $.fn.parseTxtToFloat = function () {
         }
 
     }
-};;;
+};
 // เมื่อกด enter จะ focus ไปตัวถัดไป
 $.fn.configKeyEnter = function (child) {
     var parent = $(this);
@@ -46,13 +46,13 @@ $.fn.configKeyEnter = function (child) {
             $(controls[index + 1]).focus();
         }
     })
-};;;
+};
 //กันกดคลิ๊ก
 $.fn.preventClick = function () {
     $(this).click(function (event) {
         event.stopImmediatePropagation();
     });
-};;;
+};
 //ยังใช้ไม่ได้
 $.fn.bindEnter = function (fn) {
     $(this).keyup(function () {
@@ -60,7 +60,7 @@ $.fn.bindEnter = function (fn) {
             $(this).bind("click", fn);
         }
     })
-};;;
+};
 
 function getDataMonth() {
     dataList = [];
@@ -103,21 +103,19 @@ function getDataMonth() {
         }
     }
     dataList.unshift({key: "none", value: "เดือนเกิด"});
-    ;
-    ;
     return dataList;
 }
 
 $.fn.dllYearThaiToAge = function () {
     var d = new Date();
     var currentYear = d.getFullYear() + 543;
-    var yearSelect = $(this).val();;;
+    var yearSelect = $(this).val();
     return currentYear - yearSelect;
-};;;
+};
 
 $.fn.dllAgeToYearThai = function () {
-    var yearSelect = $(this).val();;;
+    var yearSelect = $(this).val();
     var d = new Date();
     var currentYear = d.getFullYear() + 543;
     return currentYear - yearSelect;
-};;;
+};
