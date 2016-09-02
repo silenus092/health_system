@@ -644,7 +644,7 @@ foreach($Echocardiogram_noresult as $noresult): ?>
 						</thead>
 						<tbody>
 							<?php
-foreach($Ck_noresult as $noresult): ?>
+							foreach($Ck_noresult as $noresult): ?>
 							<tr>
 								<td><?php echo $noresult->person_id ?></td>
 								<td><?php echo $noresult->person_first_name. " " . $noresult->person_last_name ?></td>
@@ -680,18 +680,18 @@ foreach($Ck_noresult as $noresult): ?>
 					<table id="grid-basic-2" class="table table-condensed table-hover table-striped">
 						<thead>
 							<tr>
-								<th data-column-id="id_2" data-type="numeric">ID</th>
+
 								<th data-column-id="name_hospital">ชื่อโรงพยาบาล</th>
-								<th data-column-id="hospital_number">คน</th>
+								<th data-column-id="hospital_number">จำนวนคน</th>
 							</tr>
 						</thead>
 						<tbody>
 							<?php
-foreach($Ck_noresult as $noresult): ?>
+							foreach($hospital as $noresult): ?>
 							<tr>
-								<td><?php echo $noresult->person_id ?></td>
-								<td><?php echo $noresult->person_first_name. " " . $noresult->person_last_name ?></td>
-								<td><?php echo $noresult->person_sex ?></td>
+
+								<td><?php echo $noresult->hospital ?></td>
+								<td><?php echo $noresult->total ?></td>
 							</tr>
 							<?php endforeach; ?>
 						</tbody>

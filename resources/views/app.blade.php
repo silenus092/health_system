@@ -38,7 +38,9 @@
 	<script src="{{ URL::asset('/scripts/js/view.js') }}"></script>
 	<script src="{{ URL::asset('/scripts/js/json_parse.js') }}"></script>
 	<script src="{{ URL::asset('/scripts/js/jquery.uniform.min.js') }}"></script>
-
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
 
 	<script src="{{ URL::asset('/scripts/js/bootstrap-datetimepicker.min.js') }}"></script>
 	<script src="{{ URL::asset('/scripts/custom-loading.js') }}"></script>

@@ -2,6 +2,7 @@
 @extends('app')
 
 @section('content')
+
 <script type="text/javascript" CHARSET="UTF-8">
 	$(function(){
 
@@ -63,6 +64,45 @@
 	}
 
 	  checkCookie();
+
+
+		$('#container_PIE').highcharts({
+			chart: {
+				type: 'pie',
+				options3d: {
+					enabled: true,
+					alpha: 45
+				}
+			},
+			title: {
+				text: 'Contents of Highsoft\'s weekly fruit delivery'
+			},
+			subtitle: {
+				text: '3D donut in Highcharts'
+			},
+			plotOptions: {
+				pie: {
+					innerSize: 100,
+					depth: 45
+				}
+			},
+			series: [{
+				name: 'Delivered amount',
+				data: [
+					['Bananas', 8],
+					['Kiwi', 3],
+					['Mixed nuts', 1],
+					['Oranges', 6],
+					['Apples', 8],
+					['Pears', 4],
+					['Clementines', 4],
+					['Reddish (bag)', 1],
+					['Grapes (bunch)', 1]
+				]
+			}]
+		});
+
+
 	});
 	var datas = "" ;
 	$(document).ready(function() {
@@ -150,6 +190,21 @@
 				</div>
 			</div>
 		</div>
+		<div class="col-md-10 col-md-offset-1">
+			<div class="panel panel-default">
+				<div class="panel-heading">Panel Heading</div>
+				<div class="panel-body">
+					<div id="container_PIE" style="height: 400px">
+
+
+					</div>
+
+				</div>
+			</div>
+		</div>
 	</div>
+
+
 </div>
+
 @endsection

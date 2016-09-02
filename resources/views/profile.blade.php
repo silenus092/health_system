@@ -112,7 +112,7 @@
         $('#myModalEDIT').modal('hide');
         $.fn.editable.defaults.mode = 'popup';
 
-        $('#age').editable({
+		$('#date_birth').editable({
             type: 'text',
             pk: person_id,
             url: '{{URL::to("/")}}/update_age',
@@ -339,9 +339,15 @@
 						<div class=" col-md-9 col-lg-9 ">
 							<table class="table table-user-information">
 								<tbody>
+								<tr>
+									<td>Birthday:</td>
+									<td><a href="#" id="date_birth" data-type="datetime" title="Select date & time">15/03/2013
+											12:45</a>
+									<td>
+								</tr>
 									<tr>
 										<td>Age:</td>
-                                        <td><a href="#" id="age">{{ $person->person_age}}</a></td>
+										<td><a href="#" id="age">{{ $person->person_age}}</a></td>
 									</tr>
 									<tr>
 										<td>Citizen ID:</td>

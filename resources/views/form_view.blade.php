@@ -61,39 +61,50 @@
 		});
 
 		$('#datetimepicker1').datetimepicker({
-			onSelect: function (value, ui) {
-				var today = new Date(),
-						dob = new Date(value),
-						age = new Date(today - dob).getFullYear() - 1970;
-				alert(age);
-				$('#age').text(age);
-			},
 			format: "yyyy-mm-dd",
 			showMeridian: true,
 			minView: 2,
 			autoclose: true,
 			todayBtn: true,
+
+			endDate: $.datepicker.formatDate('yy-mm-dd', new Date()),
+		}).on('changeDate', function (ev) {
+
+			var currentDate = new Date();
+			var selectedDate = new Date(ev.date);
+			var age = currentDate.getFullYear() - selectedDate.getFullYear();
+
+			var m = currentDate.getMonth() - selectedDate.getMonth();
+			if (m < 0 || (m === 0 && currentDate.getDate() < selectedDate.getDate())) {
+				age--;
+			}
+
+			$('#age').val(age);
 		});
+
 		$('#datetimepicker2').datetimepicker({
 			format: "yyyy-mm-dd",
 			showMeridian: true,
 			minView: 2,
 			autoclose: true,
-			todayBtn: true
+			todayBtn: true,
+			endDate: $.datepicker.formatDate('yy-mm-dd', new Date()),
 		});
 		$('#datetimepicker3').datetimepicker({
 			format: "yyyy-mm-dd",
 			showMeridian: true,
 			minView: 2,
 			autoclose: true,
-			todayBtn: true
+			todayBtn: true,
+			endDate: $.datepicker.formatDate('yy-mm-dd', new Date()),
 		});
 		$('#datetimepicker4').datetimepicker({
 			format: "yyyy-mm-dd",
 			showMeridian: true,
 			minView: 2,
 			autoclose: true,
-			todayBtn: true
+			todayBtn: true,
+			endDate: $.datepicker.formatDate('yy-mm-dd', new Date()),
 		});
 
 		$('#add_more').click(function() {
@@ -217,7 +228,7 @@
 					<div class="form-group">
 						<label class="col-md-4 control-label">วันเดือนปีเกิด</label>
 						<div class='col-md-6 input-group date' id='datetimepicker1'>
-							<input type='text' name="birth_date" class="form-control" />
+							<input type='text' name="birth_date" class="form-control" disabled/>
 							<span class="input-group-addon">
 								<span class="glyphicon glyphicon-calendar"></span>
 							</span>
@@ -620,7 +631,7 @@
 			<div class="form-group">
 				<label class="col-md-4 control-label">วัน-เดือน-ปี ที่บันทึกข้อมูลโดยแพทย์เจ้าของไข้</label>
 				<div class='col-md-6 input-group date' id='datetimepicker4'>
-					<input type='text' name="doctor_care_date" class="form-control" />
+					<input type='text' name="doctor_care_date" class="form-control" disabled/>
 					<span class="input-group-addon">
 						<span class="glyphicon glyphicon-calendar"></span>
 					</span>
