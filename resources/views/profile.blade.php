@@ -113,11 +113,13 @@
         $.fn.editable.defaults.mode = 'popup';
 
 		$('#date_birth').editable({
-            type: 'text',
+			type: 'datetime',
             pk: person_id,
             url: '{{URL::to("/")}}/update_age',
             title: 'Enter age',
-            disabled: 'true'
+			disabled: 'true',
+			format: 'yyyy-mm-dd',
+			viewformat: 'yyyy-mm-dd',
         });
         $('#sex').editable({
             type: 'select',
@@ -254,8 +256,7 @@
 
         $('#myModalEDIT_button').click(function (e) {
             e.preventDefault();
-
-            $('#age').editable('toggleDisabled');
+			$('#date_birth').editable('toggleDisabled');
             $('#sex').editable('toggleDisabled');
             $('#citizenID').editable('toggleDisabled');
             $('#mobile_phone').editable('toggleDisabled');
@@ -341,13 +342,15 @@
 								<tbody>
 								<tr>
 									<td>Birthday:</td>
-									<td><a href="#" id="date_birth" data-type="datetime" title="Select date & time">15/03/2013
+									<td><a href="#" id="date_birth" title="Select date & time">15/03/2013
 											12:45</a>
 									<td>
 								</tr>
 									<tr>
 										<td>Age:</td>
-										<td><a href="#" id="age">{{ $person->person_age}}</a></td>
+										<td>
+											<div id="age">{{ $person->person_age}}</div>
+										</td>
 									</tr>
 									<tr>
 										<td>Citizen ID:</td>
