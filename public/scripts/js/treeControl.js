@@ -376,7 +376,7 @@ var treeplugin;
                 data.element.find("[name=photo]").attr({"src": itemConfig.image, "alt": itemConfig.title});
             }
             data.element.find("[name=titleBackground]").css({"background": itemConfig.itemTitleColor});
-            if (itemConfig.id !== settings.mainReId) {
+            if (itemConfig.id != settings.mainReId) {
                 data.element.find("[name=divMainId]").css("visibility", "hidden");
             }
 

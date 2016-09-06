@@ -20,11 +20,11 @@ class TreeController extends Controller
 
     public function __construct()
     {
-        // CSRF Protection
-
+        $this->middleware('auth');
     }
 
-	/**
+
+    /**
      * Initializer.
      *
      * @return void
@@ -66,7 +66,7 @@ class TreeController extends Controller
 			// Let's fill personal information to id array list.
             $result = $this->adjustArrayForTree($result, 10);
             //$result = $this->remove_NonRelevance($result, $id);
-            //$result = $this->sortTree($result);
+            $result = $this->sortTree($result);
             return response()->json($result, 200);
         } catch (Exception $e) {
             $result['status'] = "Error";

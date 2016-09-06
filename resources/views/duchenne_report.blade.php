@@ -89,14 +89,29 @@
 		letter-spacing: -0.8px;
 	}
 
+    #myModal_Echocardiogram {
+        z-index: 1500;
+    }
 
+    #myModal_CK {
+        z-index: 1500;
+    }
 </style>
 
 <script type="text/javascript">
 	var datas = "" ;
 
 	$(document).ready(function() {
+        $('#myModal_Echocardiogram').modal('hide');
+        $('#myModal_CK').modal('hide');
+        $('#popup_ck_no_result').click(function () {
 
+            $('#myModal_CK').modal('show');
+        });
+        $('#popup_Echocardiogram_no_result').click(function () {
+
+            $('#myModal_Echocardiogram').modal('show');
+        });
 
 		$('#search_patient-query').typeahead({
 			order: "desc",
@@ -490,15 +505,17 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-xs-6 col-md-3">
-							<div class="panel status panel-danger">
-								<div class="panel-heading">
-									<h1 class="panel-title text-center"><?php echo $UnEchocardiogram[0]->un_test; ?></h1>
+                        <div id="popup_Echocardiogram_no_result" class="col-xs-6 col-md-3">
+                            <div onmouseover="this.style.background='gray';" onmouseout="this.style.background='white'"
+                                 style="cursor: pointer;" class="panel status panel-danger">
+                                <div class="panel-heading">
+                                    <h1 class="panel-title text-center"><?php echo $UnEchocardiogram[0]->un_test; ?></h1>
+                                </div>
+                                <div class="panel-body text-center">
+                                    <strong>จำนวนคนที่ไม่ได้ตรวจ</strong>
+                                </div>
 								</div>
-								<div class="panel-body text-center">
-									<strong>จำนวนคนที่ไม่ได้ตรวจ</strong>
-								</div>
-							</div>
+
 						</div>
 					</div>
 					<div class="row" >
@@ -543,26 +560,7 @@
 							</div>
 						</div>
 					</div>
-					<h4 style="margin-top: 0;">คนที่ไม่มีผลตรวจ</h4>
-					<table id="grid-basic" class="table table-condensed table-hover table-striped">
-						<thead>
-							<tr>
-								<th data-column-id="id" data-type="numeric">ID</th>
-								<th data-column-id="name">ชื่อ นามสกุล</th>
-								<th data-column-id="sex">เพศ</th>
-							</tr>
-						</thead>
-						<tbody>
-							<?php
-foreach($Echocardiogram_noresult as $noresult): ?>
-							<tr>
-								<td><?php echo $noresult->person_id ?></td>
-								<td><?php echo $noresult->person_first_name. " " . $noresult->person_last_name ?></td>
-								<td><?php echo $noresult->person_sex ?></td>
-							</tr>
-							<?php endforeach; ?>
-						</tbody>
-					</table>
+
 
 					<hr class="separator">
 
@@ -578,8 +576,9 @@ foreach($Echocardiogram_noresult as $noresult): ?>
 								</div>
 							</div>
 						</div>
-						<div class="col-xs-6 col-md-3">
-							<div class="panel status panel-danger">
+                        <div id="popup_ck_no_result" class="col-xs-6 col-md-3">
+                            <div onmouseover="this.style.background='gray';" onmouseout="this.style.background='white'"
+                                 style="cursor: pointer;" class="panel status panel-danger">
 								<div class="panel-heading">
 									<h1 class="panel-title text-center"><?php echo $UnCk[0]->un_test; ?></h1>
 								</div>
@@ -633,32 +632,13 @@ foreach($Echocardiogram_noresult as $noresult): ?>
 						</div>
 
 					</div>
-					<h4 style="margin-top: 0;">คนที่ไม่มีผลตรวจ</h4>
-					<table id="grid-basic-1" class="table table-condensed table-hover table-striped">
-						<thead>
-							<tr>
-								<th data-column-id="id_1" data-type="numeric">ID</th>
-								<th data-column-id="name_1">ชื่อ นามสกุล</th>
-								<th data-column-id="sex_1">เพศ</th>
-							</tr>
-						</thead>
-						<tbody>
-							<?php
-							foreach($Ck_noresult as $noresult): ?>
-							<tr>
-								<td><?php echo $noresult->person_id ?></td>
-								<td><?php echo $noresult->person_first_name. " " . $noresult->person_last_name ?></td>
-								<td><?php echo $noresult->person_sex ?></td>
-							</tr>
-							<?php endforeach; ?>
-						</tbody>
-					</table>
-				</div>
+
+                </div>
 				<!-- ByPerson section -->
 				<div class="bhoechie-tab-content">
 					<center><h3 style="margin-top: 0;">ค้นหารายชื่อผู้ป่วยโรค Duchenne </h3></center>
 					<form action="{{ url('/show_person')}}" method="post">
-						<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
 						<div class="typeahead-container">
 							<div class="typeahead-field">
 								<span class="typeahead-query">
@@ -701,4 +681,112 @@ foreach($Echocardiogram_noresult as $noresult): ?>
 			</div>
 		</div>
 	</div>
+
+
+    <!-- Echocardiogram Modal -->
+    <div class="modal fade" id="myModal_Echocardiogram" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        คนที่ไม่มีผลตรวจ Echocardiogram
+                    </h4>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body">
+
+                    <table id="grid-basic" class="table table-condensed table-hover table-striped">
+                        <thead>
+                        <tr>
+                            <th data-column-id="id" data-type="numeric">ID</th>
+                            <th data-column-id="name">ชื่อ นามสกุล</th>
+                            <th data-column-id="sex">เพศ</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+                        foreach($Echocardiogram_noresult as $noresult): ?>
+                        <tr>
+                            <td><?php echo $noresult->person_id ?></td>
+                            <td><?php echo $noresult->person_first_name . " " . $noresult->person_last_name ?></td>
+                            <td><?php echo $noresult->person_sex ?></td>
+                        </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+
+
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Echocardiogram Modal -->
+    <div class="modal fade" id="myModal_CK" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        คนที่ไม่มีผลตรวจ Creatinine Kinase
+                    </h4>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body">
+
+
+                    <table id="grid-basic-1" class="table table-condensed table-hover table-striped">
+                        <thead>
+                        <tr>
+                            <th data-column-id="id_1" data-type="numeric">ID</th>
+                            <th data-column-id="name_1">ชื่อ นามสกุล</th>
+                            <th data-column-id="sex_1">เพศ</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+                        foreach($Ck_noresult as $noresult): ?>
+                        <tr>
+                            <td><?php echo $noresult->person_id ?></td>
+                            <td><?php echo $noresult->person_first_name . " " . $noresult->person_last_name ?></td>
+                            <td><?php echo $noresult->person_sex ?></td>
+                        </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+
+
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
 	@endsection
