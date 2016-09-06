@@ -6,7 +6,13 @@ use Input;
 
 class PersonController extends Controller {
 
-	/**
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
 	 * Display a listing of the resource.
 	 *
 	 * @return Response
@@ -166,20 +172,21 @@ class PersonController extends Controller {
 	}
 	
 	public function show_report_by_type($report_id = null , $person_id = null){
-
+        // list all medical care
         $result = DB::select('SELECT disease_types.disease_type_id ,disease_type_name_th 								,disease_type_name_en
 				FROM  disease_forms ,patients_disease_forms ,disease_types ,patients
 				WHERE patients_disease_forms.question_id  = disease_forms.question_id
                 AND disease_types.disease_type_id = disease_forms.disease_type_id
 				AND patients_disease_forms.patient_id =  patients.patient_id
 				AND patients.person_id = '. $person_id);
+        // list person profile
         $person = DB::table('persons')
             ->where('person_id', '=', $person_id)
             ->first();
 
-        if ($report_id != null && $person_id != null) { // Fuck Duchenne
+        if ($report_id != null && $person_id != null) { // For  DMD
 
-
+            // get report form of DMD
 				$result_callback =  DB::select('SELECT disease_1.*
 				FROM  disease_forms ,patients_disease_forms ,disease_1 ,patients
 				WHERE patients_disease_forms.question_id  = disease_forms.question_id
@@ -297,7 +304,20 @@ class PersonController extends Controller {
             $personId = Input::get('pk');
             $newValue = Input::get('value');
             $personData = Persons::wherepersonId($personId)->first();
-            $personData->person_age = $newValue;
+            $personData->person_birth_date = $newValue;
+
+            list($year, $month, $day) = explode("-", $newValue);
+            $year_diff = date("Y") - $year;
+            $month_diff = date("m") - $month;
+            $day_diff = date("d") - $day;
+            if ($day_diff < 0 && $month_diff == 0) {
+                $year_diff--;
+            }
+            if ($day_diff < 0 && $month_diff < 0) {
+                $year_diff--;
+            }
+            $personData->person_age = $year_diff;
+
             if ($personData->save())
                 return response()->json(array('status' => "Complete"));
             else

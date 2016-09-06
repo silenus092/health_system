@@ -2585,7 +2585,7 @@
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/hakanersu/amaran-laravel/zipball/48c61e6e5cb90617fef8502c32b3c98d719049d5",
+          "url": "https://api.github.com/repos/hakanersu/amaran-laravel/zipball/320ed94c0a607e7ebed97edf874b4130ce1f9d4a",
             "reference": "48c61e6e5cb90617fef8502c32b3c98d719049d5",
             "shasum": ""
         },
@@ -2701,56 +2701,6 @@
         ],
         "description": "DOMPDF is a CSS 2.1 compliant HTML to PDF converter",
         "homepage": "https://github.com/dompdf/dompdf"
-    },
-    {
-        "name": "barryvdh/laravel-dompdf",
-        "version": "v0.6.0",
-        "version_normalized": "0.6.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/barryvdh/laravel-dompdf.git",
-            "reference": "6acded2b805cd1818dd31e47f971eedf51e15c30"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/barryvdh/laravel-dompdf/zipball/6acded2b805cd1818dd31e47f971eedf51e15c30",
-            "reference": "6acded2b805cd1818dd31e47f971eedf51e15c30",
-            "shasum": ""
-        },
-        "require": {
-            "dompdf/dompdf": "0.6.*",
-            "illuminate/support": "5.0.x|5.1.x",
-            "php": ">=5.4.0"
-        },
-        "time": "2015-06-11 12:54:07",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "0.6-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Barryvdh\\DomPDF\\": "src"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Barry vd. Heuvel",
-                "email": "barryvdh@gmail.com"
-            }
-        ],
-        "description": "A DOMPDF Wrapper for Laravel",
-        "keywords": [
-            "dompdf",
-            "laravel",
-            "pdf"
-        ]
     },
     {
         "name": "sebastian/recursion-context",
@@ -3129,60 +3079,6 @@
         ]
     },
     {
-        "name": "barryvdh/laravel-snappy",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/barryvdh/laravel-snappy.git",
-            "reference": "34c4419a34dac528aed022295bac5f8fe6b12e13"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/barryvdh/laravel-snappy/zipball/3484477aafcdbe46394619bda28d4c6bae131859",
-            "reference": "34c4419a34dac528aed022295bac5f8fe6b12e13",
-            "shasum": ""
-        },
-        "require": {
-            "illuminate/filesystem": "5.0.x|5.1.x",
-            "illuminate/support": "5.0.x|5.1.x",
-            "knplabs/knp-snappy": "*",
-            "php": ">=5.4.0"
-        },
-        "time": "2015-06-04 13:43:34",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "0.2-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Barryvdh\\Snappy\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Barry vd. Heuvel",
-                "email": "barryvdh@gmail.com"
-            }
-        ],
-        "description": "Snappy PDF/Image for Laravel 4",
-        "keywords": [
-            "image",
-            "laravel",
-            "pdf",
-            "snappy",
-            "wkhtmltoimage",
-            "wkhtmltopdf"
-        ]
-    },
-    {
         "name": "mpdf/mpdf",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
@@ -3193,7 +3089,7 @@
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/mpdf/mpdf/zipball/9f2d761e7ac1d89a6752a18036a597fa9ce2d8c7",
+          "url": "https://api.github.com/repos/mpdf/mpdf/zipball/da078bc2669d3f98553ac41f920ead4c17c951ad",
             "reference": "9f2d761e7ac1d89a6752a18036a597fa9ce2d8c7",
             "shasum": ""
         },
@@ -3242,7 +3138,7 @@
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/php-fig/http-message/zipball/85d63699f0dbedb190bbd4b0d2b9dc707ea4c298",
+          "url": "https://api.github.com/repos/php-fig/http-message/zipball/f6561bf28d520154e4b0ec72be95418abe6d9363",
             "reference": "85d63699f0dbedb190bbd4b0d2b9dc707ea4c298",
             "shasum": ""
         },
@@ -3353,7 +3249,7 @@
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/Intervention/image/zipball/6886d43f5babe6900c29c59640ca81401fe71c80",
+          "url": "https://api.github.com/repos/Intervention/image/zipball/4064a980324f6c3bfa2bd981dfb247afa705ec3c",
             "reference": "6886d43f5babe6900c29c59640ca81401fe71c80",
             "shasum": ""
         },
