@@ -478,17 +478,20 @@
 					<div class="form-group">
 						<label class="col-md-6 text-left">1.1 เดินเขย่ง หลังแอ่น เดินขาปัด ล้มบ่อย </label>
 						<div class="btn-group" data-toggle="buttons">
-							<label class="btn btn-primary">
+							<label class="btn btn-primary <?php echo ($result_callback[0]->symptom_1_1 == "ไม่เป็น") ? 'active' : '' ?>">
 								<input type="radio" name="1_1_symptom" id="1_1_symptom" value="ไม่เป็น"
-									   autocomplete="off" checked> ไม่เป็น
+									   autocomplete="off" <?php echo ($result_callback[0]->symptom_1_1 == "ไม่เป็น") ? 'checked' : '' ?> >
+								ไม่เป็น
 							</label>
-							<label class="btn btn-primary">
-								<input type="radio" name="1_1_symptom" id="1_2_symptom" value="เป็น" autocomplete="off">
+							<label class="btn btn-primary <?php echo ($result_callback[0]->symptom_1_1 == "เป็น") ? 'active' : '' ?>">
+								<input type="radio" name="1_1_symptom" id="1_2_symptom" value="เป็น"
+									   autocomplete="off" <?php echo ($result_callback[0]->symptom_1_1 == "เป็น") ? 'checked' : '' ?> >
 								เป็น
 							</label>
-							<label class="btn btn-primary">
+							<label class="btn btn-primary <?php echo ($result_callback[0]->symptom_1_1 == "ไม่ได้สังเกต") ? 'active' : '' ?>">
 								<input type="radio" name="1_1_symptom" id="1_3_symptom" value="ไม่ได้สังเกต"
-									   autocomplete="off"> ไม่ได้สังเกต
+									   autocomplete="off" <?php echo ($result_callback[0]->symptom_1_1 == "ไม่ได้สังเกต") ? 'checked' : '' ?> >
+								ไม่ได้สังเกต
 							</label>
 						</div>
 					</div>
@@ -496,48 +499,56 @@
 						<label class="col-md-6 text-left">1.2 ลุกขึ้นยืนลำบากต้องเหนี่ยวจับหรือเกาะขึ้นยืน
 							(ท่าโกเวอร์)</label>
 						<div class="btn-group" data-toggle="buttons">
-							<label class="btn btn-primary active">
+							<label class="btn btn-primary <?php echo ($result_callback[0]->symptom_1_2 == "ไม่เป็น") ? 'active' : '' ?>">
 								<input type="radio" name="1_2_symptom" id="1_4_symptom" value="ไม่เป็น"
-									   autocomplete="off" checked> ไม่เป็น
+									   autocomplete="off" <?php echo ($result_callback[0]->symptom_1_2 == "ไม่เป็น") ? 'checked' : '' ?>>
+								ไม่เป็น
 							</label>
-							<label class="btn btn-primary">
-								<input type="radio" name="1_2_symptom" id="1_5_symptom" value="เป็น" autocomplete="off">
+							<label class="btn btn-primary <?php echo ($result_callback[0]->symptom_1_2 == "เป็น") ? 'active' : '' ?> ">
+								<input type="radio" name="1_2_symptom" id="1_5_symptom" value="เป็น"
+									   autocomplete="off" <?php echo ($result_callback[0]->symptom_1_2 == "เป็น") ? 'checked' : '' ?>>
 								เป็น
 							</label>
-							<label class="btn btn-primary">
+							<label class="btn btn-primary <?php echo ($result_callback[0]->symptom_1_2 == "ไม่ได้สังเกต") ? 'active' : '' ?> ">
 								<input type="radio" name="1_2_symptom" id="1_6_symptom" value="ไม่ได้สังเกต"
-									   autocomplete="off"> ไม่ได้สังเกต
+									   autocomplete="off" <?php echo ($result_callback[0]->symptom_1_2 == "ไม่ได้สังเกต") ? 'checked' : '' ?>>
+								ไม่ได้สังเกต
 							</label>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-6 text-left">1.3 เดินไม่ได้แล้ว</label>
 						<div class="btn-group" data-toggle="buttons">
-							<label class="btn btn-primary active">
+							<label class="btn btn-primary  <?php echo ($result_callback[0]->symptom_1_3 == "ไม่เป็น") ? 'active' : '' ?>">
 								<input type="radio" name="1_3_symptom" id="1_7_symptom" value="ไม่เป็น"
-									   autocomplete="off" checked> ไม่เป็น
+									   autocomplete="off" <?php echo ($result_callback[0]->symptom_1_3 == "ไม่เป็น") ? 'checked' : '' ?>>
+								ไม่เป็น
 							</label>
-							<label class="btn btn-primary">
-								<input type="radio" name="1_3_symptom" id="1_8_symptom" value="เป็น" autocomplete="off">
+							<label class="btn btn-primary  <?php echo ($result_callback[0]->symptom_1_3 == "เป็น") ? 'active' : '' ?> ">
+								<input type="radio" name="1_3_symptom" id="1_8_symptom" value="เป็น"
+									   autocomplete="off" <?php echo ($result_callback[0]->symptom_1_3 == "เป็น") ? 'checked' : '' ?>>
 								เป็น
 							</label>
-							<label class="btn btn-primary">
+							<label class="btn btn-primary <?php echo ($result_callback[0]->symptom_1_3 == "ไม่ได้สังเกต") ? 'active' : '' ?> ">
 								<input type="radio" name="1_3_symptom" id="1_9_symptom" value="ไม่ได้สังเกต"
-									   autocomplete="off"> ไม่ได้สังเกต
+									   autocomplete="off" <?php echo ($result_callback[0]->symptom_1_3 == "ไม่ได้สังเกต") ? 'checked' : '' ?> >
+								ไม่ได้สังเกต
 							</label>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-6 text-left">2. ครั้งแรกที่เริ่มมีปัญหาการเดินหรือการลุกยืน อายุ</label>
 						<div class="col-md-2">
-							<input type="text" class="form-control" name="2_symptom_age" placeholder="ปี">
+							<input type="text" class="form-control" name="2_symptom_age" placeholder="ปี"
+								   value="<?php echo $result_callback[0]->symptom_2 ?>">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-6 text-left">3. ครั้งแรกที่เริ่มพาไปตรวจเรื่องปัญหาการเดินหรือการลุกยืน
 							อายุ </label>
 						<div class="col-md-2">
-							<input type="text" class="form-control" name="3_symptom_age" placeholder="ปี">
+							<input type="text" class="form-control" name="3_symptom_age" placeholder="ปี"
+								   value="<?php echo $result_callback[0]->symptom_3 ?>">
 						</div>
 					</div>
 					<div class="form-group">
@@ -546,12 +557,14 @@
 					<div class="form-group">
 						<label class="col-md-6 text-left">4.1 สมาธิสั้น</label>
 						<div class="btn-group" data-toggle="buttons">
-							<label class="btn btn-primary active">
+							<label class="btn btn-primary <?php echo ($result_callback[0]->symptom_4_1 == "ไม่เป็น") ? 'active' : '' ?> ">
 								<input type="radio" name="4_1_symptom" id="4_1_symptom" value="ไม่เป็น"
-									   autocomplete="off" checked> ไม่เป็น
+									   autocomplete="off" <?php echo ($result_callback[0]->symptom_4_1 == "ไม่เป็น") ? 'checked' : '' ?>>
+								ไม่เป็น
 							</label>
-							<label class="btn btn-primary">
-								<input type="radio" name="4_1_symptom" id="4_2_symptom" value="เป็น" autocomplete="off">
+							<label class="btn btn-primary <?php echo ($result_callback[0]->symptom_4_1 == "เป็น") ? 'active' : '' ?> ">
+								<input type="radio" name="4_1_symptom" id="4_2_symptom" value="เป็น"
+									   autocomplete="off" <?php echo ($result_callback[0]->symptom_4_1 == "เป็น") ? 'checked' : '' ?> >
 								เป็น
 							</label>
 						</div>
@@ -559,12 +572,14 @@
 					<div class="form-group">
 						<label class="col-md-6 text-left">4.2 ลักษณะคล้ายออทิสติก</label>
 						<div class="btn-group" data-toggle="buttons">
-							<label class="btn btn-primary active">
+							<label class="btn btn-primary <?php echo ($result_callback[0]->symptom_4_2 == "ไม่เป็น") ? 'active' : '' ?>">
 								<input type="radio" name="4_2_symptom" id="4_3_symptom" value="ไม่เป็น"
-									   autocomplete="off" checked> ไม่เป็น
+									   autocomplete="off" <?php echo ($result_callback[0]->symptom_4_2 == "ไม่เป็น") ? 'checked' : '' ?>>
+								ไม่เป็น
 							</label>
-							<label class="btn btn-primary">
-								<input type="radio" name="4_2_symptom" id="4_4_symptom" value="เป็น" autocomplete="off">
+							<label class="btn btn-primary <?php echo ($result_callback[0]->symptom_4_2 == "เป็น") ? 'active' : '' ?>">
+								<input type="radio" name="4_2_symptom" id="4_4_symptom" value="เป็น"
+									   autocomplete="off" <?php echo ($result_callback[0]->symptom_4_2 == "เป็น") ? 'checked' : '' ?>>
 								เป็น
 							</label>
 						</div>
@@ -572,12 +587,14 @@
 					<div class="form-group">
 						<label class="col-md-6 text-left">4.3 นอนกรน</label>
 						<div class="btn-group" data-toggle="buttons">
-							<label class="btn btn-primary active">
+							<label class="btn btn-primary <?php echo ($result_callback[0]->symptom_4_3 == "ไม่เป็น") ? 'active' : '' ?>">
 								<input type="radio" name="4_3_symptom" id="4_5_symptom" value="ไม่เป็น"
-									   autocomplete="off" checked> ไม่เป็น
+									   autocomplete="off" <?php echo ($result_callback[0]->symptom_4_3 == "ไม่เป็น") ? 'checked' : '' ?>>
+								ไม่เป็น
 							</label>
-							<label class="btn btn-primary">
-								<input type="radio" name="4_3_symptom" id="4_6_symptom" value="เป็น" autocomplete="off">
+							<label class="btn btn-primary <?php echo ($result_callback[0]->symptom_4_3 == "เป็น") ? 'active' : '' ?>">
+								<input type="radio" name="4_3_symptom" id="4_6_symptom" value="เป็น"
+									   autocomplete="off" <?php echo ($result_callback[0]->symptom_4_3 == "เป็น") ? 'checked' : '' ?>>
 								เป็น
 							</label>
 						</div>
@@ -586,17 +603,20 @@
 						<label class="col-md-6 text-left">4.4 เหนื่องง่าย หรือนอนราบไม่ได้ (ต้องใช้หมอนมากกว่า 1
 							ใบ)</label>
 						<div class="btn-group" data-toggle="buttons">
-							<label class="btn btn-primary active">
+							<label class="btn btn-primary <?php echo ($result_callback[0]->symptom_4_4 == "ไม่เป็น") ? 'active' : '' ?>">
 								<input type="radio" name="4_4_symptom" id="4_7_symptom" value="ไม่เป็น"
-									   autocomplete="off" checked> ไม่เป็น
+									   autocomplete="off" <?php echo ($result_callback[0]->symptom_4_4 == "ไม่เป็น") ? 'checked' : '' ?>>
+								ไม่เป็น
 							</label>
-							<label class="btn btn-primary">
-								<input type="radio" name="4_4_symptom" id="4_8_symptom" value="เป็น" autocomplete="off">
+							<label class="btn btn-primary <?php echo ($result_callback[0]->symptom_4_4 == "เป็น") ? 'active' : '' ?>">
+								<input type="radio" name="4_4_symptom" id="4_8_symptom" value="เป็น"
+									   autocomplete="off" <?php echo ($result_callback[0]->symptom_4_4 == "เป็น") ? 'checked' : '' ?>>
 								เป็น
 							</label>
-							<label class="btn btn-primary">
+							<label class="btn btn-primary <?php echo ($result_callback[0]->symptom_4_4 == "ไม่ได้สังเกต") ? 'active' : '' ?>">
 								<input type="radio" name="4_4_symptom" id="4_9_symptom" value="ไม่ได้สังเกต"
-									   autocomplete="off"> ไม่ได้สังเกต
+									   autocomplete="off" <?php echo ($result_callback[0]->symptom_4_4 == "ไม่ได้สังเกต") ? 'checked' : '' ?> >
+								ไม่ได้สังเกต
 							</label>
 						</div>
 					</div>
@@ -604,12 +624,14 @@
 						<label class="col-md-6 text-left">5. มีผลตรวจระดับเอนไซม์กล้ามเนื้อ (ซีเค creatinine kinase)
 							หรือไม่</label>
 						<div class="btn-group" data-toggle="buttons">
-							<label class="btn btn-primary active">
+							<label class="btn btn-primary <?php echo ($result_callback[0]->symptom_5 == "ไม่มี") ? 'active' : '' ?>">
 								<input type="radio" name="5_symptom" id="5_1_symptom" value="ไม่มี" autocomplete="off"
-									   checked> ไม่มี
+								<?php echo ($result_callback[0]->symptom_5 == "ไม่มี") ? 'checked' : '' ?> > ไม่มี
 							</label>
-							<label class="btn btn-primary">
-								<input type="radio" name="5_symptom" id="5_2_symptom" value="มี" autocomplete="off"> มี
+							<label class="btn btn-primary <?php echo ($result_callback[0]->symptom_5 == "มี") ? 'active' : '' ?>">
+								<input type="radio" name="5_symptom" id="5_2_symptom" value="มี"
+									   autocomplete="off" <?php echo ($result_callback[0]->symptom_5 == "มี") ? 'checked' : '' ?>>
+								มี
 							</label>
 						</div>
 						<p>
@@ -617,12 +639,14 @@
 							<label class="col-md-1 ">ผล</label>
 							<div class="col-md-4">
 								<input type="text" class="form-control" id="5_2_symptom_add_on_result"
-									   name="5_2_symptom_add_on_result" disabled="true">
+									   name="5_2_symptom_add_on_result"
+									   value="<?php echo $result_callback[0]->symptom_5_result ?>" disabled="true">
 							</div>
 							<label class="col-md-2">ครั้งแรก เมื่อ วัน-เดือน-ปี</label>
 							<div class='col-md-2 input-group date' id='datetimepicker2'>
 								<input type='text' id="5_2_symptom_add_on_result_date"
-									   name="5_2_symptom_add_on_result_date" class="form-control" disabled="true"/>
+									   name="5_2_symptom_add_on_result_date" class="form-control"
+									   value="<?php echo $result_callback[0]->symptom_5_date ?>" disabled="true"/>
 								<span class="input-group-addon">
 									<span class="glyphicon glyphicon-calendar"></span>
 								</span>
@@ -633,12 +657,14 @@
 					<div class="form-group">
 						<label class="col-md-6 text-left">6. ได้ตรวจ เอคโค (Echocardiogram) หรือไม่</label>
 						<div class="btn-group" data-toggle="buttons">
-							<label class="btn btn-primary active">
+							<label class="btn btn-primary <?php echo ($result_callback[0]->symptom_6 == "ไม่ได้ตรวจ") ? 'active' : '' ?>">
 								<input type="radio" name="6_symptom" id="6_1_symptom" value="ไม่ได้ตรวจ"
-									   autocomplete="off" checked> ไม่ได้ตรวจ
+									   autocomplete="off" <?php echo ($result_callback[0]->symptom_6 == "ไม่ได้ตรวจ") ? 'checked' : '' ?>>
+								ไม่ได้ตรวจ
 							</label>
-							<label class="btn btn-primary">
-								<input type="radio" name="6_symptom" id="6_2_symptom" value="ตรวจ" autocomplete="off">
+							<label class="btn btn-primary <?php echo ($result_callback[0]->symptom_6 == "ตรวจ") ? 'active' : '' ?>">
+								<input type="radio" name="6_symptom" id="6_2_symptom" value="ตรวจ"
+									   autocomplete="off" <?php echo ($result_callback[0]->symptom_6 == "ตรวจ") ? 'checked' : '' ?>>
 								ตรวจ
 							</label>
 						</div>
@@ -647,13 +673,15 @@
 							<label class="col-md-1 ">ผล</label>
 							<div class="col-md-4">
 								<input type="text" class="form-control" id="6_2_symptom_add_on_result"
-									   name="6_2_symptom_add_on_result" disabled="true">
+									   name="6_2_symptom_add_on_result" disabled="true"
+									   value="<?php echo $result_callback[0]->symptom_6_result ?>">
 							</div>
 							<label class="col-md-2">ครั้งสุดท้าย เมื่อ วัน-เดือน-ปี</label>
 							<div class='col-md-2 input-group date' id='datetimepicker3'>
 								<input type='text' id="6_2_symptom_add_on_result_date"
-									   name="6_2_symptom_add_on_result_date" class="form-control" disabled="true"/>
-								<span class="input-group-addon">
+									   name="6_2_symptom_add_on_result_date" class="form-control" disabled="true"
+									   value="<?php echo $result_callback[0]->symptom_6_date ?> />
+								<span class=" input-group-addon">
 								<span class="glyphicon glyphicon-calendar"></span>
 							</span>
 							</div>
@@ -668,55 +696,61 @@
 					<div class="form-group">
 						<label class="col-md-2 text-left">7.1 Multiplex PCR </label>
 						<div class="col-md-3 btn-group" data-toggle="buttons">
-							<label class="btn btn-primary active">
+							<label class="btn btn-primary <?php echo ($result_callback[0]->symptom_7_1 == "ปกติ") ? 'active' : '' ?>">
 								<input type="radio" name="7_1_symptom" id="7_1_symptom" value="ปกติ" autocomplete="off"
-									   checked> ปกติ
+								<?php echo ($result_callback[0]->symptom_7_1 == "ปกติ") ? 'checked' : '' ?>> ปกติ
 							</label>
-							<label class="btn btn-primary">
+							<label class="btn btn-primary <?php echo ($result_callback[0]->symptom_7_1 == "ไม่ได้ตรวจ") ? 'active' : '' ?>">
 								<input type="radio" name="7_1_symptom" id="7_2_symptom" value="ไม่ได้ตรวจ"
-									   autocomplete="off"> ไม่ได้ตรวจ
+									   autocomplete="off" <?php echo ($result_callback[0]->symptom_7_1 == "ไม่ได้ตรวจ") ? 'checked' : '' ?>>
+								ไม่ได้ตรวจ
 							</label>
-							<label class="btn btn-primary">
+							<label class="btn btn-primary <?php echo ($result_callback[0]->symptom_7_1 == "ผิดปกติ") ? 'active' : '' ?>">
 								<input type="radio" name="7_1_symptom" id="7_3_symptom" value="ผิดปกติ"
-									   autocomplete="off"> ผิดปกติ
+									   autocomplete="off" <?php echo ($result_callback[0]->symptom_7_1 == "ผิดปกติ") ? 'checked' : '' ?>>
+								ผิดปกติ
 							</label>
 						</div>
 						<div class="col-md-5">
-							<input type="text" class="col-md-5 form-control" name="7_1_symptom_result" placeholder="ผล">
+							<input type="text" class="col-md-5 form-control" name="7_1_symptom_result" placeholder="ผล"
+								   value="<?php echo $result_callback[0]->symptom_7_1_result ?>">_
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-2 text-left">7.2 MLPA </label>
 						<div class="col-md-3 btn-group" data-toggle="buttons">
-							<label class="btn btn-primary active">
+							<label class="btn btn-primary <?php echo ($result_callback[0]->symptom_7_2 == "ปกติ") ? 'active' : '' ?>">
 								<input type="radio" name="7_2_symptom" id="7_4_symptom" value="ปกติ" autocomplete="off"
-									   checked> ปกติ
+								<?php echo ($result_callback[0]->symptom_7_2 == "ปกติ") ? 'checked' : '' ?> > ปกติ
 							</label>
-							<label class="btn btn-primary">
+							<label class="btn btn-primary <?php echo ($result_callback[0]->symptom_7_2 == "ไม่ได้ตรวจ") ? 'active' : '' ?>">
 								<input type="radio" name="7_2_symptom" id="7_5_symptom" value="ไม่ได้ตรวจ"
-									   autocomplete="off"> ไม่ได้ตรวจ
+									   autocomplete="off" <?php echo ($result_callback[0]->symptom_7_2 == "ไม่ได้ตรวจ") ? 'checked' : '' ?> >
+								ไม่ได้ตรวจ
 							</label>
-							<label class="btn btn-primary">
+							<label class="btn btn-primary <?php echo ($result_callback[0]->symptom_7_2 == "ผิดปกติ") ? 'active' : '' ?>">
 								<input type="radio" name="7_2_symptom" id="7_6_symptom" value="ผิดปกติ"
-									   autocomplete="off"> ผิดปกติ
+									   autocomplete="off" <?php echo ($result_callback[0]->symptom_7_2 == "ผิดปกติ") ? 'checked' : '' ?>>
+								ผิดปกติ
 							</label>
 						</div>
 						<div class="col-md-5">
-							<input type="text" class="col-md-5 form-control" name="7_2_symptom_result" placeholder="ผล">
+							<input type="text" class="col-md-5 form-control" name="7_2_symptom_result" placeholder="ผล"
+								   value="<?php echo $result_callback[0]->symptom_7_2_result ?>">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-2 text-left">7.3 Sequencing</label>
 						<div class="col-md-3 btn-group" data-toggle="buttons">
-							<label class="btn btn-primary active">
+							<label class="btn btn-primary <?php echo ($result_callback[0]->symptom_7_3 == "ปกติ") ? 'active' : '' ?>">
 								<input type="radio" name="7_3_symptom" id="7_7_symptom" value="ปกติ" autocomplete="off"
 									   checked> ปกติ
 							</label>
-							<label class="btn btn-primary">
+							<label class="btn btn-primary <?php echo ($result_callback[0]->symptom_7_3 == "ไม่ได้ตรวจ") ? 'active' : '' ?> ">
 								<input type="radio" name="7_3_symptom" id="7_8_symptom" value="ไม่ได้ตรวจ"
 									   autocomplete="off"> ไม่ได้ตรวจ
 							</label>
-							<label class="btn btn-primary">
+							<label class="btn btn-primary <?php echo ($result_callback[0]->symptom_7_3 == "ผิดปกติ") ? 'active' : '' ?> ">
 								<input type="radio" name="7_3_symptom" id="7_9_symptom" value="ผิดปกติ"
 									   autocomplete="off"> ผิดปกติ
 							</label>
