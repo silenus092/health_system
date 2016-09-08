@@ -4,7 +4,9 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\FormController;
+use Elibyy\TCPDF\Facades\Pdf;
 use Illuminate\Http\Request;
+use Elibyy\TCPDF\Facades\TCPDF;
 use DB ;
 class PrintController extends Controller 
 {
@@ -21,12 +23,27 @@ class PrintController extends Controller
 		if(count($patient_report)>0){
 			
 		
-		$html_view =  \View::make('pages.form.form_create_pdf', compact('patient_report'))->render();
-		$pdf = \App::make('mpdf.wrapper',['th','A4','','',10,10,10,10,10,5]);
-       // $pdf = \App::make('mpdf.wrapper');
-        $pdf->loadHTML(  $html_view );
-		
-       $pdf->stream($patient_report->person_citizend_id.'_'.$patient_report->disease_type_name_en.'.pdf');
+		 $html_view =  \View::make('pages.form.form_create_pdf', compact('patient_report'))->render();
+		 $pdf = \App::make('mpdf.wrapper',['th','A4','','',10,10,10,10,10,5]);
+         //$pdf = \App::make('mpdf.wrapper');
+            $pdf->setFooter('{PAGENO} / {nb}');
+         $pdf->loadHTML(  $html_view );
+         $pdf-> SetTitle($patient_report->person_first_name.' '.$patient_report->person_last_name.'_'.$patient_report->disease_type_name_en);
+		 $pdf->stream($patient_report->person_first_name.' '.$patient_report->person_last_name.'_'.$patient_report->disease_type_name_en.'.pdf');
+
+
+
+           /* $html_view =  \View::make('pages.form.form_create_pdf', compact('patient_report'))->render();
+           // return $html_view;
+            $pdf = new \TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+
+            $pdf->SetFont('freeserif', '', 10); //ภาษาไทยใช้ได้
+            $pdf-> SetTitle($patient_report->person_first_name.' '.$patient_report->person_last_name.'_'.$patient_report->disease_type_name_en);
+            $pdf-> AddPage();
+            $pdf-> writeHTML($html_view, true, false, true, false, '');
+            $pdf-> Output($patient_report->person_first_name.' '.$patient_report->person_last_name.'_'.$patient_report->disease_type_name_en.'.pdf');
+
+*/
 		}else{
 			
 				$result =  DB::select('SELECT disease_types.disease_type_id ,disease_type_name_th 								,disease_type_name_en

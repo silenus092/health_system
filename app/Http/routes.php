@@ -31,6 +31,7 @@ Route::get('form', 'FormController@index');
 Route::post('form_add', [
     'as' => 'form_add', 'uses' => 'FormController@store'
 ]);
+Route::post('form_update','FormController@update');
 
 // API Controller
 Route::get('get_tree_api/{citizen_id}', 'ApiController@show_tree');

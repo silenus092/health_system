@@ -24,19 +24,31 @@
                         if ($(this).is(':checked') && $(this).val() == 'มี') {
                             $('#5_2_symptom_add_on_result').prop("disabled", false);
                             $('#5_2_symptom_add_on_result_date').prop("disabled", false);
+
+                            $('#datetimepicker2').datetimepicker( "option", "disabled", false );
                         } else {
                             $('#5_2_symptom_add_on_result').prop("disabled", true);
                             $('#5_2_symptom_add_on_result_date').prop("disabled", true);
+                            $('#datetimepicker2').datetimepicker( "option", "disabled", true );
+                            $('#datetimepicker2').datetimepicker('remove');
+                            $('#5_2_symptom_add_on_result').val('');
+                            $('#5_2_symptom_add_on_result_date').val('');
                         }
-                    });
+                    }
+            );
             $('input:radio[name="6_symptom"]').change(
                     function () {
                         if ($(this).is(':checked') && $(this).val() == 'ตรวจ') {
                             $('#6_2_symptom_add_on_result').prop("disabled", false);
                             $('#6_2_symptom_add_on_result_date').prop("disabled", false);
+                            $('#datetimepicker3').datetimepicker( "option", "disabled", false );
                         } else {
                             $('#6_2_symptom_add_on_result').prop("disabled", true);
                             $('#6_2_symptom_add_on_result_date').prop("disabled", true);
+                            $('#datetimepicker3').datetimepicker( "option", "disabled", true );
+                            $('#datetimepicker3').datetimepicker('remove');
+                            $('#6_2_symptom_add_on_result').val('');
+                            $('#6_2_symptom_add_on_result_date').val('');
                         }
                     });
             $('input:radio[name="10_symptom"]').change(
@@ -45,8 +57,10 @@
                             $('#10_symptom_number').prop("disabled", false);
                         } else {
                             $('#10_symptom_number').prop("disabled", true);
+                            $('#10_symptom_number').val('');
                         }
                     });
+
 
             $('#10_symptom_checkbox :checked').removeAttr('checked');
 
@@ -109,25 +123,45 @@
 
             $('#add_more').click(function () {
                 count_line++;
-                $('<div class="col-md-2">' +
-                        '<input type="text" class="form-control field_name" name="10_name[]" placeholder="' + count_line + '-ชื่อ-นามสกุล">' +
-                        '</div>' +
-                        '<div class="col-md-2">' +
-                        '<input type="text" class="form-control field_age" name="10_age[]" placeholder="อายุ">' +
-                        '</div>' +
-                        '<div class="col-md-2">' +
-                        '<input type="text" class="form-control field_id" name="10_citizen_number[]" placeholder="เลขประจำตัวประชาชน">' +
-                        '</div>' + '<div class="form-group">' + '<label class="col-md-1 control-label">Relationship</label>' +
-                        '<div class="col-md-2  selectContainer">' + '<select name="10_roles[]" class="form-control field_roles">' +
-                        '<option value="ปู่ทวด">ปู่ทวด</option>' + '<option value="ปู่">ปู่</option>' +
-                        '<option value="ตา">ตา</option>' +
-                        '<option value="น้า">น้า</option>' +
-                        '<option value="ลุง">ลุง</option>' +
-                        '<option value="พ่อ">พ่อ</option>' +
-                        '<option value="พี่ชาย">พี่ชาย</option>' +
-                        '<option value="น้องชาย">น้องชาย</option>' + '</select></div></div>'
-                )
-                        .fadeIn('slow').appendTo('.form-group_10');
+                if(count_line <= 10) {
+
+
+                    $('<div><div class="col-md-2">' +
+                            '<input type="text" class="form-control field_name" name="10_name[]" placeholder="ชื่อ นามสกุล">' +
+                            '</div>' +
+                            '<div class="col-md-2">' +
+                            '<input type="text" class="form-control field_age" name="10_age[]" placeholder="อายุ">' +
+                            '</div>' +
+                            '<div class="col-md-2">' +
+                            '<input type="text" class="form-control field_id" name="10_citizen_number[]" placeholder="เลขประจำตัวประชาชน">' +
+                            '</div>' + '<div class="form-group">' + '<label class="col-md-1 control-label">Relationship</label>' +
+                            '<div class="col-md-2  selectContainer">' + '<select name="10_roles[]" class="form-control field_roles">' +
+                            '<option value="ปู่ทวด">ปู่ทวด</option>' + '<option value="ปู่">ปู่</option>' +
+                            '<option value="ตา">ตา</option>' +
+                            '<option value="น้า">น้า</option>' +
+                            '<option value="ลุง">ลุง</option>' +
+                            '<option value="พ่อ">พ่อ</option>' +
+                            '<option value="พี่ชาย">พี่ชาย</option>' +
+                            '<option value="น้องชาย">น้องชาย</option>' + '</select></div>' +
+                            '<div>' +
+                            '<a data-original-title="Remove this user" data-toggle="tooltip" type="button" onclick="" ' +
+                            ' class="remove_button btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>' +
+                            '</div>' +
+                            '</div></div>'
+                    ).fadeIn('slow').appendTo('.form-group_10');
+                }else{
+                    BootstrapDialog.show({
+                        type: BootstrapDialog.TYPE_WARNING,
+                        title: "Cannot add more !!",
+                        message: "Sorry, you have exceeded a  limit"
+                    });
+                }
+            });
+
+            $('.form-group_10').on('click', '.remove_button', function(e){ //Once remove button is clicked
+                e.preventDefault();
+                $(this).parent().parent().parent('div').remove(); //Remove field html
+                count_line--; //Decrement field counter
             });
 
             $('#submit').click(function (e) {
@@ -136,25 +170,35 @@
                 var vpb_items_age = [];
                 var vpb_items_id = [];
                 var vpb_items_roles = [];
-                $.each($('.field_name'), function () {
-                    vpb_items.push($(this).val());
-                });
-                $.each($('.field_age'), function () {
-                    vpb_items_age.push($(this).val());
-                });
-                $.each($('.field_id'), function () {
-                    vpb_items_id.push($(this).val());
-                });
-                $.each($('.field_roles'), function () {
-                    vpb_items_roles.push($(this).val());
-                });
 
-                //alert("vpb_items_roles "+vpb_items_roles.length);
-                var data_name = "&vpb_item_name=" + JSON.stringify(vpb_items);
-                var data_age = "&vpb_item_ages=" + JSON.stringify(vpb_items_age);
-                var data_id = "&vpb_item_ids=" + JSON.stringify(vpb_items_id);
-                var data_role = "&vpb_item_roles=" + JSON.stringify(vpb_items_roles);
-                var serializedReturn = $('#main_form').serialize() + data_name + data_age + data_id + data_role;
+                if(!$("#10_symptom_checkbox").is(':checked')) {
+
+
+                    $.each($('.field_name'), function () {
+                        vpb_items.push($(this).val());
+                    });
+                    $.each($('.field_age'), function () {
+                        vpb_items_age.push($(this).val());
+                    });
+                    $.each($('.field_id'), function () {
+                        vpb_items_id.push($(this).val());
+                    });
+                    $.each($('.field_roles'), function () {
+                        vpb_items_roles.push($(this).val());
+                    });
+
+                    //alert("vpb_items_roles "+vpb_items_roles.length);
+                    var data_name = "&vpb_item_name=" + JSON.stringify(vpb_items);
+                    var data_age = "&vpb_item_ages=" + JSON.stringify(vpb_items_age);
+                    var data_id = "&vpb_item_ids=" + JSON.stringify(vpb_items_id);
+                    var data_role = "&vpb_item_roles=" + JSON.stringify(vpb_items_roles);
+
+                    var serializedReturn = $('#main_form').serialize() + data_name + data_age + data_id + data_role;
+
+                }else{
+                    var serializedReturn = $('#main_form').serialize();
+                }
+
                 //alert( serializedReturn);
                 var url = $(this).attr("data-link");
                 $.ajax({
@@ -618,7 +662,7 @@
 
                             <div class="checkbox col-md-2">
                                 <label>
-                                    <input type="checkbox" id="10_symptom_checkbox" name="10_symptom_checkbox">ไม่รู้:
+                                    <input type="checkbox" id="10_symptom_checkbox" name="10_symptom_checkbox" value="ไม่รู้">ไม่รู้:
                                     ติดตามเพิ่มเติม
                                 </label>
                             </div>

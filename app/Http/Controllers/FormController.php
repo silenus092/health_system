@@ -38,82 +38,113 @@ class FormController extends Controller
 
             if ($request->ajax()) {
                 DB::beginTransaction();
-                if($request->request_types == "dmd"){
-                    // keep the personal  patient records
-                    $Person_id = DB::table('persons')->insertGetId( 
-                    ['person_first_name' => Input::get('first_name'), 'person_last_name' => Input::get('last_name'),
-                    'person_age' => Input::get('age'), 'person_sex' => Input::get('sex'),
-                    'person_citizenID' => Input::get('citizen_id'),    'person_birth_date' => Input::get('birth_date'),
-                    'person_house_num' => Input::get('ban_number'),    'person_soi' => Input::get('soi'),
-                    'person_road' => Input::get('road'),    'person_tumbon' => Input::get('sub_district'),
-                    'person_mooh_num' => Input::get('mooh_number'),    'person_amphur' => Input::get('district'),
-                    'person_province' => Input::get('province'),    'person_post_code' => Input::get('postal_code'),
-                    'person_mobile_phone' => Input::get('mobi_phone_number'), 'person_phone' => Input::get('house_number'),
-                    ]);
-                    // keep the doctor profile
-                    $Doctor_id = DB::table('doctors')->insertGetId(
-                    ['doctor_name' => Input::get('doctor_name'), 'doctor_mobile_phone' => Input::get('doctor_mobilephonenumber'),
-                    'doctor_phone' => Input::get('doctor_phonenumber'), 'hospital' => Input::get('hospital_name'), 'doctor_care_date' => Input::get('doctor_care_date') ,
-                    'email' => Input::get('doctor_email')
-                    ]);
-                    // keep the patient profile
-                    $Patient_id = DB::table('patients')->insertGetId(
-                    ['doctor_id' => $Doctor_id, 'person_id' => $Person_id,
-                    'registration_date' => date('Y-m-d')
-                    ]);
+                    if($request->request_types == "dmd"){
+                        // keep the personal  patient records
+                        $Person_id = DB::table('persons')->insertGetId(
+                        ['person_first_name' => Input::get('first_name'), 'person_last_name' => Input::get('last_name'),
+                        'person_age' => Input::get('age'), 'person_sex' => Input::get('sex'),
+                        'person_citizenID' => Input::get('citizen_id'),    'person_birth_date' => Input::get('birth_date'),
+                        'person_house_num' => Input::get('ban_number'),    'person_soi' => Input::get('soi'),
+                        'person_road' => Input::get('road'),    'person_tumbon' => Input::get('sub_district'),
+                        'person_mooh_num' => Input::get('mooh_number'),    'person_amphur' => Input::get('district'),
+                        'person_province' => Input::get('province'),    'person_post_code' => Input::get('postal_code'),
+                        'person_mobile_phone' => Input::get('mobi_phone_number'), 'person_phone' => Input::get('house_number'),
+                        ]);
+                        // keep the doctor profile
+                        $Doctor_id = DB::table('doctors')->insertGetId(
+                        ['doctor_name' => Input::get('doctor_name'), 'doctor_mobile_phone' => Input::get('doctor_mobilephonenumber'),
+                        'doctor_phone' => Input::get('doctor_phonenumber'), 'hospital' => Input::get('hospital_name'), 'doctor_care_date' => Input::get('doctor_care_date') ,
+                        'email' => Input::get('doctor_email')
+                        ]);
+                        // keep the patient profile
+                        $Patient_id = DB::table('patients')->insertGetId(
+                        ['doctor_id' => $Doctor_id, 'person_id' => $Person_id,
+                        'registration_date' => date('Y-m-d')
+                        ]);
+                          //In future, if our system support many disease types , we need to change where on disease_type_name_en to id
+                        $disease_types = DB::table('disease_types')->where('disease_type_name_en', 'Duchenne muscular dystrophy, DMD')->first();
+                         // register disease type with question table
+                        $disease_form_id = DB::table('disease_forms')->insertGetId(
+                        ['disease_type_id' => $disease_types->disease_type_id] );
 
-                    $disease_types = DB::table('disease_types')->where('disease_type_name_en', 'Duchenne muscular dystrophy, DMD')->first();
+                        DB::table('patients_disease_forms')->insert(
+                        ['patient_id' => $Patient_id, 'question_id' =>  $disease_form_id,
+                        'registration_date' => date('Y-m-d')
+                        ]);
+                        // insert information record
+                        $symptom_checkbox_10 = Input::get('10_symptom_checkbox');
+                        DB::table('disease_1')->insert(
+                        ['symptom_1_1' => Input::get('1_1_symptom'), 'symptom_1_2' =>  Input::get('1_2_symptom'),
+                        'symptom_1_3' => Input::get('1_3_symptom'), 'symptom_2' =>  Input::get('2_symptom_age'),
+                        'symptom_3' => Input::get('3_symptom_age'), 'symptom_4_1' =>  Input::get('4_1_symptom'),
+                        'symptom_4_2' => Input::get('4_2_symptom'), 'symptom_4_3' => Input::get('4_2_symptom'),
+                        'symptom_4_4' => Input::get('4_4_symptom'), 'symptom_5' =>   Input::get('5_symptom'),
+                        'symptom_5_date' => Input::get('5_2_symptom_add_on_result_date'), 'symptom_5_result' =>  Input::get('5_2_symptom_add_on_result'),
+                        'symptom_6' => Input::get('6_symptom'), 'symptom_6_date' => Input::get('6_2_symptom_add_on_result_date'),
+                        'symptom_6_result' => Input::get('6_2_symptom_add_on_result'), 'symptom_7_1' =>  Input::get('7_1_symptom'),
+                        'symptom_7_1_result' => Input::get('7_1_symptom_result'), 'symptom_7_2' =>Input::get('7_2_symptom'),
+                        'symptom_7_2_result' => Input::get('7_2_symptom_result'), 'symptom_7_3' =>  Input::get('7_3_symptom'),
+                        'symptom_7_3_result' => Input::get('7_3_symptom_result'), 'symptom_8' => Input::get('8_1_symptom'),
+                        'symptom_9_male' => Input::get('9_male_number'), 'symptom_9_female' =>Input::get('9_female_number'),
+                        'symptom_10_2_male' => Input::get('10_2_male_number'), 'symptom_10_2_female' =>Input::get('10_2_female_number'),
+                        'symptom_10_1' => Input::get('10_symptom') , 'symptom_10_1_number' => Input::get('10_symptom_number'),'symptom_10_1_check' => $symptom_checkbox_10 ,
+                        'questions_id' => $disease_form_id
+                        ]);
+                        $sym_10_name = json_decode(stripslashes(Input::get('vpb_item_name')));
+                        $sym_10_age = json_decode(stripslashes(Input::get('vpb_item_ages')));
+                        $sym_10_citizen_number = json_decode(stripslashes(Input::get('vpb_item_ids')));
+                        $sym_10_roles =json_decode(stripslashes(Input::get('vpb_item_roles')));
 
-                    $disease_form_id = DB::table('disease_forms')->insertGetId(
-                    ['disease_type_id' => $disease_types->disease_type_id] );
+                        if($symptom_checkbox_10 != "ไม่รู้") {
+                            for($i = 0 ; $i < sizeof($sym_10_name) ; $i++){
+                                if($sym_10_name[$i] != ' '   && $sym_10_name[$i] != null) {
 
-                    DB::table('patients_disease_forms')->insert(
-                    ['patient_id' => $Patient_id, 'question_id' =>  $disease_form_id,
-                    'registration_date' => date('Y-m-d')
-                    ]);
-                    // insert information record
-                    $symptom_checkbox_10 = Input::get('10_symptom_checkbox');
-                    DB::table('disease_1')->insert(
-                    ['symptom_1_1' => Input::get('1_1_symptom'), 'symptom_1_2' =>  Input::get('1_2_symptom'),
-                    'symptom_1_3' => Input::get('1_3_symptom'), 'symptom_2' =>  Input::get('2_symptom_age'),
-                    'symptom_3' => Input::get('3_symptom_age'), 'symptom_4_1' =>  Input::get('4_1_symptom'),
-                    'symptom_4_2' => Input::get('4_2_symptom'), 'symptom_4_3' => Input::get('4_2_symptom'),
-                    'symptom_4_4' => Input::get('4_4_symptom'), 'symptom_5' =>   Input::get('5_symptom'),
-                    'symptom_5_date' => Input::get('5_2_symptom_add_on_result_date'), 'symptom_5_result' =>  Input::get('5_2_symptom_add_on_result'),
-                    'symptom_6' => Input::get('6_symptom'), 'symptom_6_date' => Input::get('6_2_symptom_add_on_result_date'),
-                    'symptom_6_result' => Input::get('6_2_symptom_add_on_result'), 'symptom_7_1' =>  Input::get('7_1_symptom'),
-                    'symptom_7_1_result' => Input::get('7_1_symptom_result'), 'symptom_7_2' =>Input::get('7_2_symptom'),
-                    'symptom_7_2_result' => Input::get('7_2_symptom_result'), 'symptom_7_3' =>  Input::get('7_3_symptom'),
-                    'symptom_7_3_result' => Input::get('7_3_symptom_result'), 'symptom_8' => Input::get('8_1_symptom'),
-                    'symptom_9_male' => Input::get('9_male_number'), 'symptom_9_female' =>Input::get('9_female_number'),
-                    'symptom_10_2_male' => Input::get('10_2_male_number'), 'symptom_10_2_female' =>Input::get('10_2_female_number'),
-                    'symptom_10_1' => Input::get('10_symptom') , 'symptom_10_1_number' => Input::get('10_symptom_number'),'symptom_10_1_check' => $symptom_checkbox_10 ,
-                    'questions_id' => $disease_form_id
-                    ]);
-                    $sym_10_name = json_decode(stripslashes(Input::get('vpb_item_name')));
-                    $sym_10_age = json_decode(stripslashes(Input::get('vpb_item_ages')));
-                    $sym_10_citizen_number = json_decode(stripslashes(Input::get('vpb_item_ids')));
-                    $sym_10_roles =json_decode(stripslashes(Input::get('vpb_item_roles')));
+                                    $name = explode(" ", $sym_10_name[$i]);
+                                    $relative_person_id = DB::table('persons')->insertGetId(
+                                        ['person_first_name' => $name[0], 'person_last_name' => $name[1],
+                                            'person_age' => $sym_10_age[$i], 'person_citizenID' => $sym_10_citizen_number[$i],
+                                            'person_sex' => 'male'
+                                        ]);
 
-                    if($symptom_checkbox_10 != "on") {
-                        for($i = 0 ; $i < sizeof($sym_10_name) ; $i++){
-                            $name = explode ( " " ,  $sym_10_name[$i]);
-                            $relative_person_id = DB::table('persons')->insertGetId(
-                            ['person_first_name' => $name[0], 'person_last_name' => $name[1],
-                            'person_age' => $sym_10_age[$i],'person_citizenID' => $sym_10_citizen_number[$i],
-                            'person_sex' => 'male'
-                            ]);
+                                    DB::table('relationship')->insert(
+                                        ['person_1_id' => $Person_id, 'person_2_id' => $relative_person_id,
+                                            'role_1_id' => $this->check_my_role($sym_10_roles[$i], $Person_id),
+                                            'role_2_id' => $this->check_role($sym_10_roles[$i]),
+                                            'relationship_type_id' => $this->check_my_relationship($sym_10_roles[$i])
+                                        ]);
 
-                            DB::table('relationship')->insert(
-                            ['person_1_id' => $Person_id, 'person_2_id' => $relative_person_id,
-                            'role_1_id' => $this->check_my_role($sym_10_roles[$i],$Person_id),
-                            'role_2_id' => $this->check_role($sym_10_roles[$i]),
-                            'relationship_type_id'=> $this->check_my_relationship($sym_10_roles[$i])
-                            ]);
+                                    //add data into patient, doctor , and question table
+                                    $relative_doctor_id = DB::table('doctors')->insertGetId(
+                                        ['doctor_name' => "ไม่ทราบ", 'doctor_mobile_phone' => "ไม่ทราบ",
+                                            'doctor_phone' => "ไม่ทราบ", 'hospital' => "ไม่ทราบ", 'doctor_care_date' => "",
+                                            'email' => "ไม่ทราบ"
+                                        ]);
+
+                                    $relative_patient_id = DB::table('patients')->insertGetId(
+                                        ['doctor_id' => $relative_doctor_id, 'person_id' => $relative_person_id,
+                                            'registration_date' => date('Y-m-d')
+                                        ]);
+
+                                    //In future, if our system support many disease types , we need to change where on disease_type_name_en to id
+                                    $relative_disease_types = DB::table('disease_types')->where('disease_type_name_en', 'Duchenne muscular dystrophy, DMD')->first();
+                                    // register disease type with question table
+                                    $relative_disease_form_id = DB::table('disease_forms')->insertGetId(
+                                        ['disease_type_id' => $relative_disease_types->disease_type_id]);
+
+                                    DB::table('patients_disease_forms')->insert(
+                                        ['patient_id' => $relative_patient_id, 'question_id' => $disease_form_id,
+                                            'registration_date' => date('Y-m-d')
+                                        ]);
+
+                                    DB::table('disease_1')->insert(
+                                        [
+                                            'questions_id' => $relative_disease_form_id
+                                        ]);
+                                }
+                            }
                         }
+                        DB::commit();
                     }
-                    DB::commit();
-                }
                 return response()->json(array('status' => 'Complete', 'message' => 'บันทึกสำเร็จ ', 'details' =>" : ) ") );   
              }
              return response()->json(array('status' => '3', 'message' => 'มาได้ยังไง ')); 
@@ -261,11 +292,11 @@ class FormController extends Controller
     /**
     * Update the specified resource in storage.
     *
-    * @param int $id
+    *
     *
     * @return Response
     */
-    public function update($id)
+    public function update()
     {
         //
     }

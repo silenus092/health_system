@@ -105,10 +105,8 @@ trait AuthenticatesAndRegistersUsers {
 	 */
 	public function getLogout()
 	{
-          \Session::flash('logout', 'Good Bye');
-		 // \Session::flush();
 		$this->auth->logout();
-       
+
 		return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/');
 	}
 

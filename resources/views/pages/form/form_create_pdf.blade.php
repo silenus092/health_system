@@ -1,17 +1,13 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<meta http-equiv="Content-Type" content="text/html;" charset="utf-8"/>
-
-<link rel="stylesheet" href="http://localhost/health_system/public/scripts/css/jquery-ui.css">
-
-<script src="http://localhost/health_system/public/scripts/scripts/jquery-1.11.2.min.js"></script>
-<script src="http://localhost/health_system/public/scripts/scripts/js/jquery-ui.min.js"></script>
-<script src="http://localhost/health_system/public/scripts/scripts/js/bootstrap.min.js"></script>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	</head>
 	<body>
-		<div class="">
+
 			<div class="">แบบการบันทึกความผิดปกติแต่กำเนิดแห่งประเทศไทย
 				( แบบที่ 3 สำหรับความผิดปกติโรคกล้ามเนื้อเสื่อมดูเชนน์ )</div>
 			<hr>
@@ -29,7 +25,7 @@
 					?>
 
 					<div class="form-group">
-						<label class="col-md-4 control-label">เพศ :</label>
+						<label class="col-md-4 control-label ">เพศ :</label>
 						<?php echo $patient_report->person_sex; ?>
 					</div>
 					<div class="form-group">
@@ -261,13 +257,13 @@
 					</div>
 					<div class="form-group">
 						<label class="col-md-4 control-label">email :</label>
-							<?php echo $patient_report->email; ?>
+						<input type="text" class="form-control" value="<?php echo $patient_report->email; ?>" name="doctor_email">
+
 					</div>
 
 					<hr>
 				</div>
 
-			</div>
-		</div>
+
 	</body>
 </html>

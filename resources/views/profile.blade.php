@@ -278,7 +278,40 @@
 					window.location = '<?=URL::to('/')?>/show_report_by_type/' + select_value + '/' + person_id;
 				}
 			});
+			$('#update_btn').click(function (e) {
+			e.preventDefault();
 
+				$.ajax({
+					url: "{{ url('/form_update') }}",
+					type: "POST",
+					data: $('#main_form').serialize()+"&doctor_id="+'<?php echo $result_callback[0]->doctor_id ?>'+
+                    "&question_id="+'<?php echo $result_callback[0]->question_id ?>'+"&person_id="+person_id,
+					success: function (data) {
+						//alert(data.status +" \n"+ data.message);
+						if (data.status == "Success") {
+							BootstrapDialog.show({
+								type: BootstrapDialog.TYPE_SUCCESS,
+								title: data.status,
+								message: data.message + " " + name
+							});
+							window.location = '{{ URL::asset('/home') }}';
+						} else {
+							BootstrapDialog.show({
+								type: BootstrapDialog.TYPE_DANGER,
+								title: data.status,
+								message: data.message
+							});
+						}
+					},
+					error: function (xhr, textStatus, thrownError) {
+						BootstrapDialog.show({
+							type: BootstrapDialog.TYPE_DANGER,
+							title: textStatus,
+							message: thrownError
+						});
+					}
+				});
+			});
 			$('#myModalEDIT_button').click(function (e) {
 				e.preventDefault();
 				$('#date_birth').editable('toggleDisabled');
@@ -288,6 +321,80 @@
 				$('#landline').editable('toggleDisabled');
 				$('#address_field').editable('toggleDisabled');
 			});
+
+			$('#datetimepicker2').datetimepicker({
+				format: "yyyy-mm-dd",
+				showMeridian: true,
+				minView: 2,
+				autoclose: true,
+				todayBtn: true,
+				endDate: $.datepicker.formatDate('yy-mm-dd', new Date()),
+			});
+			$('#datetimepicker3').datetimepicker({
+				format: "yyyy-mm-dd",
+				showMeridian: true,
+				minView: 2,
+				autoclose: true,
+				todayBtn: true,
+				endDate: $.datepicker.formatDate('yy-mm-dd', new Date()),
+			});
+			$('#datetimepicker4').datetimepicker({
+				format: "yyyy-mm-dd",
+				showMeridian: true,
+				minView: 2,
+				autoclose: true,
+				todayBtn: true,
+				endDate: $.datepicker.formatDate('yy-mm-dd', new Date()),
+			});
+
+			$('input:radio[name="5_symptom"]').change(
+					function () {
+						if ($(this).is(':checked') && $(this).val() == 'มี') {
+							$('#5_2_symptom_add_on_result').prop("disabled", false);
+							$('#5_2_symptom_add_on_result_date').prop("disabled", false);
+
+							$('#datetimepicker2').datetimepicker( "option", "disabled", false );
+						} else {
+							$('#5_2_symptom_add_on_result').prop("disabled", true);
+							$('#5_2_symptom_add_on_result_date').prop("disabled", true);
+							$('#datetimepicker2').datetimepicker( "option", "disabled", true );
+							$('#datetimepicker2').datetimepicker('remove');
+							$('#5_2_symptom_add_on_result').val('');
+							$('#5_2_symptom_add_on_result_date').val('');
+						}
+					}
+			);
+			$('input:radio[name="6_symptom"]').change(
+					function () {
+						if ($(this).is(':checked') && $(this).val() == 'ตรวจ') {
+							$('#6_2_symptom_add_on_result').prop("disabled", false);
+							$('#6_2_symptom_add_on_result_date').prop("disabled", false);
+							$('#datetimepicker3').datetimepicker( "option", "disabled", false );
+						} else {
+							$('#6_2_symptom_add_on_result').prop("disabled", true);
+							$('#6_2_symptom_add_on_result_date').prop("disabled", true);
+							$('#datetimepicker3').datetimepicker( "option", "disabled", true );
+							$('#datetimepicker3').datetimepicker('remove');
+							$('#6_2_symptom_add_on_result').val('');
+							$('#6_2_symptom_add_on_result_date').val('');
+						}
+					});
+			$('input:radio[name="10_symptom"]').change(
+					function () {
+						if ($(this).is(':checked') && $(this).val() == 'มี') {
+							$('#10_symptom_number').prop("disabled", false);
+						} else {
+							$('#10_symptom_number').prop("disabled", true);
+							$('#10_symptom_number').val('');
+						}
+					});
+
+			$('#10_symptom_checkbox :checked').removeAttr('checked');
+
+
+
+
+
 		});
 		function remove_person(id, name) {
 			BootstrapDialog.confirm({
@@ -640,13 +747,13 @@
 							<div class="col-md-4">
 								<input type="text" class="form-control" id="5_2_symptom_add_on_result"
 									   name="5_2_symptom_add_on_result"
-									   value="<?php echo $result_callback[0]->symptom_5_result ?>" disabled="true">
+									   value="<?php echo $result_callback[0]->symptom_5_result ?>" disabled="<?php echo ($result_callback[0]->symptom_5 == "มี") ? true : false ?>">
 							</div>
 							<label class="col-md-2">ครั้งแรก เมื่อ วัน-เดือน-ปี</label>
 							<div class='col-md-2 input-group date' id='datetimepicker2'>
 								<input type='text' id="5_2_symptom_add_on_result_date"
 									   name="5_2_symptom_add_on_result_date" class="form-control"
-									   value="<?php echo $result_callback[0]->symptom_5_date ?>" disabled="true"/>
+									   value="<?php echo $result_callback[0]->symptom_5_date ?>" disabled="<?php echo ($result_callback[0]->symptom_5 == "มี") ? true : fasle ?>"/>
 								<span class="input-group-addon">
 									<span class="glyphicon glyphicon-calendar"></span>
 								</span>
@@ -673,17 +780,17 @@
 							<label class="col-md-1 ">ผล</label>
 							<div class="col-md-4">
 								<input type="text" class="form-control" id="6_2_symptom_add_on_result"
-									   name="6_2_symptom_add_on_result" disabled="true"
+									   name="6_2_symptom_add_on_result" disabled="<?php echo ($result_callback[0]->symptom_6 == "ตรวจ") ? true : false ?>"
 									   value="<?php echo $result_callback[0]->symptom_6_result ?>">
 							</div>
 							<label class="col-md-2">ครั้งสุดท้าย เมื่อ วัน-เดือน-ปี</label>
 							<div class='col-md-2 input-group date' id='datetimepicker3'>
 								<input type='text' id="6_2_symptom_add_on_result_date"
-									   name="6_2_symptom_add_on_result_date" class="form-control" disabled="true"
-									   value="<?php echo $result_callback[0]->symptom_6_date ?> />
+									   name="6_2_symptom_add_on_result_date" class="form-control" disabled="<?php echo ($result_callback[0]->symptom_6 == "ตรวจ") ? true : false ?>"
+									   value="<?php echo $result_callback[0]->symptom_6_date ?>" />
 								<span class=" input-group-addon">
 								<span class="glyphicon glyphicon-calendar"></span>
-							</span>
+								</span>
 							</div>
 						</div>
 						</p>
@@ -713,7 +820,7 @@
 						</div>
 						<div class="col-md-5">
 							<input type="text" class="col-md-5 form-control" name="7_1_symptom_result" placeholder="ผล"
-								   value="<?php echo $result_callback[0]->symptom_7_1_result ?>">_
+								   value="<?php echo $result_callback[0]->symptom_7_1_result ?>">
 						</div>
 					</div>
 					<div class="form-group">
@@ -744,35 +851,35 @@
 						<div class="col-md-3 btn-group" data-toggle="buttons">
 							<label class="btn btn-primary <?php echo ($result_callback[0]->symptom_7_3 == "ปกติ") ? 'active' : '' ?>">
 								<input type="radio" name="7_3_symptom" id="7_7_symptom" value="ปกติ" autocomplete="off"
-									   checked> ปกติ
+								<?php echo ($result_callback[0]->symptom_7_3 == "ปกติ") ? 'checked' : '' ?> > ปกติ
 							</label>
 							<label class="btn btn-primary <?php echo ($result_callback[0]->symptom_7_3 == "ไม่ได้ตรวจ") ? 'active' : '' ?> ">
 								<input type="radio" name="7_3_symptom" id="7_8_symptom" value="ไม่ได้ตรวจ"
-									   autocomplete="off"> ไม่ได้ตรวจ
+									   autocomplete="off" <?php echo ($result_callback[0]->symptom_7_3 == "ไม่ได้ตรวจ") ? 'checked' : '' ?> > ไม่ได้ตรวจ
 							</label>
 							<label class="btn btn-primary <?php echo ($result_callback[0]->symptom_7_3 == "ผิดปกติ") ? 'active' : '' ?> ">
 								<input type="radio" name="7_3_symptom" id="7_9_symptom" value="ผิดปกติ"
-									   autocomplete="off"> ผิดปกติ
+									   autocomplete="off" <?php echo ($result_callback[0]->symptom_7_3 == "ผิดปกติ") ? 'checked' : '' ?> > ผิดปกติ
 							</label>
 						</div>
 						<div class="col-md-5">
-							<input type="text" class="col-md-5 form-control" name="7_3_symptom_result" placeholder="ผล">
+							<input type="text" class="col-md-5 form-control" name="7_3_symptom_result" placeholder="ผล"  value="<?php echo $result_callback[0]->symptom_7_3_result ?>" >
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-6 text-left">8. ผลตรวจยีนของมารดา</label>
 						<div class="btn-group" data-toggle="buttons">
-							<label class="btn btn-primary active">
+							<label class="btn btn-primary <?php echo ($result_callback[0]->symptom_8 == "เป็นพาหะ") ? 'active' : '' ?>">
 								<input type="radio" name="8_1_symptom" id="8_1_symptom" value="เป็นพาหะ"
-									   autocomplete="off" checked> เป็นพาหะ
+									   autocomplete="off"  <?php echo ($result_callback[0]->symptom_8 == "เป็นพาหะ") ? 'checked' : '' ?> > เป็นพาหะ
 							</label>
-							<label class="btn btn-primary">
+							<label class="btn btn-primary <?php echo ($result_callback[0]->symptom_8 == "ไม่เป็นพาหะ") ? 'active' : '' ?>">
 								<input type="radio" name="8_1_symptom" id="8_2_symptom" value="ไม่เป็นพาหะ"
-									   autocomplete="off"> ไม่เป็นพาหะ
+									   autocomplete="off" <?php echo ($result_callback[0]->symptom_8 == "ไม่เป็นพาหะ") ? 'checked' : '' ?> > ไม่เป็นพาหะ
 							</label>
-							<label class="btn btn-primary">
+							<label class="btn btn-primary <?php echo ($result_callback[0]->symptom_8 == "ไม่รู้") ? 'active' : '' ?>">
 								<input type="radio" name="8_1_symptom" id="8_3_symptom" value="ไม่รู้"
-									   autocomplete="off">ยังไม่ได้ตรวจ / ไม่รู้
+									   autocomplete="off" <?php echo ($result_callback[0]->symptom_8 == "ไม่รู้") ? 'checked' : '' ?>>ยังไม่ได้ตรวจ / ไม่รู้
 							</label>
 						</div>
 					</div>
@@ -784,7 +891,7 @@
 							</label>
 						</div>
 						<div class="col-md-2 text-left">
-							<input type="text" class="form-control" name="9_male_number" value="" placeholder="คน">
+							<input type="text" class="form-control" name="9_male_number" value="<?php echo $result_callback[0]->symptom_9_male ?>" placeholder="คน">
 						</div>
 						<div class="checkbox col-md-1">
 							<label>
@@ -792,7 +899,7 @@
 							</label>
 						</div>
 						<div class="col-md-2 text-left">
-							<input type="text" class="form-control" name="9_female_number" value="" placeholder="คน">
+							<input type="text" class="form-control" name="9_female_number" value="<?php echo $result_callback[0]->symptom_9_female ?>" placeholder="คน">
 						</div>
 					</div>
 					<div class="form-group">
@@ -803,18 +910,18 @@
 							10.1 มีหรือเคยมีพี่น้องเพศชาย หรือญาติเพศชายป่วยเป็นโรคกล้ามเนื้อหรือไม่
 						</label>
 						<div class="col-md-2 btn-group" data-toggle="buttons">
-							<label class="btn btn-primary active">
+							<label class="btn btn-primary <?php echo ($result_callback[0]->symptom_10_1 == "ไม่มี") ? 'active' : '' ?>">
 								<input type="radio" name="10_symptom" id="10_1_symptom" value="ไม่มี" autocomplete="off"
-									   checked> ไม่มี
+								<?php echo ($result_callback[0]->symptom_10_1 == "ไม่มี") ? 'checked' : '' ?>> ไม่มี
 							</label>
 							<label class="btn btn-primary">
-								<input type="radio" name="10_symptom" id="10_2_symptom" value="มี" autocomplete="off">
+								<input type="radio" name="10_symptom" id="10_2_symptom" value="มี" autocomplete="off"  <?php echo ($result_callback[0]->symptom_10_1 == "มี") ? 'checked' : '' ?>>
 								มี
 							</label>
 						</div>
 						<div class="col-md-2">
 							<input type="text" class="form-control" id="10_symptom_number" name="10_symptom_number"
-								   disabled="true" placeholder="กี่คน">
+								   disabled="<?php echo ($result_callback[0]->symptom_10_1 == "มี") ? true : false ?>" value="<?php echo $result_callback[0]->symptom_10_1_number ?>" placeholder="กี่คน">
 						</div>
 					</div>
 					<div class="form-group">
@@ -825,7 +932,8 @@
 
 						<div class="checkbox col-md-2">
 							<label>
-								<input type="checkbox" id="10_symptom_checkbox" name="10_symptom_checkbox">ไม่รู้:
+								<input type="checkbox" id="10_symptom_checkbox" name="10_symptom_checkbox"
+								<?php echo ($result_callback[0]->symptom_10_check == "ไม่รู้") ? 'checked' : '' ?> >ไม่รู้:
 								ติดตามเพิ่มเติม
 							</label>
 						</div>
@@ -868,7 +976,7 @@
 							</label>
 						</div>
 						<div class="col-md-2 text-left">
-							<input type="text" class="form-control" name="10_2_male_number" value="" placeholder="คน">
+							<input type="text" class="form-control" name="10_2_male_number" value="<?php echo $result_callback[0]->symptom_10_2_male ?>" placeholder="คน">
 						</div>
 						<div class="checkbox col-md-1">
 							<label>
@@ -876,14 +984,14 @@
 							</label>
 						</div>
 						<div class="col-md-2 text-left">
-							<input type="text" class="form-control" name="10_2_female_number" value="" placeholder="คน">
+							<input type="text" class="form-control" name="10_2_female_number" value="<?php echo $result_callback[0]->symptom_10_2_female ?>" placeholder="คน">
 						</div>
 					</div>
 					<hr>
 					<div class="form-group">
 						<label class="col-md-4 control-label">คนไข้จากโรงพยาบาล </label>
 						<div class='col-md-6'>
-							<input type="text" class="form-control" name="hospital_name" value="">
+							<input type="text" class="form-control" name="hospital_name" value="<?php echo $result_callback[0]->hospital ?>">
 						</div>
 					</div>
 					<div class="form-group">
@@ -892,7 +1000,7 @@
 					<div class="form-group">
 						<label class="col-md-4 control-label">วัน-เดือน-ปี ที่บันทึกข้อมูลโดยแพทย์เจ้าของไข้</label>
 						<div class='col-md-6 input-group date' id='datetimepicker4'>
-							<input type='text' name="doctor_care_date" class="form-control" disabled/>
+							<input type='text' name="doctor_care_date" class="form-control"  value="<?php echo $result_callback[0]->doctor_care_date ?>" disabled/>
 							<span class="input-group-addon">
 						<span class="glyphicon glyphicon-calendar"></span>
 					</span>
@@ -901,32 +1009,32 @@
 					<div class="form-group">
 						<label class="col-md-4 control-label">ชื่อ-นามสกุล</label>
 						<div class="col-md-6">
-							<input type="text" class="form-control" name="doctor_name">
+							<input type="text" class="form-control" value="<?php echo $result_callback[0]->doctor_name ?>" name="doctor_name">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-4 control-label">เบอร์โทร</label>
 						<div class='col-md-6'>
-							<input type="text" class="form-control" name="doctor_mobilephonenumber" value="">
+							<input type="text" class="form-control"  value="<?php echo $result_callback[0]->doctor_mobile_phone ?>" name="doctor_mobilephonenumber" value="">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-4 control-label">โทรสาร</label>
 						<div class="col-md-6">
-							<input type="text" class="form-control" name="doctor_phonenumber">
+							<input type="text" class="form-control" value="<?php echo $result_callback[0]->doctor_phone ?>" name="doctor_phonenumber">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-4 control-label">email</label>
 						<div class="col-md-6">
-							<input type="text" class="form-control" name="doctor_email">
+							<input type="text" class="form-control" value="<?php echo $result_callback[0]->email ?>" name="doctor_email">
 						</div>
 					</div>
 
 					<hr>
 					<div class="form-group">
 						<div class="col-md-6 col-md-offset-4">
-							<input type="button" id="submit" value="update value" class="btn btn-primary"/>
+							<input type="button" id="update_btn" value="update value" class="btn btn-primary"/>
 						</div>
 					</div>
 				</form>
