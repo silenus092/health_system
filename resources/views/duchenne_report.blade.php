@@ -2,7 +2,9 @@
 @extends('app')
 
 @section('content')
-
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
 <style >
 	/*  bhoechie tab */
 	div.bhoechie-tab-container{
@@ -210,6 +212,157 @@
 			$("div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
 			$("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
 		});
+
+		// Load the fonts
+		Highcharts.createElement('link', {
+			href: 'https://fonts.googleapis.com/css?family=Signika:400,700',
+			rel: 'stylesheet',
+			type: 'text/css'
+		}, null, document.getElementsByTagName('head')[0]);
+
+// Add the background image to the container
+		Highcharts.wrap(Highcharts.Chart.prototype, 'getContainer', function (proceed) {
+			proceed.call(this);
+			this.container.style.background = 'url(http://www.highcharts.com/samples/graphics/sand.png)';
+		});
+
+
+		Highcharts.theme = {
+			colors: ["#f45b5b", "#8085e9", "#8d4654", "#7798BF", "#aaeeee", "#ff0066", "#eeaaee",
+				"#55BF3B", "#DF5353", "#7798BF", "#aaeeee"],
+			chart: {
+				backgroundColor: null,
+				style: {
+					fontFamily: "Signika, serif"
+				}
+			},
+			title: {
+				style: {
+					color: 'black',
+					fontSize: '16px',
+					fontWeight: 'bold'
+				}
+			},
+			subtitle: {
+				style: {
+					color: 'black'
+				}
+			},
+			tooltip: {
+				borderWidth: 0
+			},
+			legend: {
+				itemStyle: {
+					fontWeight: 'bold',
+					fontSize: '13px'
+				}
+			},
+			xAxis: {
+				labels: {
+					style: {
+						color: '#6e6e70'
+					}
+				}
+			},
+			yAxis: {
+				labels: {
+					style: {
+						color: '#6e6e70'
+					}
+				}
+			},
+			plotOptions: {
+				series: {
+					shadow: true
+				},
+				candlestick: {
+					lineColor: '#404048'
+				},
+				map: {
+					shadow: false
+				}
+			},
+
+			// Highstock specific
+			navigator: {
+				xAxis: {
+					gridLineColor: '#D0D0D8'
+				}
+			},
+			rangeSelector: {
+				buttonTheme: {
+					fill: 'white',
+					stroke: '#C0C0C8',
+					'stroke-width': 1,
+					states: {
+						select: {
+							fill: '#D0D0D8'
+						}
+					}
+				}
+			},
+			scrollbar: {
+				trackBorderColor: '#C0C0C8'
+			},
+
+			// General
+			background2: '#E0E0E8'
+
+		};
+		// Apply the theme
+		Highcharts.setOptions(Highcharts.theme);
+
+		$('#container_bar').highcharts({
+			chart: {
+				type: 'column'
+			},
+			title: {
+				text:  'จำนวนที่คนที่ป่วยเเยกตามช่วงอายุของการป่วย'
+			},
+			subtitle: {
+				text: ''
+			},
+			xAxis: {
+
+				crosshair: true,
+				title: {
+					text: 'ช่วงอายุที่ป่วย'
+				}
+			},
+			yAxis: {
+				min: 0,
+				title: {
+					text: 'จำนวนคน'
+				}
+			},
+			tooltip: {
+				headerFormat: '<span style="font-size:10px">อายุ</span><table>',
+				pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+				'<td style="padding:0"><b>{point.y} คน</b></td></tr>',
+				footerFormat: '</table>',
+				shared: true,
+				useHTML: true
+			},
+			plotOptions: {
+				column: {
+					pointPadding: 0.2,
+					borderWidth: 0
+				}
+			},
+			series: [{
+				name: '0-5',
+				data: [49]
+
+			}, {
+				name: '5-10',
+				data: [83]
+
+			}, {
+				name: '10+',
+				data: [48]
+
+			}]
+		});
 	});
 </script>
 <div id="container">
@@ -237,6 +390,13 @@
 				<!-- Dashbroad section -->
 				<div class="bhoechie-tab-content active">
 					<center><h3 style="margin-top: 0;">จากผู้ป่วย Duchenne ในฐานข้อมูล</h3></center>
+					<div class = "row">
+
+
+						<div id="container_bar" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+
+					</div>
 					<hr class="separator">
 					<div class="row" >
 						<div class="col-xs-6 col-md-3">

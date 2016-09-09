@@ -2,6 +2,10 @@
 @extends('app')
 
 @section('content')
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
 
 <script type="text/javascript" CHARSET="UTF-8">
 	$(function(){
@@ -46,7 +50,7 @@
 			} else {
 				user ='{{ \Auth::user()->name}}';
 			if (user != "" && user != null) {
-				setCookie("username", user, 1);
+				setCookie("username", user, 0.5);
 			}
 			$.amaran({
 				'theme'     :'user green',
@@ -75,30 +79,34 @@
 				}
 			},
 			title: {
-				text: 'Contents of Highsoft\'s weekly fruit delivery'
+				text: 'จำนวนโรคเเละผู้ป่วยที่เป็นโรคทั้งหมดในฐานข้อมูล'
 			},
 			subtitle: {
-				text: '3D donut in Highcharts'
+				text: ''
 			},
-			plotOptions: {
-				pie: {
-					innerSize: 100,
-					depth: 45
-				}
-			},
+
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    innerSize: 100,
+                    depth: 45,
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                        style: {
+                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        }
+                    }
+                }
+            },
 			series: [{
-				name: 'Delivered amount',
-				data: [
-					['Bananas', 8],
-					['Kiwi', 3],
-					['Mixed nuts', 1],
-					['Oranges', 6],
-					['Apples', 8],
-					['Pears', 4],
-					['Clementines', 4],
-					['Reddish (bag)', 1],
-					['Grapes (bunch)', 1]
-				]
+				name: 'amount',
+				data: [<?php echo join($disease_summary, ","); ?>
+                ]
 			}]
 		});
 
@@ -192,7 +200,7 @@
 		</div>
 		<div class="col-md-10 col-md-offset-1">
 			<div class="panel panel-default">
-				<div class="panel-heading">Panel Heading</div>
+				<div class="panel-heading">Panel</div>
 				<div class="panel-body">
 					<div id="container_PIE" style="height: 400px">
 

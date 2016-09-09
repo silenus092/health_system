@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use Auth;
+use DB;
 class HomeController extends Controller
 {
     /*
@@ -34,8 +35,17 @@ class HomeController extends Controller
 		   /*$name = Auth::user()->name;
 			$staff_type = Auth::user()->staff_type;
         	\Session::put('message', 'Welcome : '.$staff_type."<br>". $name);*/
-       
-        
-        return view('home');
+
+        $Total  = DB::select('SELECT count(disease_forms.question_id) as  total , disease_type_name_en ,disease_type_name_th
+                                FROM disease_forms
+                                RIGHT JOIN disease_types
+                                ON disease_types.disease_type_id = disease_forms.disease_type_id
+                                Group by disease_type_name_en , disease_type_name_th');
+        $data = array();
+        for($i = 0 ; $i < count($Total) ; $i++){
+            $data[]='{name:"'.$Total[$i]->disease_type_name_en.'",y:'.$Total[$i]->total.'}';
+        }
+
+        return view('home')->with('disease_summary', $data);
     }
 }

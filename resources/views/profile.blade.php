@@ -160,13 +160,7 @@
 				],
 				disabled: 'true'
 			});
-			/* $('#citizenID').editable({
-			 type: 'text',
-			 pk: person_id,
-			 url: '{{URL::to("/")}}/update_CitizenID',
-			 title: 'Enter Citizen ID',
-			 disabled: 'true'
-			 }); */
+
 
 			$('#mobile_phone').editable({
 				type: 'text',
@@ -280,7 +274,7 @@
 			});
 			$('#update_btn').click(function (e) {
 			e.preventDefault();
-
+				alert("clicks");
 				$.ajax({
 					url: "{{ url('/form_update') }}",
 					type: "POST",
