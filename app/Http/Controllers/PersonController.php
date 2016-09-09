@@ -4,6 +4,8 @@ use App\Persons;
 use DB;
 use Input;
 
+use Illuminate\Http\Response;
+use Illuminate\Http\Request;
 class PersonController extends Controller {
 
 
@@ -94,13 +96,14 @@ class PersonController extends Controller {
                         ->where('doctor_id',Input::get('doctor_id'))
                         ->update(
                         ['doctor_name' => Input::get('doctor_name'), 'doctor_mobile_phone' => Input::get('doctor_mobilephonenumber'),
-                            'doctor_phone' => Input::get('doctor_phonenumber'), 'hospital' => Input::get('hospital_name'), 'doctor_care_date' => Input::get('doctor_care_date') ,
+                            'doctor_phone' => Input::get('doctor_phonenumber'), 'hospital' => Input::get('hospital_name'),
+                            'doctor_care_date' => Input::get('doctor_care_date') ,
                             'email' => Input::get('doctor_email')
                         ]);
 
 
                     // insert information record
-                    $symptom_checkbox_10 = Input::get('10_symptom_checkbox');
+                  /*  $symptom_checkbox_10 = Input::get('10_symptom_checkbox');
                     DB::table('disease_1')
                         ->where('questions_id' ,  Input::get('question_id'))
                         ->update(
@@ -140,16 +143,16 @@ class PersonController extends Controller {
                                     'relationship_type_id'=> $this->check_my_relationship($sym_10_roles[$i])
                                 ]);
                         }
-                    }
+                    }*/
                     DB::commit();
 
-                return response()->json(array('status' => 'Complete', 'message' => 'บันทึกสำเร็จ ', 'details' =>" : ) ") );
+                return response()->json(array('status' => 'Complete', 'message' => 'บันทึกสำเร็จ' ) ,200 );
             }
-            return response()->json(array('status' => '3', 'message' => 'มาได้ยังไง '));
+            return response()->json(array('status' => 'Error', 'message' => 'มาได้ยังไง ') ,200);
         }catch (Exception $e) {
             DB::rollback();
             if ($e->getCode() == 23000) {
-                $result['status'] = 1;
+                $result['status'] = "Error";
                 $result['message'] = "Duplicate Record";
                 return response()->json($result, 200);
             } else {

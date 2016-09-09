@@ -48,7 +48,7 @@ class FormController extends Controller
                         'person_road' => Input::get('road'),    'person_tumbon' => Input::get('sub_district'),
                         'person_mooh_num' => Input::get('mooh_number'),    'person_amphur' => Input::get('district'),
                         'person_province' => Input::get('province'),    'person_post_code' => Input::get('postal_code'),
-                        'person_mobile_phone' => Input::get('mobi_phone_number'), 'person_phone' => Input::get('house_number'),
+                        'person_mobile_phone' => Input::get('mobi_phone_number'), 'person_phone' => Input::get('house_number'),'person_alive'=> '1'
                         ]);
                         // keep the doctor profile
                         $Doctor_id = DB::table('doctors')->insertGetId(
@@ -147,7 +147,7 @@ class FormController extends Controller
                     }
                 return response()->json(array('status' => 'Complete', 'message' => 'บันทึกสำเร็จ ', 'details' =>" : ) ") );   
              }
-             return response()->json(array('status' => '3', 'message' => 'มาได้ยังไง ')); 
+             return response()->json(array('status' => '3', 'message' => 'มาได้ยังไง '));
             }catch (Exception $e) {
                 DB::rollback();
                 if ($e->getCode() == 23000) {  
@@ -296,10 +296,85 @@ class FormController extends Controller
     *
     * @return Response
     */
-    public function update()
+    public function update(Request $request)
     {
         //
+        try {
+
+
+               /* DB::beginTransaction();
+                $Person_id=Input::get('person_id');
+
+                // keep the doctor profile
+                $Doctor_id = DB::table('doctors')
+                    ->where('doctor_id',Input::get('doctor_id'))
+                    ->update(
+                        ['doctor_name' => Input::get('doctor_name'), 'doctor_mobile_phone' => Input::get('doctor_mobilephonenumber'),
+                            'doctor_phone' => Input::get('doctor_phonenumber'), 'hospital' => Input::get('hospital_name'), 'doctor_care_date' => Input::get('doctor_care_date') ,
+                            'email' => Input::get('doctor_email')
+                        ]);*/
+
+
+                // insert information record
+                /*  $symptom_checkbox_10 = Input::get('10_symptom_checkbox');
+                  DB::table('disease_1')
+                      ->where('questions_id' ,  Input::get('question_id'))
+                      ->update(
+                      ['symptom_1_1' => Input::get('1_1_symptom'), 'symptom_1_2' =>  Input::get('1_2_symptom'),
+                          'symptom_1_3' => Input::get('1_3_symptom'), 'symptom_2' =>  Input::get('2_symptom_age'),
+                          'symptom_3' => Input::get('3_symptom_age'), 'symptom_4_1' =>  Input::get('4_1_symptom'),
+                          'symptom_4_2' => Input::get('4_2_symptom'), 'symptom_4_3' => Input::get('4_2_symptom'),
+                          'symptom_4_4' => Input::get('4_4_symptom'), 'symptom_5' =>   Input::get('5_symptom'),
+                          'symptom_5_date' => Input::get('5_2_symptom_add_on_result_date'), 'symptom_5_result' =>  Input::get('5_2_symptom_add_on_result'),
+                          'symptom_6' => Input::get('6_symptom'), 'symptom_6_date' => Input::get('6_2_symptom_add_on_result_date'),
+                          'symptom_6_result' => Input::get('6_2_symptom_add_on_result'), 'symptom_7_1' =>  Input::get('7_1_symptom'),
+                          'symptom_7_1_result' => Input::get('7_1_symptom_result'), 'symptom_7_2' =>Input::get('7_2_symptom'),
+                          'symptom_7_2_result' => Input::get('7_2_symptom_result'), 'symptom_7_3' =>  Input::get('7_3_symptom'),
+                          'symptom_7_3_result' => Input::get('7_3_symptom_result'), 'symptom_8' => Input::get('8_1_symptom'),
+                          'symptom_9_male' => Input::get('9_male_number'), 'symptom_9_female' =>Input::get('9_female_number'),
+                          'symptom_10_2_male' => Input::get('10_2_male_number'), 'symptom_10_2_female' =>Input::get('10_2_female_number'),
+                          'symptom_10_1' => Input::get('10_symptom') , 'symptom_10_1_number' => Input::get('10_symptom_number'),'symptom_10_1_check' => $symptom_checkbox_10 ,
+                      ]);
+                  $sym_10_name = json_decode(stripslashes(Input::get('vpb_item_name')));
+                  $sym_10_age = json_decode(stripslashes(Input::get('vpb_item_ages')));
+                  $sym_10_citizen_number = json_decode(stripslashes(Input::get('vpb_item_ids')));
+                  $sym_10_roles =json_decode(stripslashes(Input::get('vpb_item_roles')));
+
+                  if($symptom_checkbox_10 != "ไม่รู้") {
+                      for($i = 0 ; $i < sizeof($sym_10_name) ; $i++){
+                          $name = explode ( " " ,  $sym_10_name[$i]);
+                          $relative_person_id = DB::table('persons')->insertGetId(
+                              ['person_first_name' => $name[0], 'person_last_name' => $name[1],
+                                  'person_age' => $sym_10_age[$i],'person_citizenID' => $sym_10_citizen_number[$i],
+                                  'person_sex' => 'male'
+                              ]);
+
+                          DB::table('relationship')->insert(
+                              ['person_1_id' => $Person_id, 'person_2_id' => $relative_person_id,
+                                  'role_1_id' => $this->check_my_role($sym_10_roles[$i],$Person_id),
+                                  'role_2_id' => $this->check_role($sym_10_roles[$i]),
+                                  'relationship_type_id'=> $this->check_my_relationship($sym_10_roles[$i])
+                              ]);
+                      }
+                  }*/
+                //DB::commit();
+
+                return response()->json(array('status' => 'Complete', 'message' => 'บันทึกสำเร็จ' ) ,200 );
+
+        }catch (Exception $e) {
+            DB::rollback();
+            if ($e->getCode() == 23000) {
+                $result['status'] = "Error";
+                $result['message'] = "Duplicate Record";
+                return response()->json($result, 200);
+            } else {
+                $result['status'] = 2;
+                $result['message'] = $e->getMessage();
+                return response()->json($result, 200);
+            }
+        }
     }
+
 
     /**
     * Remove the specified resource from storage.
