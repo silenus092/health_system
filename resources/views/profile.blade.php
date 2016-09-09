@@ -115,6 +115,19 @@
 		var person_id = "<?php echo $person->person_id; ?>";
 
 		$(document).ready(function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+            });
+
+            jQuery(document).ajaxStart(function () {
+                //show ajax indicator
+                ajaxindicatorstart(' please wait..');
+            }).ajaxStop(function () {
+                //hide ajax indicator
+                ajaxindicatorstop();
+            });
 
 			var panels = $('.user-infos');
 			var panelsButton = $('.dropdown-user');
@@ -274,24 +287,25 @@
 			});
 			$('#update_btn').click(function (e) {
 			e.preventDefault();
-				alert("clicks");
+
 				$.ajax({
 					url: "{{ url('/form_update') }}",
 					type: "POST",
 					data: $('#main_form').serialize()+"&doctor_id="+'<?php echo $result_callback[0]->doctor_id ?>'+
                     "&question_id="+'<?php echo $result_callback[0]->question_id ?>'+"&person_id="+person_id,
 					success: function (data) {
-						//alert(data.status +" \n"+ data.message);
-						if (data.status == "Success") {
+
+						//alert(data+" T "+data.status +" \n"+ data.message);
+						if (data.status == "Complete") {
 							BootstrapDialog.show({
 								type: BootstrapDialog.TYPE_SUCCESS,
 								title: data.status,
-								message: data.message + " " + name
+								message: data.message
 							});
-							window.location = '{{ URL::asset('/home') }}';
+
 						} else {
 							BootstrapDialog.show({
-								type: BootstrapDialog.TYPE_DANGER,
+								type: BootstrapDialog.TYPE_WARNING,
 								title: data.status,
 								message: data.message
 							});
@@ -386,8 +400,21 @@
 			$('#10_symptom_checkbox :checked').removeAttr('checked');
 
 
+            if($('input[name="5_symptom"]:checked').val()== 'มี'){
+                $('#5_2_symptom_add_on_result').prop("disabled", false);
+                $('#5_2_symptom_add_on_result_date').prop("disabled", false);
 
+                $('#datetimepicker2').datetimepicker( "option", "disabled", false );
+            }
+            if($('input[name="6_symptom"]:checked').val()== 'ตรวจ'){
+                $('#6_2_symptom_add_on_result').prop("disabled", false);
+                $('#6_2_symptom_add_on_result_date').prop("disabled", false);
+                $('#datetimepicker3').datetimepicker( "option", "disabled", false );
+            }
 
+            if ($('input:radio[name="10_symptom"]:checked').val() == 'มี') {
+                $('#10_symptom_number').prop("disabled", false);
+            }
 
 		});
 		function remove_person(id, name) {
@@ -482,7 +509,10 @@
 									<tr>
 										<td>Status:</td>
 										<td>
-											<div id="age">{{ $person->person_alive}}</div>
+											<div id="alive">
+											{{ $person->person_alive == 1 ? "alive" : "dead" }}
+
+											</div>
 										</td>
 									</tr>
 									<!-- <tr>
@@ -994,7 +1024,7 @@
 					<div class="form-group">
 						<label class="col-md-4 control-label">วัน-เดือน-ปี ที่บันทึกข้อมูลโดยแพทย์เจ้าของไข้</label>
 						<div class='col-md-6 input-group date' id='datetimepicker4'>
-							<input type='text' name="doctor_care_date" class="form-control"  value="<?php echo $result_callback[0]->doctor_care_date ?>" disabled/>
+							<input type='text' name="doctor_care_date" class="form-control"  value="<?php echo $result_callback[0]->doctor_care_date ?>" />
 							<span class="input-group-addon">
 						<span class="glyphicon glyphicon-calendar"></span>
 					</span>

@@ -270,7 +270,7 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label">วันเดือนปีเกิด</label>
                             <div class='col-md-6 input-group date' id='datetimepicker1'>
-                                <input type='text' name="birth_date" class=" col-md-2 form-control" disabled/>
+                                <input type='text' name="birth_date" class=" col-md-2 form-control" />
                                 <span class="input-group-addon">
 								<span class="glyphicon glyphicon-calendar"></span>
 							</span>
@@ -279,7 +279,7 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label">อายุ</label>
                             <div class='col-md-6'>
-                                <input type="text" class="form-control" id="age" name="age" value="" disabled>
+                                <input type="text" class="form-control" id="age" name="age" value="" >
                             </div>
                         </div>
                         <div class="form-group">
@@ -731,7 +731,7 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label">วัน-เดือน-ปี ที่บันทึกข้อมูลโดยแพทย์เจ้าของไข้</label>
                             <div class='col-md-6 input-group date' id='datetimepicker4'>
-                                <input type='text' name="doctor_care_date" class="form-control" disabled/>
+                                <input type='text' name="doctor_care_date" class="form-control" />
                                 <span class="input-group-addon">
 						<span class="glyphicon glyphicon-calendar"></span>
 					</span>
