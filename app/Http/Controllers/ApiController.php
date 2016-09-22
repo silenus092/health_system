@@ -970,31 +970,48 @@ class ApiController extends Controller
 
     }
 
-    //ผิดตรงนนี้เเหละ มการเกิม parent เป็นพี่น้อง
+    //ผิดตรงนนี้เเหละ มีการเกิม หาparentของคนอื่นเเล้วเอามาผูห เป็นพี่น้อง ของตนฟัค
     public function FindRelativesByParent($Parents)
     {
         $relatives = array();
         foreach ($Parents as $parent_id) {
-            $person_1_id = DB::table('relationship')
+            /*$person_1_id = DB::table('relationship')
                 ->where('person_1_id', '=', $parent_id)
                 ->where('role_1_id', '=', 19)->orWhere('role_1_id', '=', 20)
-                ->get();
-            foreach ($person_1_id as $p1) {
-                if (!in_array($p1->person_1_id, $relatives)) {
-                    $relatives[] = $p1->person_1_id;
-                }
-            }
-            $person_2_id = DB::table('relationship')
-                ->where('person_2_id', '=', $parent_id)
-                ->where('role_2_id', '=', 19)->orWhere('role_2_id', '=', 20)
-                ->get();
+                ->get();*/
+            $person_2_id= DB::table('relationship')
+            ->where('person_1_id', '=', $parent_id)
+            ->where(function($query)
+            {
+                $query->where('role_1_id', '=', 1)
+                ->orWhere('role_1_id', '=', 2);
+            })->get();
+
             foreach ($person_2_id as $p2) {
                 if (!in_array($p2->person_2_id, $relatives)) {
                     $relatives[] = $p2->person_2_id;
                 }
             }
+            /*$person_2_id = DB::table('relationship')
+                ->where('person_2_id', '=', $parent_id)
+                ->where('role_2_id', '=', 19)->orWhere('role_2_id', '=', 20)
+                ->get();*/
+            $person_1_id= DB::table('relationship')
+                ->where('person_2_id', '=', $parent_id)
+                ->where(function($query)
+                {
+                    $query->where('role_2_id', '=', 1)
+                        ->orWhere('role_2_id', '=', 2);
+                })->get();
+
+            foreach ($person_1_id as $p1) {
+                if (!in_array($p1->person_1_id, $relatives)) {
+                    $relatives[] = $p1->person_1_id;
+                }
+            }
 
         }
+
         return $relatives;
     }
 

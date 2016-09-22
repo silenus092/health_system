@@ -110,6 +110,9 @@
 		#myModalEDIT {
 			z-index: 1500;
 		}
+		.bootstrap-datetimepicker-widget {
+            position: 'relative';
+		}
 	</style>
 	<script type="text/javascript" CHARSET="UTF-8">
 		var person_id = "<?php echo $person->person_id; ?>";
@@ -121,13 +124,7 @@
                 },
             });
 
-            jQuery(document).ajaxStart(function () {
-                //show ajax indicator
-                ajaxindicatorstart(' please wait..');
-            }).ajaxStop(function () {
-                //hide ajax indicator
-                ajaxindicatorstop();
-            });
+
 
 			var panels = $('.user-infos');
 			var panelsButton = $('.dropdown-user');
@@ -192,6 +189,7 @@
 			$('#address_field').editable({
 				send: 'always',
 				pk: person_id,
+				url: '{{URL::to("/")}}/update_address',
 				url: '{{URL::to("/")}}/update_address',
 				title: 'Enter city, street and building #',
 				value: {
@@ -287,20 +285,54 @@
 			});
 			$('#update_btn').click(function (e) {
 			e.preventDefault();
+				if(!$("#10_symptom_checkbox").is(':checked')) {
+					var vpb_items = [];
+					var vpb_items_age = [];
+					var vpb_items_id = [];
+					var vpb_items_roles = [];
 
+
+					$.each($('.field_name'), function () {
+						vpb_items.push($(this).val());
+					});
+					$.each($('.field_age'), function () {
+						vpb_items_age.push($(this).val());
+					});
+					$.each($('.field_id'), function () {
+						vpb_items_id.push($(this).val());
+					});
+					$.each($('.field_roles'), function () {
+						vpb_items_roles.push($(this).val());
+					});
+
+					//alert("vpb_items_roles "+vpb_items_roles.length);
+					var data_name = "&vpb_item_name=" + JSON.stringify(vpb_items);
+					var data_age = "&vpb_item_ages=" + JSON.stringify(vpb_items_age);
+					var data_id = "&vpb_item_ids=" + JSON.stringify(vpb_items_id);
+					var data_role = "&vpb_item_roles=" + JSON.stringify(vpb_items_roles);
+					var serializedReturn = $('#main_form').serialize() + data_name + data_age + data_id + data_role;
+				}else{
+					var serializedReturn = $('#main_form').serialize();
+				}
 				$.ajax({
 					url: "{{ url('/form_update') }}",
 					type: "POST",
-					data: $('#main_form').serialize()+"&doctor_id="+'<?php echo $result_callback[0]->doctor_id ?>'+
-                    "&question_id="+'<?php echo $result_callback[0]->question_id ?>'+"&person_id="+person_id,
+					data: serializedReturn+"&doctor_id="+'<?php echo $result_callback[0]->doctor_id ?>'+
+                    "&question_id="+'<?php echo $result_callback[0]->questions_id ?>'+"&person_id="+person_id+'&10_symptom_checkbox='+$('#10_symptom_checkbox:checkbox:checked').val(),
+					onSubmit: function () {
+						$('#myPleaseWait').modal('show');
+					},
 					success: function (data) {
-
+						$('#myPleaseWait').modal('hide');
 						//alert(data+" T "+data.status +" \n"+ data.message);
 						if (data.status == "Complete") {
 							BootstrapDialog.show({
 								type: BootstrapDialog.TYPE_SUCCESS,
 								title: data.status,
-								message: data.message
+								message: data.message ,
+								onhidden: function (dialogRef) {
+									location.reload();
+								}
 							});
 
 						} else {
@@ -312,6 +344,7 @@
 						}
 					},
 					error: function (xhr, textStatus, thrownError) {
+						$('#myPleaseWait').modal('hide');
 						BootstrapDialog.show({
 							type: BootstrapDialog.TYPE_DANGER,
 							title: textStatus,
@@ -336,6 +369,8 @@
 				minView: 2,
 				autoclose: true,
 				todayBtn: true,
+                horizontal: 'auto',
+                vertical: 'bottom',
 				endDate: $.datepicker.formatDate('yy-mm-dd', new Date()),
 			});
 			$('#datetimepicker3').datetimepicker({
@@ -397,7 +432,20 @@
 						}
 					});
 
-			$('#10_symptom_checkbox :checked').removeAttr('checked');
+			if ($('#10_symptom_checkbox :checked')){
+				$(".form-group_10").hide();
+				$('#add_more').prop("disabled", true);
+			}
+
+			$("#10_symptom_checkbox").change(function () {
+				if (this.checked) {
+					$(".form-group_10").hide();
+					$('#add_more').prop("disabled", true);
+				} else {
+					$(".form-group_10").show();
+					$('#add_more').prop("disabled", false);
+				}
+			});
 
 
             if($('input[name="5_symptom"]:checked').val()== 'มี'){
@@ -416,6 +464,49 @@
                 $('#10_symptom_number').prop("disabled", false);
             }
 
+			var count_line = parseInt("<?php echo (sizeof($result_relation) == 0) ? 1 : sizeof($result_relation);  ?>");
+			$('#add_more').click(function () {
+				//alert(count_line);
+				count_line++;
+				if (count_line <= 10) {
+
+					$('<div><div class="col-md-2">' +
+							'<input type="text" class="form-control field_name" name="10_name[]" placeholder="ชื่อ นามสกุล">' +
+							'</div>' +
+							'<div class="col-md-2">' +
+							'<input type="text" class="form-control field_age" name="10_age[]" placeholder="อายุ">' +
+							'</div>' +
+							'<div class="col-md-2">' +
+							'<input type="text" class="form-control field_id" name="10_citizen_number[]" placeholder="เลขประจำตัวประชาชน">' +
+							'</div>' + '<div class="form-group">' + '<label class="col-md-1 control-label">Relationship</label>' +
+							'<div class="col-md-2  selectContainer">' + '<select name="10_roles[]" class="form-control field_roles">' +
+							'<option value="ปู่ทวด">ปู่ทวด</option>' + '<option value="ปู่">ปู่</option>' +
+							'<option value="ตา">ตา</option>' +
+							'<option value="น้า">น้า</option>' +
+							'<option value="ลุง">ลุง</option>' +
+							'<option value="พ่อ">พ่อ</option>' +
+							'<option value="พี่ชาย">พี่ชาย</option>' +
+							'<option value="น้องชาย">น้องชาย</option>' + '</select></div>' +
+							'<div>' +
+							'<a data-original-title="Remove this user" data-toggle="tooltip" type="button" onclick="" ' +
+							' class="remove_button btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>' +
+							'</div>' +
+							'</div></div>'
+					).fadeIn('slow').appendTo('.form-group_10');
+				} else {
+					BootstrapDialog.show({
+						type: BootstrapDialog.TYPE_WARNING,
+						title: "Cannot add more !!",
+						message: "Sorry, you have exceeded a  limit"
+					});
+				}
+			});
+
+			$('.form-group_10').on('click', '.remove_button', function (e) { //Once remove button is clicked
+				e.preventDefault();
+				$(this).parent().parent().parent('div').remove(); //Remove field html
+				count_line--; //Decrement field counter
+			});
 		});
 		function remove_person(id, name) {
 			BootstrapDialog.confirm({
@@ -466,7 +557,8 @@
 				}
 			});
 
-		}
+
+		};
 	</script>
 	<div class="container">
 		<div class="row">
@@ -773,8 +865,9 @@
 									   name="5_2_symptom_add_on_result"
 									   value="<?php echo $result_callback[0]->symptom_5_result ?>" disabled="<?php echo ($result_callback[0]->symptom_5 == "มี") ? true : false ?>">
 							</div>
+
 							<label class="col-md-2">ครั้งแรก เมื่อ วัน-เดือน-ปี</label>
-							<div class='col-md-2 input-group date' id='datetimepicker2'>
+							<div class='col-md-2 input-group date' style="position: relative" id='datetimepicker2'>
 								<input type='text' id="5_2_symptom_add_on_result_date"
 									   name="5_2_symptom_add_on_result_date" class="form-control"
 									   value="<?php echo $result_callback[0]->symptom_5_date ?>" disabled="<?php echo ($result_callback[0]->symptom_5 == "มี") ? true : fasle ?>"/>
@@ -938,7 +1031,7 @@
 								<input type="radio" name="10_symptom" id="10_1_symptom" value="ไม่มี" autocomplete="off"
 								<?php echo ($result_callback[0]->symptom_10_1 == "ไม่มี") ? 'checked' : '' ?>> ไม่มี
 							</label>
-							<label class="btn btn-primary">
+							<label class="btn btn-primary  <?php echo ($result_callback[0]->symptom_10_1 == "มี") ? 'active' : '' ?>">
 								<input type="radio" name="10_symptom" id="10_2_symptom" value="มี" autocomplete="off"  <?php echo ($result_callback[0]->symptom_10_1 == "มี") ? 'checked' : '' ?>>
 								มี
 							</label>
@@ -956,14 +1049,50 @@
 
 						<div class="checkbox col-md-2">
 							<label>
-								<input type="checkbox" id="10_symptom_checkbox" name="10_symptom_checkbox"
-								<?php echo ($result_callback[0]->symptom_10_check == "ไม่รู้") ? 'checked' : '' ?> >ไม่รู้:
+								<input type="checkbox" id="10_symptom_checkbox" name="10_symptom_checkbox" value="ไม่รู้"
+								<?php echo ($result_callback[0]->symptom_10_1_check == "ไม่รู้") ? 'checked' : '' ?> >ไม่รู้:
 								ติดตามเพิ่มเติม
 							</label>
 						</div>
 					</div>
 
 					<div class="form-group form-group_10">
+						<?php  if(sizeof($result_relation) > 0){
+
+						for($i = 0 ; $i < sizeof($result_relation) ; $i++){
+
+						?>
+
+						<div class="col-md-2">
+							<input type="text" class="form-control field_name" name="10_name[]"
+								   placeholder="ชื่อ นามสกุล" value="<?php echo $result_relation[$i]->person_first_name.' '.$result_relation[$i]->person_last_name ?>" readonly>
+						</div>
+						<div class="col-md-2">
+							<input type="text" class="form-control field_age" value="<?php echo $result_relation[$i]->person_age ?>" name="10_age[]" placeholder="อายุ"
+								   readonly>
+						</div>
+						<div class="col-md-2">
+							<input type="text" class="form-control field_id" name="10_citizen_number[]"
+								   placeholder="เลขประจำตัวประชาชน" value="<?php echo $result_relation[$i]->person_citizenID ?>" readonly>
+						</div>
+						<div class="form-group">
+							<label class="col-md-1 control-label">Relationship</label>
+							<div class="col-md-2  selectContainer">
+								<select name="10_roles[] " class="form-control field_roles">
+									<option value="ปู่ทวด" <?= $result_relation[$i]->role_description == 'ปู่ทวด' ? ' selected="selected"' : '';?> >ปู่ทวด</option>
+									<option value="ปู่" <?= $result_relation[$i]->role_description == 'ปู่' ? ' selected="selected"' : '';?>  >ปู่</option>
+									<option value="ตา" <?= $result_relation[$i]->role_description == 'ตา' ? ' selected="selected"' : '';?>  >ตา</option>
+									<option value="น้า" <?= $result_relation[$i]->role_description == 'น้า' ? ' selected="selected"' : '';?>  >น้า</option>
+									<option value="ลุง" <?= $result_relation[$i]->role_description == 'ลุง' ? ' selected="selected"' : '';?>  >ลุง</option>
+									<option value="พ่อ" <?= $result_relation[$i]->role_description == 'พ่อ' ? ' selected="selected"' : '';?>  >พ่อ</option>
+									<option value="พี่ชาย" <?= $result_relation[$i]->role_description == 'พี่ชาย' ? ' selected="selected"' : '';?>  >พี่ชาย</option>
+									<option value="น้องชาย" <?= $result_relation[$i]->role_description == 'น้องชาย' ? ' selected="selected"' : '';?> >น้องชาย</option>
+								</select>
+							</div>
+						</div>
+						<?php }
+							}else{ ?>
+
 						<div class="col-md-2">
 							<input type="text" class="form-control field_name" name="10_name[]"
 								   placeholder="1-ชื่อ-นามสกุล" required="true">
@@ -991,6 +1120,7 @@
 								</select>
 							</div>
 						</div>
+							<?php }?>
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 text-left">10.2 มารดามีพี่น้องแม่เดียวกัน กี่คน </label>

@@ -31,13 +31,6 @@
 	<script src="{{ URL::asset('/scripts/jquery-1.9.1.js') }}"></script>
 	<script src="{{ URL::asset('/scripts/js/bootstrap.min.js') }}"></script>
 	<script src="{{ URL::asset('/scripts/js/jquery-ui-1.9.2.custom.min.js') }}"></script>
-	<script src="{{ URL::asset('/scripts/js/primitives.min.js') }}"></script>
-	<script src="{{ URL::asset('/scripts/js/jqGlobal.js') }}"></script>
-	<script src="{{ URL::asset('/scripts/js/treeControl.js') }}"></script>
-	<script src="{{ URL::asset('scripts/js/jquery.blockUI.js') }}"></script>
-	<script src="{{ URL::asset('/scripts/js/view.js') }}"></script>
-	<script src="{{ URL::asset('/scripts/js/json_parse.js') }}"></script>
-	<script src="{{ URL::asset('/scripts/js/jquery.uniform.min.js') }}"></script>
 
 
 	<script src="{{ URL::asset('/scripts/js/bootstrap-datetimepicker.min.js') }}"></script>
@@ -66,7 +59,7 @@
 			width: 100%;
 			height: 100%;
 			z-index: 9999;
-			background: url('images/ajax-loader.gif') 50% 50% no-repeat rgb(249, 249, 249);
+			background: url('/images/ajax-loader.gif') 50% 50% no-repeat rgb(249, 249, 249);
 		}
 
 		.dropdown-submenu {

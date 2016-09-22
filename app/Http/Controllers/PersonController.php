@@ -1,11 +1,14 @@
 <?php namespace App\Http\Controllers;
 
 use App\Persons;
+use App\Relationship;
 use DB;
 use Input;
-
+use StaticArray\StaticArray;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
+use Symfony\Component\Security\Core\Authentication\RememberMe\PersistentToken;
+
 class PersonController extends Controller {
 
 
@@ -86,7 +89,7 @@ class PersonController extends Controller {
 	{
 		//
         try {
-
+            $relationship_debug = "None";
             if ($request->ajax()) {
                 DB::beginTransaction();
                 $Person_id=Input::get('person_id');
@@ -102,8 +105,8 @@ class PersonController extends Controller {
                         ]);
 
 
-                    // insert information record
-                  /*  $symptom_checkbox_10 = Input::get('10_symptom_checkbox');
+                // insert information record
+                $symptom_checkbox_10 = Input::get('10_symptom_checkbox');
                     DB::table('disease_1')
                         ->where('questions_id' ,  Input::get('question_id'))
                         ->update(
@@ -122,31 +125,100 @@ class PersonController extends Controller {
                             'symptom_10_2_male' => Input::get('10_2_male_number'), 'symptom_10_2_female' =>Input::get('10_2_female_number'),
                             'symptom_10_1' => Input::get('10_symptom') , 'symptom_10_1_number' => Input::get('10_symptom_number'),'symptom_10_1_check' => $symptom_checkbox_10 ,
                         ]);
+
                     $sym_10_name = json_decode(stripslashes(Input::get('vpb_item_name')));
                     $sym_10_age = json_decode(stripslashes(Input::get('vpb_item_ages')));
                     $sym_10_citizen_number = json_decode(stripslashes(Input::get('vpb_item_ids')));
                     $sym_10_roles =json_decode(stripslashes(Input::get('vpb_item_roles')));
 
-                    if($symptom_checkbox_10 != "ไม่รู้") {
+                    if($symptom_checkbox_10 != "ไม่รู้" || $symptom_checkbox_10==null ||  !isset($symptom_checkbox_10) ) {
+                        $relationship_debug = "เข้ามาเเล้ส";
                         for($i = 0 ; $i < sizeof($sym_10_name) ; $i++){
-                            $name = explode ( " " ,  $sym_10_name[$i]);
-                            $relative_person_id = DB::table('persons')->insertGetId(
-                                ['person_first_name' => $name[0], 'person_last_name' => $name[1],
-                                    'person_age' => $sym_10_age[$i],'person_citizenID' => $sym_10_citizen_number[$i],
-                                    'person_sex' => 'male'
-                                ]);
+                            $relationship_debug = "เข้ามาเเล้ส 1";
+                            if($sym_10_name[$i] != ' '   && $sym_10_name[$i] != null) {
+                                $name = explode ( " " ,  $sym_10_name[$i]);
 
-                            DB::table('relationship')->insert(
-                                ['person_1_id' => $Person_id, 'person_2_id' => $relative_person_id,
-                                    'role_1_id' => $this->check_my_role($sym_10_roles[$i],$Person_id),
-                                    'role_2_id' => $this->check_role($sym_10_roles[$i]),
-                                    'relationship_type_id'=> $this->check_my_relationship($sym_10_roles[$i])
-                                ]);
+                                $user = Persons::firstOrNew(array('person_first_name' => $name[0] ,'person_last_name' => $name[1] ));
+                                $user->person_first_name = $name[0];
+                                $user->person_last_name = $name[1];
+                                $user->person_age = $sym_10_age[$i];
+                                $user->person_citizenID = $sym_10_citizen_number[$i];
+                                $user->person_sex = 'male';
+                                $user->save();
+                                $relative_person_id =  $user->person_id;
+                                /*$relative_person_id = DB::table('persons')->insertGetId(
+                                    ['person_first_name' => $name[0], 'person_last_name' => $name[1],
+                                        'person_age' => $sym_10_age[$i],'person_citizenID' => $sym_10_citizen_number[$i],
+                                        'person_sex' => 'male'
+                                    ]);*/
+
+                                $relationship =Relationship::where('person_1_id', '=', $Person_id)
+                                    ->where('person_2_id', '=', $relative_person_id)
+                                    ->first();
+
+                                if($relationship->exists){
+                                    $relationship_debug = "เข้ามาเเล้ส 2";
+                                    $relationship->role_1_id =  $this->check_my_role($sym_10_roles[$i],$Person_id);
+                                    $relationship->role_2_id = $this->check_role($sym_10_roles[$i]);
+                                    $relationship->relationship_type_id = $this->check_my_relationship($sym_10_roles[$i]);
+                                    $relationship->save();
+
+                                }else {
+                                    $relationship = Relationship::where('person_2_id', '=', $Person_id)
+                                        ->where('person_1_id', '=', $relative_person_id)
+                                        ->first();
+                                    if($relationship->exists){
+                                        $relationship_debug = "เข้ามาเเล้ส 3";
+                                        $relationship->role_2_id =  $this->check_my_role($sym_10_roles[$i],$Person_id);
+                                        $relationship->role_1_id = $this->check_role($sym_10_roles[$i]);
+                                        $relationship->relationship_type_id = $this->check_my_relationship($sym_10_roles[$i]);
+                                        $relationship->save();
+                                    }else{
+                                        $relationship_debug = "เข้ามาเเล้ส 4";
+
+                                        //add data into patient, doctor , and question table
+                                        $relative_doctor_id = DB::table('doctors')->insertGetId(
+                                            ['doctor_name' => "ไม่ทราบ", 'doctor_mobile_phone' => "ไม่ทราบ",
+                                                'doctor_phone' => "ไม่ทราบ", 'hospital' => "ไม่ทราบ", 'doctor_care_date' => "",
+                                                'email' => "ไม่ทราบ"
+                                            ]);
+
+                                        $relative_patient_id = DB::table('patients')->insertGetId(
+                                            ['doctor_id' => $relative_doctor_id, 'person_id' => $relative_person_id,
+                                                'registration_date' => date('Y-m-d')
+                                            ]);
+
+                                        //In future, if our system support many disease types , we need to change where on disease_type_name_en to id
+                                        $relative_disease_types = DB::table('disease_types')->where('disease_type_name_en', StaticArray::$diseases['DMD'])->first();
+                                        // register disease type with question table
+                                        $relative_disease_form_id = DB::table('disease_forms')->insertGetId(
+                                            ['disease_type_id' => $relative_disease_types->disease_type_id]);
+
+                                        DB::table('patients_disease_forms')->insert(
+                                            ['patient_id' => $relative_patient_id, 'question_id' => $relative_disease_form_id,
+                                                'registration_date' => date('Y-m-d')
+                                            ]);
+
+                                        DB::table('disease_1')->insert(
+                                            [
+                                                'questions_id' => $relative_disease_form_id
+                                            ]);
+                                        DB::table('relationship')->insert(
+                                            ['person_1_id' => $Person_id, 'person_2_id' => $relative_person_id,
+                                                'role_1_id' => $this->check_my_role($sym_10_roles[$i],$Person_id),
+                                                'role_2_id' => $this->check_role($sym_10_roles[$i]),
+                                                'relationship_type_id'=> $this->check_my_relationship($sym_10_roles[$i])
+                                            ]);
+                                    }
+
+                                }
+                            }
+
                         }
-                    }*/
+                    }
                     DB::commit();
 
-                return response()->json(array('status' => 'Complete', 'message' => 'บันทึกสำเร็จ' ) ,200 );
+                return response()->json(array('status' => 'Complete', 'message' => 'บันทึกสำเร็จ ' ) ,200 );
             }
             return response()->json(array('status' => 'Error', 'message' => 'มาได้ยังไง ') ,200);
         }catch (Exception $e) {
@@ -257,7 +329,7 @@ class PersonController extends Controller {
                 AND disease_types.disease_type_id = disease_forms.disease_type_id
 				AND patients_disease_forms.patient_id =  patients.patient_id
 				AND patients.person_id = '. $person_id);
-        // list person profile
+        //  list person profile
         $person = DB::table('persons')
             ->where('person_id', '=', $person_id)
             ->first();
@@ -273,6 +345,19 @@ class PersonController extends Controller {
 				AND patients_disease_forms.patient_id =  patients.patient_id
 				AND patients.person_id = '. $person_id .'
                 AND patients.doctor_id  = doctors.doctor_id');
+            // get all relationships between person_id
+                    $result_relation = DB::select('SELECT persons.person_first_name ,persons.person_last_name ,persons.person_citizenID ,filtered_role.*
+                                                FROM persons ,
+                                                    (SELECT *
+                                                    FROM  relationship
+                                                    WHERE person_1_id = '.$person_id.' OR person_2_id = '.$person_id.') as relationship  ,
+                                                    ( SELECT  *
+                                                     FROM   roles
+                                                     WHERE  role_id IN (1,3,5,7,9,11,13,15,17,19,24) ) as filtered_role
+                                                WHERE (relationship.role_1_id  = filtered_role.role_id AND persons.person_id  = relationship.person_1_id AND relationship.person_1_id != '.$person_id.' ) OR 
+                                                ( persons.person_id = relationship.person_2_id AND relationship.person_2_id != '.$person_id.' AND relationship.role_2_id = filtered_role.role_id )
+                                                GROUP by persons.person_first_name ,persons.person_last_name ,persons.person_citizenID ,filtered_role.role_description ');
+
 
 
             $result_callback_header = DB::table('disease_types')
@@ -285,7 +370,7 @@ class PersonController extends Controller {
 					->with('person' ,$person)
 					->with('results',$result)
 				    ->with('result_callback_header', $result_callback_header)
-
+                    ->with('result_relation',$result_relation)
 					->with('result_callback',$result_callback);
 
 				}else{
@@ -314,25 +399,38 @@ class PersonController extends Controller {
         $person = DB::table('persons')
             ->where('person_id', '=', $name[0])
             ->first();
-        $result = DB::select('SELECT disease_types.disease_type_id ,disease_type_name_th ,disease_type_name_en
+        if(count($person)>0)
+        {
+            $result = DB::select('SELECT disease_types.disease_type_id ,disease_type_name_th ,disease_type_name_en
 				FROM  disease_forms ,patients_disease_forms ,disease_types ,patients
 				WHERE patients_disease_forms.question_id  = disease_forms.question_id
                 AND disease_types.disease_type_id = disease_forms.disease_type_id
 				AND patients_disease_forms.patient_id =  patients.patient_id
 				AND patients.person_id = ' . $person->person_id);
+            return view('profile')
+                ->with('person', $person)
+                ->with('results', $result)
+                ->with('result_callback_header', null)
+                ->with('result_callback', null);
+        } else{
+            $Total  = DB::select('SELECT count(disease_forms.question_id) as  total , disease_type_name_en ,disease_type_name_th
+                                FROM disease_forms
+                                RIGHT JOIN disease_types
+                                ON disease_types.disease_type_id = disease_forms.disease_type_id
+                                Group by disease_type_name_en , disease_type_name_th');
+            $data = array();
+            for($i = 0 ; $i < count($Total) ; $i++){
+                $data[]='{name:"'.$Total[$i]->disease_type_name_en.'",y:'.$Total[$i]->total.'}';
+            }
+            return redirect()->back()->with('no_result' , true)->with('disease_summary' , $data);
 
+        }
         /*$result = DB::table('disease_forms')
             ->join('patients_disease_forms', 'patients_disease_forms.question_id', '=', 'disease_forms.question_id')
             ->join('disease_types', 'disease_types.disease_type_id', '=', 'disease_forms.disease_type_id')
             ->where('patients_disease_forms.patient_id', '=' , $person->person_id)
             ->select('disease_forms.question_id','disease_types.disease_type_name_th', 'disease_types.disease_type_name_en')
             ->get();*/
-
-        return view('profile')
-            ->with('person', $person)
-            ->with('results', $result)
-            ->with('result_callback_header', null)
-            ->with('result_callback', null);
 
     }
 	

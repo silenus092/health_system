@@ -141,7 +141,7 @@ var treeplugin;
             };
 
             $(myTreeControl).famDiagram(treeOptions);
-            createMenuBtn();
+            //createMenuBtn();
             callCheckUndoDelete();
         })
     };
@@ -213,7 +213,7 @@ var treeplugin;
             var idDelete = findById(idRef).id_key;
             var input = JSON.stringify({person_id: idDelete});
             $.ajax({
-                url: settings.url + '/drop_person',
+                url: settings.url + '/drop_person_api',
                 contentType: "application/x-www-form-urlencoded;charset=utf-8",
                 cache: false,
                 type: 'post',
@@ -402,7 +402,7 @@ var treeplugin;
     function createMenuBtn() {
         var menu = $('<div style="position:fixed;z-index:1000;top: 115px;">'
             + '<div>'
-            + '<input id="btnReturn" type="button" value="ย้อนกลับ" style="width:120px; position:relative;" /></div>'
+            + '<input id="btnReturn" type="button" class="btn btn-primary" value="ย้อนกลับ" style="border-radius: 12px; width:120px; position:relative;" /></div>'
             + '<div id="divUndoDelelte" style="position:relative; left:150px;">'
             + '<input id="btnUndoDelete" type="button" value="ยกเลิกการลบ" style="width:120px; position:relative;"/>'
             + '</div>').attr("id", "divMenu");

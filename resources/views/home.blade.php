@@ -10,11 +10,17 @@
 <script type="text/javascript" CHARSET="UTF-8">
 	$(function(){
 
-		function setCookie(cname, cvalue, exdays) {
-			var d = new Date();
-			d.setTime(d.getTime() + (exdays*24*60*60*1000));
-			var expires = "expires="+d.toUTCString();
-			document.cookie = cname + "=" + cvalue + "; " + expires;
+		function setCookie(cname, cvalue, exdays ,type) {
+            if(type = "user_session"){
+                var d = new Date();
+                d.setTime(d.getTime() + (exdays*24*60*60*1000));
+                var expires = "expires="+d.toUTCString();
+                document.cookie = cname + "=" + cvalue + "; " + expires;
+            }else{
+
+                document.cookie = cname + "=" + cvalue + "; " + expires;
+            }
+
 		}
 
 		function getCookie(cname) {
@@ -33,8 +39,25 @@
 		}
 
 		function checkCookie() {
-			var user = getCookie("username");
-			if (user != "") {
+			var  user = getCookie("username");
+            var  user_closedtab = getCookie("user_closedtab");
+			var  serach_fail = '{{  Session::get( 'no_result')  }}';
+			//alert(serach_fail);
+			if(serach_fail == "1"){
+				$.amaran({
+					'theme'     :'user yellow',
+					'content'   :{
+						user:'Search not found!!',
+						message: "Try again with other keywords",
+						info:'',
+						img:'{{ URL::asset('images/ICBS.png') }}',
+					},
+					'position'  :'top right',
+					'inEffect'  :'slideTop',
+					'delay' : 4000
+				});
+			}
+			if (user_closedtab == "true") {
 				$.amaran({
 					'theme'     :'user green',
 					'content'   :{
@@ -47,28 +70,37 @@
 					'inEffect'  :'slideTop',
 					'delay' : 4000
 				});
+                setCookie("user_closedtab", "false", "","user_closedtab");
 			} else {
 				user ='{{ \Auth::user()->name}}';
-			if (user != "" && user != null) {
-				setCookie("username", user, 0.5);
+			if (user != "" && user != null ) {
+				setCookie("username", user, 0.5,"user_session");
+
 			}
-			$.amaran({
-				'theme'     :'user green',
-				'content'   :{
-					user:'Welcome !!',
-					message:'You are successfully logged in!',
-					info:'',
-					img:'{{ URL::asset('images/ICBS.png') }}',
-				},
-				'position'  :'top right',
-				'inEffect'  :'slideTop',
-				'delay' : 4000
-			});
+           /* if( serach_fail != "1"){
+                $.amaran({
+                    'theme'     :'user green',
+                    'content'   :{
+                        user:'Welcome !!',
+                        message:'You are successfully logged in!',
+                        info:'',
+                        img:'{{ URL::asset('images/ICBS.png') }}',
+                    },
+                    'position'  :'top right',
+                    'inEffect'  :'slideTop',
+                    'delay' : 4000
+                });
+
+            }*/
+
 		}
 	}
 
-	  checkCookie();
+	    checkCookie();
 
+		window.onbeforeunload = function () {
+			return setCookie("user_closedtab", "true", "","user_closedtab");
+		};
 
 		$('#container_PIE').highcharts({
 			chart: {
@@ -161,24 +193,36 @@
 		});
 	});
 </script>
+    <style>
+        #myModal {
+            z-index: 1500;
+        }
+        .btn-circle {
+            width: 49px;
+            height: 49px;
+            text-align: center;
+            padding: 5px 0;
+            font-size: 20px;
+            line-height: 2.00;
+            border-radius: 30px;
+        }
+        .btn-circle-lg {
+            width: 80px;
+            height: 80px;
+            text-align: center;
+            padding: 13px 0;
+            font-size: 20px;
+            line-height: 2.00;
+            border-radius: 70px;
+        }
+    </style>
 <div class="container" >
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
 			<div class="panel panel-default">
-				<div class="panel-heading">Home</div>
+				<div class="panel-heading">Menu</div>
 				<div class="panel-body">
 
-					@if (Session::has('message'))
-					{!! Amaran::theme('user green')->content([
-					'message'=>Session::get('message'),
-					'user'=>' ICBS',
-					'img'=>URL::asset('images/ICBS.png'),
-					])
-					->position('top right')
-					->inEffect('slideTop')
-					->create();
-					!!}
-					@endif
 					<var id="result-container" class="result-container"></var>
 					<form id="formid" action="{{ url('/show_person')}}" method="post">
 						<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
@@ -195,12 +239,21 @@
 							</div>
 						</div>
 					</form>
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1" style="padding-top: 10px" >
+                        <a href="#aboutModal" data-toggle="modal" data-target="#myModal" class="btn  btn-circle-lg btn-primary"><span class="glyphicon glyphicon-wrench"></span><br> DMD </a>
+                        </div>
+                    </div>
+
+
 				</div>
 			</div>
 		</div>
+
+
 		<div class="col-md-10 col-md-offset-1">
 			<div class="panel panel-default">
-				<div class="panel-heading">Panel</div>
+				<div class="panel-heading">Report</div>
 				<div class="panel-body">
 					<div id="container_PIE" style="height: 400px">
 
@@ -215,4 +268,29 @@
 
 </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel"> DMD management tool</h4>
+                </div>
+
+                <div class="modal-body">
+
+
+                        <div class="" >
+                            <a href="{{ URL::asset('/form') }}" class="btn btn-block btn-lg btn-success "><span class="glyphicon glyphicon-plus"></span> Add  new DMD record</a>
+                        </div>
+                    <br>
+                        <div class="" >
+                            <a href="{{ URL::asset('/duc_report') }}" class="btn btn-block btn-lg btn-info"><span class="glyphicon glyphicon-folder-open"></span> View DMD report </a>
+                        </div>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

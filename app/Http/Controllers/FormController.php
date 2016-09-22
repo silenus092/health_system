@@ -62,7 +62,7 @@ class FormController extends Controller
                         'registration_date' => date('Y-m-d')
                         ]);
                           //In future, if our system support many disease types , we need to change where on disease_type_name_en to id
-                        $disease_types = DB::table('disease_types')->where('disease_type_name_en', 'Duchenne muscular dystrophy, DMD')->first();
+                        $disease_types = DB::table('disease_types')->where('disease_type_name_en', \Config::get('constants.DMD'))->first();
                          // register disease type with question table
                         $disease_form_id = DB::table('disease_forms')->insertGetId(
                         ['disease_type_id' => $disease_types->disease_type_id] );
@@ -126,13 +126,13 @@ class FormController extends Controller
                                         ]);
 
                                     //In future, if our system support many disease types , we need to change where on disease_type_name_en to id
-                                    $relative_disease_types = DB::table('disease_types')->where('disease_type_name_en', 'Duchenne muscular dystrophy, DMD')->first();
+                                    $relative_disease_types = DB::table('disease_types')->where('disease_type_name_en', \Config::get('constants.DMD'))->first();
                                     // register disease type with question table
                                     $relative_disease_form_id = DB::table('disease_forms')->insertGetId(
                                         ['disease_type_id' => $relative_disease_types->disease_type_id]);
 
                                     DB::table('patients_disease_forms')->insert(
-                                        ['patient_id' => $relative_patient_id, 'question_id' => $disease_form_id,
+                                        ['patient_id' => $relative_patient_id, 'question_id' => $relative_disease_form_id,
                                             'registration_date' => date('Y-m-d')
                                         ]);
 
@@ -393,7 +393,7 @@ class FormController extends Controller
 
 		return DB::table('persons')
             ->join('patients', 'patients.person_id', '=', 'persons.person_id')
-			->join('doctors', 'doctors.doctor_id', '=', 'patients.doctor_id')	
+			->join('doctors', 'doctors.doctor_id', '=', 'patients.doctor_id')
             ->join('patients_disease_forms', 'patients_disease_forms.patient_id', '=', 'patients.patient_id')
 			->join('disease_forms','disease_forms.question_id','=','patients_disease_forms.question_id')
 			->join('disease_1', 'disease_1.questions_id', '=', 'patients_disease_forms.question_id')
@@ -402,6 +402,21 @@ class FormController extends Controller
             ->first();
 		
 	}
+
+	public function  get_relative($person_id){
+        $result_relation = DB::select('SELECT persons.person_first_name ,persons.person_last_name ,persons.person_citizenID ,filtered_role.*
+                                                FROM persons ,
+                                                    (SELECT *
+                                                    FROM  relationship
+                                                    WHERE person_1_id = '.$person_id.' OR person_2_id = '.$person_id.') as relationship  ,
+                                                    ( SELECT  *
+                                                     FROM   roles
+                                                     WHERE  role_id IN (1,3,5,7,9,11,13,15,17,19,24) ) as filtered_role
+                                                WHERE (relationship.role_1_id  = filtered_role.role_id AND persons.person_id  = relationship.person_1_id AND relationship.person_1_id != '.$person_id.' ) OR 
+                                                ( persons.person_id = relationship.person_2_id AND relationship.person_2_id != '.$person_id.' AND relationship.role_2_id = filtered_role.role_id )
+                                                GROUP by persons.person_first_name ,persons.person_last_name ,persons.person_citizenID ,filtered_role.role_description ');
+            return $result_relation;
+    }
 	
 	
 }

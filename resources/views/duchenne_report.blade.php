@@ -415,7 +415,7 @@
 									<h1 class="panel-title text-center"><?php echo $Family_total[0]->total ; ?></h1>
 								</div>
 								<div class="panel-body text-center">
-									<strong>จำนวนครอบครัว</strong>
+									<strong>จำนวนครอบครัวที่มีผู้ป่วยอยู่</strong>
 								</div>
 							</div>
 						</div>

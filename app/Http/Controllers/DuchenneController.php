@@ -169,7 +169,9 @@ class DuchenneController extends Controller
                                                     ) AS a1
                                     WHERE patients.patient_id = a1.patient_id AND patients.doctor_id  = doctors.doctor_id
                                     GROUP BY doctors.hospital');
+        // จากจำนวนผู้ป่วยทั้งหมดื มีกี่คนที่มีประวัติมีคนเป็นโรคแบบผู้ป่วยมาก่อนในครอบครัว และกี่คนที่ไม่มีประวัติมีคนเป็นแบบเดียวกันมาก่อน
 
+        // ในรายที่ไม่มีประวัติมีคนเป็นแบบเดียวกันมาก่อนนั้น มารดาได้รับการตรวจพาะหะกี่ราย และผลพบเป็นพาหะกี่รายไม่เป็นพาหะกี่ราย
 
         return view('duchenne_report')
             ->with('Symp2_SD', $Symp2_SD)

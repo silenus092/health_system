@@ -48,4 +48,8 @@ class HomeController extends Controller
 
         return view('home')->with('disease_summary', $data);
     }
+
+    public function search_notfound(){
+
+    }
 }

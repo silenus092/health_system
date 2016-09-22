@@ -19,15 +19,20 @@ class PrintController extends Controller
 
 		$form_controller =	new FormController();
 		$patient_report =  $form_controller->view_form($id , $type);
+        $result_relation =  $form_controller->get_relative($id , $type);
 		//var_dump($this->view_form($id , $type));
 		if(count($patient_report)>0){
 			
 		
-		 $html_view =  \View::make('pages.form.form_create_pdf', compact('patient_report'))->render();
+		 $html_view =  \View::make('pages.form.form_create_pdf', compact('patient_report','result_relation'))->render();
 		 $pdf = \App::make('mpdf.wrapper',['th','A4','','',10,10,10,10,10,5]);
          //$pdf = \App::make('mpdf.wrapper');
-            $pdf->setFooter('{PAGENO} / {nb}');
-         $pdf->loadHTML(  $html_view );
+         $pdf->setFooter('{PAGENO} / {nb}');
+
+            $pdf->SetXY(110, 200);
+           // $pdf->Image('/uploads/2016-04-22-16-16-29-1416923147-01-o.jpg', '', '', 40, 40, '', '', 'T', false, 300, '', false, false, 1, false, false, false);
+            $pdf->loadHTML(  $html_view );
+
          $pdf-> SetTitle($patient_report->person_first_name.' '.$patient_report->person_last_name.'_'.$patient_report->disease_type_name_en);
 		 $pdf->stream($patient_report->person_first_name.' '.$patient_report->person_last_name.'_'.$patient_report->disease_type_name_en.'.pdf');
 
