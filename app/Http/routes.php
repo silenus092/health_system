@@ -66,6 +66,13 @@ Route::get('tree_constuct/{id}', [
     'uses' => 'TreeController@index'
 ]);
 
+// General Tree
+Route::get('general_tree_constuct/{id}', [
+    'as' => 'general_tree_constuct',
+    'uses' => 'GeneralTreeController@getTreeByID'
+]);
+
+
 // Duchenne Controller
 Route::get('duc_report', 'DuchenneController@index');
 Route::get('show_patient_duchenne', 'DuchenneController@show_patient_duchenne');

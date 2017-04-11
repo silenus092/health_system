@@ -32,7 +32,7 @@ class PersonController extends Controller {
     })->get();*/
 	 $persons = 	DB::table('persons')
 						->select('person_id','person_first_name', 'person_last_name', 'person_citizenID')
-            ->get();
+                        ->get();
 						$data = array();
 										 // find  dad
 										foreach ($persons as $person) {
@@ -407,11 +407,13 @@ class PersonController extends Controller {
                 AND disease_types.disease_type_id = disease_forms.disease_type_id
 				AND patients_disease_forms.patient_id =  patients.patient_id
 				AND patients.person_id = ' . $person->person_id);
+
             return view('profile')
                 ->with('person', $person)
                 ->with('results', $result)
                 ->with('result_callback_header', null)
-                ->with('result_callback', null);
+                ->with('result_callback', null)
+                ->with('result_relation', null);
         } else{
             $Total  = DB::select('SELECT count(disease_forms.question_id) as  total , disease_type_name_en ,disease_type_name_th
                                 FROM disease_forms

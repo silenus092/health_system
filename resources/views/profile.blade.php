@@ -314,11 +314,14 @@
 				}else{
 					var serializedReturn = $('#main_form').serialize();
 				}
-				$.ajax({
+                var doctor_id = '<?php echo (count($result_callback) > 0 ) ? $result_callback[0]->doctor_id  : '' ?>">';
+                var questions_id = '<?php echo (count($result_callback) > 0 ) ? $result_callback[0]->questions_id  : '' ?>">';
+
+                $.ajax({
 					url: "{{ url('/form_update') }}",
 					type: "POST",
-					data: serializedReturn+"&doctor_id="+'<?php echo $result_callback[0]->doctor_id ?>'+
-                    "&question_id="+'<?php echo $result_callback[0]->questions_id ?>'+"&person_id="+person_id+'&10_symptom_checkbox='+$('#10_symptom_checkbox:checkbox:checked').val(),
+					data: serializedReturn+"&doctor_id="+doctor_id+
+                    "&question_id="+questions_id+"&person_id="+person_id+'&10_symptom_checkbox='+$('#10_symptom_checkbox:checkbox:checked').val(),
 					onSubmit: function () {
 						$('#myPleaseWait').modal('show');
 					},
@@ -507,6 +510,17 @@
 				$(this).parent().parent().parent('div').remove(); //Remove field html
 				count_line--; //Decrement field counter
 			});
+
+			$('#SeeMore').click(function(){
+
+
+                BootstrapDialog.show({
+                    title: 'Select type',
+                    message: $('<a data-original-title="View as tree diagram" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary" href="{{route('general_tree_constuct', ['id' => $person->person_id ])}}"> General <i class="glyphicon glyphicon-tree-conifer"></i></a>'+
+					'<br> <br> <a data-original-title="View as tree diagram" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary" href="{{route('lists.items.create', ['id' => $person->person_id ])}}"> New Style <i class="glyphicon glyphicon-tree-conifer"></i></a>'),
+                });
+            });
+
 		});
 		function remove_person(id, name) {
 			BootstrapDialog.confirm({
@@ -640,10 +654,11 @@
 							</div>
 						</div>
 						<div class="panel-footer">
-							<a data-original-title="View as tree diagram" data-toggle="tooltip" type="button"
+							<button id="SeeMore" data-original-title="View as tree diagram" data-toggle="tooltip" type="button"
 							   class="btn btn-sm btn-primary"
-							   href="{{route('lists.items.create', ['id' => $person->person_id ])}}"> View as family
-								tree <i class="glyphicon glyphicon-tree-conifer"></i></a>
+							   href=""> View as family
+								tree <i class="fa fa-users"></i></button>
+
 							<span class="pull-right">
 							<button id="myModalEDIT_button" data-original-title="Edit this user" data-toggle="tooltip"
 									type="button" class="btn btn-sm btn-warning">Enable/Disable Edit <i

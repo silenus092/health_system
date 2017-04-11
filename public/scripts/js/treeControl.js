@@ -97,7 +97,7 @@ var treeplugin;
                     myTreeStatus = enStatusUI.add;
                     $.blockUI({
 
-                        message: '<iframe src="http://www.cavaros.com/health_system/public/scripts/resources/PersonDetailPage.html" height="280px" width="470px" scrolling="yes" frameborder="0" id="progressIframe" />',
+                        message: '<iframe src="http://localhost/health_system/public/scripts/resources/PersonDetailPage.html" height="280px" width="470px" scrolling="yes" frameborder="0" id="progressIframe" />',
                         css: {
                             width: '500px' // ความกว้างขอบ iframe
                         },
@@ -112,7 +112,7 @@ var treeplugin;
                     myTreeStatus = enStatusUI.delete;
                     $.blockUI({
 
-                        message: '<iframe src="http://www.cavaros.com/health_system/public/scripts/resources/PersonDeletePage.html" height="220px" width="500px" scrolling="yes" frameborder="0" id="progressIframe" />',
+                        message: '<iframe src="http://localhost/health_system/public/scripts/resources/PersonDeletePage.html" height="220px" width="500px" scrolling="yes" frameborder="0" id="progressIframe" />',
                         css: {
                             width: '500px' // ความกว้างขอบ iframe
                         },
@@ -127,7 +127,7 @@ var treeplugin;
                     myTreeStatus = enStatusUI.edit;
                     $.blockUI({
 
-                        message: '<iframe src="http://www.cavaros.com/health_system/public/scripts/resources/PersonEditPage.html" height="270px" width="470px" scrolling="yes" frameborder="0" id="progressIframe" />',
+                        message: '<iframe src="http://localhost/health_system/public/scripts/resources/PersonEditPage.html" height="270px" width="470px" scrolling="yes" frameborder="0" id="progressIframe" />',
                         css: {
                             width: '500px' // ความกว้างขอบ iframe
                         },
@@ -330,10 +330,10 @@ var treeplugin;
             + '</div>'
             + '<div name="description" class="bp-item" style="top: 26px; left: 56px; width: 138px; height: 62px; font-size: 12px; overflow: hidden;"></div>'
             + '<div class="bp-item" style="top: 89px;left: 2px; width: 193px; height: 27px; overflow: hidden;text-align: right;">'
-            + '<img name="photoDead" style="height:30px; width:32px;" src="http://www.cavaros.com/health_system/public/images/rip.png" />'
+            + '<img name="photoDead" style="height:30px; width:32px;" src="http://localhost/health_system/public/images/rip.png" />'
             + '</div>'
             + '<div name="divMainId" class="bp-item" style="top: 2px;left: 169px;width: 32px;height: 30px;">'
-            + '<img style="height:25px; width:26px;" src="http://www.cavaros.com/health_system/public/images/star.png"/>'
+            + '<img style="height:25px; width:26px;" src="http://localhost/health_system/public/images/star.png"/>'
             + '</div>'
             + '</div>'
         ).css({
@@ -361,13 +361,13 @@ var treeplugin;
             if (itemConfig.image == null) {
                 if (itemConfig.sex == "male") {
                     data.element.find("[name=photo]").attr({
-                        "src": "http://www.cavaros.com/health_system/public/images/men.png",
+                        "src": "http://localhost/health_system/public/images/men.png",
                         "alt": itemConfig.title
                     });
                 }
                 else {
                     data.element.find("[name=photo]").attr({
-                        "src": "http://www.cavaros.com/health_system/public/images/women.png",
+                        "src": "http://localhost/health_system/public/images/women.png",
                         "alt": itemConfig.title
                     });
                 }
@@ -415,7 +415,7 @@ var treeplugin;
 
     function callCheckUndoDelete() {
         $.ajax({
-            url: "http://www.cavaros.com/health_system/public/check_undo_state",
+            url: "http://localhost/health_system/public/check_undo_state",
             contentType: "application/x-www-form-urlencoded;charset=utf-8",
             cache: false,
             type: 'get',

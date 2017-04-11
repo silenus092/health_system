@@ -11,7 +11,7 @@
 		"knplabs/knp-snappy": "^0.4.3",
 		"h4cc/wkhtmltopdf-amd64": "0.12.x",
 		"h4cc/wkhtmltoimage-amd64": "0.12.x",
-		"servit/l5mpdf": "dev-master@dev",
+
 		"intervention/image": "^2.3",
 		"elibyy/laravel-tcpdf": "0.*"
 

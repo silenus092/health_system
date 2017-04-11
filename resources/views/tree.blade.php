@@ -13,7 +13,7 @@
 
 	//var imageMen = "/imagesTest/men.png";
 	//var imageWomen = "/imagesTest/women.png";
-	var person_id = <?php echo $citi_id; ?>;
+	var person_id = '<?php echo $citi_id; ?>';
 	var colorSick = primitives.common.Colors.Orange;
 	var colorWomen = primitives.common.Colors.Pink;
 	var items = null;
@@ -34,7 +34,8 @@
 			success: function(data, textStatus, jQxhr) {
 
 				$("#basicdiagram").treeControl({
-					url: 'http://www.cavaros.com/health_system/public',
+					//url: 'http://www.cavaros.com/health_system/public',
+					url: '<?=URL::to('/')?>',
 					mainId: person_id,
 					mainReId: person_id,
 					data: data.person,
@@ -109,12 +110,12 @@
 			},
 		});
 
-		callCheckUndoDelete();
+		//callCheckUndoDelete();
 	}
 
 	function callCheckUndoDelete() {
 		$.ajax({
-			url: "http://www.cavaros.com/health_system/public/check_undo_state",
+			url:'<?=URL::to('/')?>/check_undo_state',
 			contentType: "application/x-www-form-urlencoded;charset=utf-8",
 			cache: false,
 			type: 'get',

@@ -151,7 +151,7 @@ return [
         'Intervention\Image\ImageServiceProvider',
         'Xuma\Amaran\AmaranServiceProvider',
 		//'Barryvdh\DomPDF\ServiceProvider',
-		'Servit\Mpdf\ServiceProvider',
+		//'Servit\Mpdf\ServiceProvider',
 		//Barryvdh\Debugbar\ServiceProvider::class,
 
 
@@ -207,10 +207,11 @@ return [
 		'Form' => 'Illuminate\Html\FormFacade',
         'Amaran' => 'Xuma\Amaran\Facades\Amaran',
 		//'PDF' => 'Barryvdh\DomPDF\Facade',
-		'PDF'     => 'Servit\Mpdf\Facades\Pdf',
+		//'PDF'     => 'Servit\Mpdf\Facades\Pdf',
 		//'Debugbar' => 'Barryvdh\Debugbar\Facade',
 		'Image' => 'Intervention\Image\Facades\Image',
 
     ],
-
+// "mpdf/mpdf": "dev-master" ,
+    // "servit/l5mpdf": "dev-master@dev",
 ];
