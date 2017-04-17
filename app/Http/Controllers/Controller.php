@@ -98,9 +98,17 @@ abstract class Controller extends BaseController {
             return false;
         }
 
-
 		return false;
 	}
+
+    function check_key_has_exists_valueByGeneralTree($array, $key, $val) {
+
+            foreach ($array as $item){
+                if ( $item[$key] == $val)
+                    return true;
+            }
+        return false;
+    }
 
 
 }
