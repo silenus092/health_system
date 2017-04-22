@@ -16,7 +16,7 @@ class GeneralTreeController extends Controller
 
     private $TreeIDList =  array();
     private $TreeIDInfectedList = array();
-
+    private  $data = array();
     public function __construct()
     {
         // for development
@@ -26,7 +26,7 @@ class GeneralTreeController extends Controller
     public function getTreeByID($keyID){
 
         $result = array();
-        $data = array();
+
         $persons = 	DB::table('persons')->where('person_id' , '=' , $keyID)
             ->select('person_id','person_first_name', 'person_last_name', 'person_citizenID')
             ->first();
@@ -35,6 +35,8 @@ class GeneralTreeController extends Controller
             $result['message'] = "No person found on ID: ".$keyID;
             return response()->json($result, 200);
         }
+
+      //  echo  $persons->person_citizenID ." ";
        /* $result = '{
             focusId: 3,
             confirmIds: [3, 4],
@@ -52,23 +54,38 @@ class GeneralTreeController extends Controller
         }';*/
 
         $result['focusId'] = $persons->person_id;
-        $this->TreeIDList[] = $persons->person_id;;
-
+        $this->TreeIDList[] = $persons->person_id;
+       // print_r( $this->TreeIDList);
         while (count($this->TreeIDList) > 0 ) {
             $key = array_shift($this->TreeIDList);
-            if ((!$this->check_key_has_exists_valueByGeneralTree($data, 'key', $key)) && $key != null) {
+            if ((!$this->check_key_has_exists_valueByGeneralTree($this->data, 'key', $key)) && $key != null) {
+
                 $row = array();
+
                 $row = $this->setPersonalInfo($row, $key);
-
-
                 $this->findInfectedByID($key);
-                $data[] = $row;
+
+
+               // print_r($row);
+
+                $this->data[] = $row;
+
+                //print_r($this->data);
+
             }
         }
 
-        $result['data'] = $data;
+        $result['data'] =$this->data;
         $result['confirmIds'] = $this->TreeIDInfectedList;
-        return  response()->json($result);
+
+        $responsecode = 200;
+
+        $header = array (
+            'Content-Type' => 'application/json; charset=UTF-8',
+            'charset' => 'utf-8'
+        );
+
+        return  response()->json($result , $responsecode, $header, JSON_UNESCAPED_UNICODE);
         //return view('general_tree')->with('result', $result);
     }
 
@@ -99,7 +116,8 @@ class GeneralTreeController extends Controller
 
     public function setPersonalInfo($person_array, $key)
     {
-        $r = DB::table('persons')->where('person_id', '=', $key)->where('deleted_flag', '=', false)->first();
+        $r = DB::table('persons')->where('person_id', '=', $key)->first();
+
 
         $person_array['key'] = $r->person_id;
         $person_array['n'] = $r->person_first_name.' '.$r->person_last_name.' '.$r->person_age.' y';
@@ -112,7 +130,7 @@ class GeneralTreeController extends Controller
         $person_array = $this->find_spouse($person_array , $r );
         // add child
         $this->find_children($r );
-
+        //print_r($this->TreeIDList);
         return $person_array;
     }
 
@@ -145,32 +163,37 @@ class GeneralTreeController extends Controller
             ->join('relationship_type', 'relationship.relationship_type_id', '=', 'relationship_type.relationship_type_id')
             ->where('relationship_type_description', '=', "คู่สมรส")
             ->first();
+
         if (count($relation_married) != 0) {
             //$role= DB::table('roles')->where('role_id', '=', $relation_married->role_2_id)->first();
             $person_2 = DB::table('persons')
                 ->where('person_id', '=', $relation_married->person_2_id)
-                ->where('deleted_flag', '=', false)->first();
-            $this->TreeIDList[] = $person_2->person_id;
+                ->first();
+            $this->addTOList( $person_2->person_id);
+
             $person_array['ux'] =$person_2->person_id;
             return $person_array;
-
         }
+
         $relation_married = DB::table('relationship')
             ->where('person_2_id', '=', $r->person_id)
             ->join('relationship_type', 'relationship.relationship_type_id', '=', 'relationship_type.relationship_type_id')
             ->where('relationship_type_description', '=', "คู่สมรส")
             ->first();
+
         if (count($relation_married) != 0) {
             //$role= DB::table('roles')->where('role_id', '=', $relation_married->role_2_id)->first();
-            $person_2 = DB::table('persons')
+            $person_1 = DB::table('persons')
                 ->where('person_id', '=', $relation_married->person_1_id)
-                ->where('deleted_flag', '=', false)->first();
-            $this->TreeIDList[] = $person_2->person_id;
-            $person_array['ux'] =$person_2->person_id;
+                ->first();
+            $this->addTOList(  $person_1->person_id);
+
+            $person_array['ux'] =$person_1->person_id;
             return $person_array;
 
         } else {
             $person_array['ux']="";
+            return $person_array;
         }
     }
 
@@ -185,7 +208,6 @@ class GeneralTreeController extends Controller
             ->where('relationship_type_description', '=', "พ่อเเม่ลูก")
             ->get();
         if (count($relation_parent) != 0 && $relation_parent != null) {
-
             //$rp_array =array();
             // find  dad
             foreach ($relation_parent as $rp) {
@@ -197,10 +219,11 @@ class GeneralTreeController extends Controller
                     if (count($role_dad) != 0 && $role_dad != null) {
                         $person_dad = DB::table('persons')
                             ->where('person_id', '=', $rp->person_2_id)
-                            ->where('deleted_flag', '=', false)->first();
+                           ->first();
                         //$rp_array['title'] = $person_dad->person_first_name." ".$person_dad->person_last_name;
                         if (count($person_dad) != 0) {
-                            $this->TreeIDList[] = $person_dad->person_id; // add dad to list
+                             // add dad to list
+                            $this->addTOList( $person_dad->person_id);
                             $person_array['m'] = $person_dad->person_id;
                             //$rp_array['role']=$role_dad->role_description;
                         }
@@ -214,30 +237,31 @@ class GeneralTreeController extends Controller
                     if (count($role_dad) != 0 && $role_dad != null) {
                         $person_dad = DB::table('persons')
                             ->where('person_id', '=', $rp->person_1_id)
-                            ->where('deleted_flag', '=', false)
+
                             ->first();
                         //$rp_array['title'] = $person_dad->person_first_name." ".$person_dad->person_last_name;
                         if (count($person_dad) != 0) {
-                            $this->TreeIDList[] = $person_dad->person_id; // add dad to list
+                           // add dad to list
+                            $this->addTOList( $person_dad->person_id);
                             $person_array['m'] = $person_dad->person_id;
                         }
                     }
                 }
 
                 // find mom
-                if ($rp->person_2_id != $r->person_id) {
+               if ($rp->person_2_id != $r->person_id ) {
                     $role_mom = DB::table('roles')->where('role_id', '=', $rp->role_2_id)
                         ->where('role_description', '=', "เเม่")
                         ->first();
                     if (count($role_mom) != 0 && $role_mom != null) {
                         $person_mom = DB::table('persons')
                             ->where('person_id', '=', $rp->person_2_id)
-                            ->where('deleted_flag', '=', false)
+
                             ->first();
                         //$rp_array['title'] = $person_mom->person_first_name." ".$person_mom->person_last_name;
                         if (count($person_mom) != 0) {
-                            $this->TreeIDList[] = $person_mom->person_id; // add mom to list
-
+                             // add mom to list
+                            $this->addTOList( $person_mom->person_id);
                             $person_array['f'] = $person_mom->person_id;
                             //$rp_array['role']=$role_mom->role_description;
                         }
@@ -250,18 +274,19 @@ class GeneralTreeController extends Controller
                     if (count($role_mom) != 0 && $role_mom != null) {
                         $person_mom = DB::table('persons')
                             ->where('person_id', '=', $rp->person_1_id)
-                            ->where('deleted_flag', '=', false)
+
                             ->first();
                         //$rp_array['title'] = $person_mom->person_first_name." ".$person_mom->person_last_name;
                         if (count($person_mom) != 0) {
-                            $this->TreeIDList[] = $person_mom->person_id; // add mom to list
-
+                             // add mom to list
+                            $this->addTOList( $person_mom->person_id);
                             $person_array['f'] = $person_mom->person_id;
                             //$rp_array['role']=$role_mom->role_description;
                         }
 
                     }
                 }
+
                 //array_push($relation_parent_array, $rp_array);
 
             }
@@ -302,12 +327,10 @@ class GeneralTreeController extends Controller
                     if (count($role_son) != 0) {
                         $person_son = DB::table('persons')
                             ->where('person_id', '=', $rp->person_2_id)
-                            ->where('deleted_flag', '=', false)
+
                             ->first();
                         //$rp_array['title'] = $person_dad->person_first_name." ".$person_dad->person_last_name;
-
-                        $this->TreeIDList[] = $person_son->person_id; // add dad to list
-
+                        $this->addTOList($person_son->person_id);
                         //$relation_child_array[] = $person_son->person_id;
                         //$rp_array['role']=$role_dad->role_description;
                     }
@@ -323,12 +346,10 @@ class GeneralTreeController extends Controller
                     if (count($role_son) != 0) {
                         $person_son = DB::table('persons')
                             ->where('person_id', '=', $rp->person_1_id)
-                            ->where('deleted_flag', '=', false)
+
                             ->first();
                         //$rp_array['title'] = $person_dad->person_first_name." ".$person_dad->person_last_name;
-
-                        $this->TreeIDList[] = $person_son->person_id; // add dad to list
-
+                        $this->addTOList($person_son->person_id);
                         //$relation_child_array[] = $person_son->person_id;
                         //$rp_array['role']=$role_dad->role_description;
                     }
@@ -337,7 +358,7 @@ class GeneralTreeController extends Controller
                 // f
                 //หา ลูกสาว
 
-                if ($rp->person_2_id != $local_id) {
+               if ($rp->person_2_id != $local_id) {
 
                     $role_daughter = DB::table('roles')->where('role_id', '=', $rp->role_2_id)
                         ->where('role_description', '=', "ลูกสาว")
@@ -345,11 +366,11 @@ class GeneralTreeController extends Controller
                     if (count($role_daughter) != 0) {
                         $person_daughter = DB::table('persons')
                             ->where('person_id', '=', $rp->person_2_id)
-                            ->where('deleted_flag', '=', false)
+
                             ->first();
                         //$rp_array['title'] = $person_mom->person_first_name." ".$person_mom->person_last_name;
 
-                        $this->TreeIDList[] = $person_daughter->person_id; // add mom to list
+                        $this->addTOList($person_daughter->person_id);
 
                        // $relation_child_array[] = $person_daughter->person_id;
                         //$rp_array['role']=$role_mom->role_description;
@@ -366,12 +387,11 @@ class GeneralTreeController extends Controller
                     if (count($role_daughter) != 0) {
                         $person_daughter = DB::table('persons')
                             ->where('person_id', '=', $rp->person_1_id)
-                            ->where('deleted_flag', '=', false)
+
                             ->first();
+
                         //$rp_array['title'] = $person_mom->person_first_name." ".$person_mom->person_last_name;
-
-                        $this->TreeIDList[] = $person_daughter->person_id; // add mom to list
-
+                         $this->addTOList($person_daughter->person_id);
                       //  $relation_child_array[] = $person_daughter->person_id;
                         //$rp_array['role']=$role_mom->role_description;
 
@@ -386,5 +406,17 @@ class GeneralTreeController extends Controller
           //  return false;
         }
     }
+
+    public function addTOList($key){
+        if ((!$this->check_key_has_exists_valueByGeneralTree($this->data, 'key', $key)) && $key != null) {
+            if (!in_array($key, $this->TreeIDList)) {
+                $this->TreeIDList[] = $key;
+            }
+
+        }else{
+          //  echo  $key . " Matched";
+        }
+    }
+
 
 }

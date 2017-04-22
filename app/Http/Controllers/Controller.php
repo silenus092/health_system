@@ -104,8 +104,11 @@ abstract class Controller extends BaseController {
     function check_key_has_exists_valueByGeneralTree($array, $key, $val) {
 
             foreach ($array as $item){
-                if ( $item[$key] == $val)
+                if ( $item[$key] == $val){
+                   //  echo "Found : ".$val."\n";
                     return true;
+                }
+
             }
         return false;
     }
